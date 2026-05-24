@@ -1,12 +1,40 @@
 {
   "name": "artdict",
   "version": "1.0.0",
-  "description": "Minimalist Art Gallery & Showcase website",
+  "description": "A premium minimalist Art Gallery, Artist Showcase, and Streetwear Product Catalogue website connecting student designers with collectors.",
+  "main": "main.js",
   "scripts": {
-    "dev": "browser-sync start --server --files \"*.html, *.css, *.js\""
+    "start": "npm run dev",
+    "dev": "browser-sync start --server --files \"*.html, *.css, *.js\"",
+    "test": "node scratch/verify.js && node scratch/verify_authors.js",
+    "test:catalogue": "node scratch/verify.js",
+    "test:authors": "node scratch/verify_authors.js",
+    "format": "prettier --write \"*.html\" \"*.css\" \"*.js\" \"scratch/*.js\""
   },
+  "keywords": [
+    "art-gallery",
+    "portfolio",
+    "minimalist-design",
+    "streetwear-showcase",
+    "wavy-slider",
+    "interactive-ui",
+    "responsive-design",
+    "browser-sync",
+    "playwright-testing"
+  ],
+  "author": "Artdict Studio <contact@artdict.studio>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lamkdhe180931-arch/EXE_Project.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lamkdhe180931-arch/EXE_Project/issues"
+  },
+  "homepage": "https://github.com/lamkdhe180931-arch/EXE_Project#readme",
   "devDependencies": {
     "browser-sync": "^3.0.3",
-    "playwright": "^1.60.0"
+    "playwright": "^1.60.0",
+    "prettier": "^3.2.5"
   }
 }

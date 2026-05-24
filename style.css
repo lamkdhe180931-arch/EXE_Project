@@ -1,5 +1,5 @@
 /* Import Premium Typography */
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap");
 
 /* CSS Custom Properties / Design Tokens */
 :root {
@@ -14,8 +14,8 @@
   --color-gray-muted: #6e685c;
   --color-gray-light: #ded6c3;
 
-  --font-body: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
-  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: "Space Grotesk", "Plus Jakarta Sans", sans-serif;
+  --font-display: "Space Grotesk", sans-serif;
 
   --transition-smooth: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   --transition-fast: all 0.3s ease;
@@ -67,7 +67,8 @@ body {
 [data-reveal] {
   opacity: 0;
   transform: translateY(40px);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+  transition:
+    opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
     transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -190,7 +191,7 @@ header {
   pointer-events: none;
 }
 
-header>* {
+header > * {
   pointer-events: auto;
 }
 
@@ -248,7 +249,7 @@ header .menu-trigger {
 }
 
 header .menu-trigger::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   left: 0;
@@ -382,7 +383,9 @@ header .menu-trigger:hover::after {
   cursor: pointer;
   background-color: transparent;
   will-change: transform;
-  transition: filter 0.6s ease, transform 0.6s ease;
+  transition:
+    filter 0.6s ease,
+    transform 0.6s ease;
 }
 
 .collage-card img {
@@ -478,8 +481,6 @@ header .menu-trigger:hover::after {
   height: 100%;
   z-index: 0;
   overflow: hidden;
-
-
 }
 
 .slide {
@@ -563,8 +564,6 @@ header .menu-trigger:hover::after {
   transform: scale(1.2);
 }
 
-
-
 /* Title container — centered in viewport */
 .hero-scroll-title {
   position: absolute;
@@ -634,7 +633,6 @@ header .menu-trigger:hover::after {
 }
 
 @keyframes bounceInd {
-
   0%,
   100% {
     transform: translateY(0);
@@ -773,7 +771,9 @@ header .menu-trigger:hover::after {
   cursor: pointer;
   aspect-ratio: 1.5;
   background-color: var(--color-cream-secondary);
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition:
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .cat-tile:hover {
@@ -787,7 +787,8 @@ header .menu-trigger:hover::after {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+  transition:
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
     filter 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   filter: brightness(0.85);
 }
@@ -803,14 +804,21 @@ header .menu-trigger:hover::after {
   left: 0;
   width: 100%;
   padding: 2.5rem 2rem;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 60%, transparent 100%);
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(0, 0, 0, 0.4) 60%,
+    transparent 100%
+  );
   color: var(--color-white);
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  transition:
+    opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .cat-tile:hover .cat-tile-overlay {
@@ -868,7 +876,9 @@ header .menu-trigger:hover::after {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: opacity 0.4s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition:
+    opacity 0.4s ease,
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .projects-intro-text p {
@@ -1034,7 +1044,8 @@ header .menu-trigger:hover::after {
   overflow: hidden;
   background-color: var(--color-gray-dark);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  transition: filter 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+  transition:
+    filter 0.6s cubic-bezier(0.16, 1, 0.3, 1),
     border-color 0.6s cubic-bezier(0.16, 1, 0.3, 1),
     box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
@@ -1055,7 +1066,9 @@ header .menu-trigger:hover::after {
   object-fit: cover;
   display: block;
   filter: grayscale(100%);
-  transition: filter 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition:
+    filter 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .artist-wavy-card:hover {
@@ -1079,7 +1092,9 @@ header .menu-trigger:hover::after {
   border-radius: 12px;
   padding: 1rem 1.2rem;
   color: var(--color-white);
-  transition: background 0.4s ease, border-color 0.4s ease;
+  transition:
+    background 0.4s ease,
+    border-color 0.4s ease;
 }
 
 .artist-wavy-card:hover .artist-meta-box {
@@ -1617,7 +1632,9 @@ body.pdp-page {
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition:
+    opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .pdp-gallery-main img.fade-out {
@@ -1664,7 +1681,7 @@ body.pdp-page {
 }
 
 .pdp-stock::before {
-  content: '';
+  content: "";
   display: inline-block;
   width: 8px;
   height: 8px;
@@ -1872,7 +1889,9 @@ body.pdp-page {
 .pdp-info-row-content {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1), padding 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  transition:
+    max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    padding 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .pdp-info-row-content p {
@@ -1926,7 +1945,7 @@ body.pdp-page {
 }
 
 .pdp-tab::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   left: 0;
@@ -2123,7 +2142,7 @@ body.pdp-page {
 }
 
 .pdp-story-italic {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: "Space Grotesk", sans-serif;
   font-style: italic;
   font-weight: 300;
   text-transform: lowercase;
@@ -2172,7 +2191,9 @@ body.pdp-page {
   margin: 0 auto;
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.6s cubic-bezier(0.16, 1, 0.3, 1), margin-top 0.6s ease;
+  transition:
+    max-height 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+    margin-top 0.6s ease;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -2317,7 +2338,9 @@ body.pdp-page {
 .pdp-faq-answer {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1), padding 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  transition:
+    max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    padding 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .pdp-faq-answer p {
@@ -2552,7 +2575,9 @@ body.author-page {
   object-fit: cover;
   display: block;
   filter: grayscale(15%);
-  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s ease;
+  transition:
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.8s ease;
 }
 
 .author-portrait-wrap:hover #author-portrait-img {
@@ -2785,7 +2810,7 @@ body.author-page {
 }
 
 .author-timeline::before {
-  content: '';
+  content: "";
   position: absolute;
   left: 100px;
   top: 0;
@@ -2819,7 +2844,7 @@ body.author-page {
 }
 
 .author-timeline-year::after {
-  content: '';
+  content: "";
   position: absolute;
   right: -7px;
   top: 5px;
@@ -2880,7 +2905,7 @@ body.author-page {
     border-right: 1.5px solid var(--color-black);
   }
 
-  .author-artwork-card:nth-child(2n+1) {
+  .author-artwork-card:nth-child(2n + 1) {
     border-right: 1.5px solid var(--color-black);
   }
 
@@ -3055,7 +3080,9 @@ body.author-page {
   opacity: 0;
   background-color: var(--color-cream-secondary);
   border-bottom: 1.5px solid var(--color-black);
-  transition: max-height 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition:
+    max-height 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .filter-panel.active {
@@ -3140,7 +3167,8 @@ body.author-page {
   top: 0;
   opacity: 1;
   transform: scale(1);
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+  transition:
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
     opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
     scale 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform, opacity;
