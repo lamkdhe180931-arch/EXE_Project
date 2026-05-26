@@ -9,7 +9,7 @@ const fs = require("fs");
   const page = await context.newPage();
 
   const screenshotDir =
-    "C:\\Users\\Admin\\.gemini\\antigravity-ide\\brain\\17b705f7-028e-4bfc-be85-6d7dec3afd37";
+    "C:\\Users\\Admin\\.gemini\\antigravity-ide\\brain\\f2f5402e-08ad-4118-84e1-d2e1a5a6cd89";
 
   // Ensure screenshot directory exists
   if (!fs.existsSync(screenshotDir)) {
@@ -17,8 +17,8 @@ const fs = require("fs");
   }
 
   // 1. Load the page
-  console.log("Navigating to http://localhost:3000/catalogue.html...");
-  await page.goto("http://localhost:3000/catalogue.html");
+  console.log("Navigating to http://localhost:3000/views/catalogue.html...");
+  await page.goto("http://localhost:3000/views/catalogue.html");
   await page.waitForTimeout(1000); // Wait for animations/load
 
   // 2. Count total products initially

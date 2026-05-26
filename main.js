@@ -1,25 +1,75 @@
 document.addEventListener("DOMContentLoaded", () => {
   // =============================================
-  // MENU OVERLAY
+  // DYNAMIC LAYOUT LOADER (Header, Menu, Footer)
   // =============================================
-  const menuTrigger = document.getElementById("menu-open-btn");
-  const menuClose = document.getElementById("menu-close-btn");
-  const menuOverlay = document.getElementById("main-menu-overlay");
-  const menuLinks = document.querySelectorAll(".menu-link");
+  async function loadLayout() {
+    const placeholders = [
+      { id: "#header-placeholder", file: "partials/header.html" },
+      { id: "#menu-placeholder", file: "partials/menu.html" },
+      { id: "#footer-placeholder", file: "partials/footer.html" }
+    ];
 
-  function openMenu() {
-    menuOverlay.classList.add("active");
-    document.body.style.overflow = "hidden";
+    for (const item of placeholders) {
+      const el = document.querySelector(item.id);
+      if (el) {
+        try {
+          const response = await fetch(item.file);
+          if (response.ok) {
+            el.outerHTML = await response.text();
+          } else {
+            console.error(`Failed to load component: ${item.file}`, response.statusText);
+          }
+        } catch (error) {
+          console.error(`Error loading component: ${item.file}`, error);
+        }
+      }
+    }
+
+    highlightActiveLinks();
+    initScrollRevealForInjected();
   }
-  function closeMenu() {
-    menuOverlay.classList.remove("active");
-    document.body.style.overflow = "";
+
+  function highlightActiveLinks() {
+    const currentPath = window.location.pathname;
+    if (currentPath.includes("catalogue.html")) {
+      const link = document.getElementById("header-nav-catalogue");
+      if (link) link.classList.add("active");
+    } else if (currentPath.includes("authors.html") || currentPath.includes("author.html")) {
+      const link = document.getElementById("header-nav-author");
+      if (link) link.classList.add("active");
+    }
   }
-  if (menuTrigger && menuOverlay && menuClose) {
-    menuTrigger.addEventListener("click", openMenu);
-    menuClose.addEventListener("click", closeMenu);
-    menuLinks.forEach((l) => l.addEventListener("click", closeMenu));
+
+  function initScrollRevealForInjected() {
+    const revealEls = document.querySelectorAll("#footer-sec [data-reveal]");
+    if (window.__revealObserver) {
+      revealEls.forEach((el) => window.__revealObserver.observe(el));
+    } else {
+      revealEls.forEach((el) => el.classList.add("revealed"));
+    }
   }
+
+  // Load layout components
+  loadLayout();
+
+  // =============================================
+  // MENU OVERLAY (Event Delegation)
+  // =============================================
+  document.addEventListener("click", (e) => {
+    if (e.target.closest("#menu-open-btn")) {
+      const menuOverlay = document.getElementById("main-menu-overlay");
+      if (menuOverlay) {
+        menuOverlay.classList.add("active");
+        document.body.style.overflow = "hidden";
+      }
+    } else if (e.target.closest("#menu-close-btn") || e.target.closest(".menu-link")) {
+      const menuOverlay = document.getElementById("main-menu-overlay");
+      if (menuOverlay) {
+        menuOverlay.classList.remove("active");
+        document.body.style.overflow = "";
+      }
+    }
+  });
 
   // =============================================
   // HERO SLIDESHOW (8s auto-rotate with swirl transition)
@@ -301,6 +351,7 @@ document.addEventListener("DOMContentLoaded", () => {
       },
       { threshold: 0.15, rootMargin: "0px 0px -60px 0px" },
     );
+    window.__revealObserver = obs;
     revealEls.forEach((el) => obs.observe(el));
   } else {
     revealEls.forEach((el) => el.classList.add("revealed"));

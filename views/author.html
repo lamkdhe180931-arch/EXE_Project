@@ -17,66 +17,16 @@
     <meta name="author" content="Artdict Studio" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="assets/art_one.png" />
+    <link rel="icon" type="image/png" href="../assets/art_one.png" />
 
     <!-- Core Stylesheet -->
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="../style.css" />
   </head>
 
   <body class="author-page">
-    <!-- Header Navigation (Reused from index.html) -->
-    <header id="main-header">
-      <span class="logo-badge" id="header-badge">Nghệ thuật & Quà tặng</span>
-      <div class="logo-container" id="logo-wrapper">
-        <div class="logo" id="header-logo">
-          <a href="index.html">
-            <img
-              src="assets/Logo bản sáng.png"
-              alt="ARTDICT"
-              class="header-logo-img"
-            />
-          </a>
-        </div>
-      </div>
-      <div class="menu-trigger" id="menu-open-btn">Menu</div>
-    </header>
-
-    <!-- Fullscreen Navigation Overlay (Reused) -->
-    <div class="menu-overlay" id="main-menu-overlay">
-      <div class="menu-close" id="menu-close-btn">Đóng</div>
-      <nav>
-        <ul>
-          <li style="--i: 1">
-            <a href="index.html" class="menu-link" id="nav-home">Trang chủ</a>
-          </li>
-          <li style="--i: 2">
-            <a href="index.html#manifesto-sec" class="menu-link" id="nav-about"
-              >Tuyên ngôn</a
-            >
-          </li>
-          <li style="--i: 3">
-            <a href="catalogue.html" class="menu-link" id="nav-catalogue"
-              >Sản phẩm</a
-            >
-          </li>
-          <li style="--i: 4">
-            <a href="index.html#team-sec" class="menu-link" id="nav-team"
-              >Đội ngũ</a
-            >
-          </li>
-          <li style="--i: 5">
-            <a href="authors.html" class="menu-link active" id="nav-author"
-              >Tác giả</a
-            >
-          </li>
-          <li style="--i: 6">
-            <a href="index.html#footer-sec" class="menu-link" id="nav-contact"
-              >Liên hệ</a
-            >
-          </li>
-        </ul>
-      </nav>
-    </div>
+    <!-- Header Placeholders -->
+    <div id="header-placeholder"></div>
+    <div id="menu-placeholder"></div>
 
     <!-- Main Content -->
     <main class="author-main">
@@ -105,7 +55,7 @@
             <div class="author-portrait-wrap" data-reveal>
               <div class="author-portrait-img-box">
                 <img
-                  src="assets/artist_portrait.png"
+                  src="../assets/artist_portrait.png"
                   alt="Chân dung nghệ sĩ Kiều Đức Lâm"
                   id="author-portrait-img"
                 />
@@ -129,6 +79,10 @@
                   anh luôn tìm cách đưa hơi thở hội họa đương đại vào trong các
                   vật liệu cứng cáp của đời thực.
                 </p>
+                  Tác phẩm nghệ thuật không sinh ra để trưng bày trong tủ kính vô
+                  tri. Nó chỉ thực sự sống khi được chạm vào da thịt, cùng người sở
+                  hữu trải qua những thăng trầm của đời sống và tự bản thân nó tích
+                  tụ những vết xước kiêu hãnh của dòng thời gian.
                 <p>
                   Với triết lý sáng tạo "Tôn vinh sự không hoàn hảo", Lâm tin
                   rằng mỗi món đồ trang sức hay thời trang thiết kế không nên
@@ -183,7 +137,7 @@
             <div class="author-artwork-card" id="artwork-sunflower">
               <div class="author-artwork-img-box">
                 <img
-                  src="assets/helios.vn_products_khuvsgul-sunflower-stud-helios-silver (1).png"
+                  src="../assets/helios.vn_products_khuvsgul-sunflower-stud-helios-silver (1).png"
                   alt="Khuvsgul Sunflower Stud"
                 />
               </div>
@@ -208,7 +162,7 @@
             <!-- Artwork 2 -->
             <div class="author-artwork-card" id="artwork-mekong">
               <div class="author-artwork-img-box">
-                <img src="assets/13.png" alt="Vòng tay Mekong" />
+                <img src="../assets/13.png" alt="Vòng tay Mekong" />
               </div>
               <div class="author-artwork-info">
                 <h3 class="author-artwork-name">Vòng tay Mekong Bangle</h3>
@@ -229,7 +183,7 @@
             <!-- Artwork 3 -->
             <div class="author-artwork-card" id="artwork-journey">
               <div class="author-artwork-img-box">
-                <img src="assets/Sổ tay.png" alt="Sổ tay hành trình Artdict" />
+                <img src="../assets/Sổ tay.png" alt="Sổ tay hành trình Artdict" />
               </div>
               <div class="author-artwork-info">
                 <h3 class="author-artwork-name">Sổ tay Hành trình Artdict</h3>
@@ -321,35 +275,10 @@
       </section>
     </main>
 
-    <!-- Footer Section (Reused from index.html) -->
-    <footer id="footer-sec" class="bg-dark-section">
-      <div class="footer-hero" data-reveal>
-        <h2 class="footer-big-text" id="footer-big-heading">
-          <a href="mailto:artdict@studio.com">
-            <span class="footer-line">Contact</span>
-            <span class="footer-line"
-              >Us <span class="footer-arrow-inline">↗</span></span
-            >
-          </a>
-        </h2>
-      </div>
-      <div class="footer-bottom-bar">
-        <div class="footer-bottom-left">
-          <span class="footer-logo-text">ARTDICT</span>
-          <span class="footer-copyright">— ©2026</span>
-        </div>
-        <div class="footer-bottom-right">
-          <a href="#" id="social-instagram" class="footer-social-link"
-            >Instagram↗</a
-          >
-          <a href="#" id="social-behance" class="footer-social-link"
-            >Behance↗</a
-          >
-        </div>
-      </div>
-    </footer>
+    <!-- Footer Placeholder -->
+    <div id="footer-placeholder"></div>
 
     <!-- Core JavaScript -->
-    <script src="main.js"></script>
+    <script src="../main.js"></script>
   </body>
 </html>
