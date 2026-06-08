@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { calculateOrderTotal } from "@/lib/data/orders";
+import { calculateOrderTotal } from "../../lib/money.ts";
 
 test("calculateOrderTotal sums line totals", () => {
   assert.equal(

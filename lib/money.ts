@@ -9,3 +9,7 @@ export function formatVnd(amount: number): string {
 export function toLineTotal(unitPrice: number, quantity: number): number {
   return unitPrice * quantity;
 }
+
+export function calculateOrderTotal(items: Array<{ unitPrice: number; quantity: number }>): number {
+  return items.reduce((total, item) => total + toLineTotal(item.unitPrice, item.quantity), 0);
+}

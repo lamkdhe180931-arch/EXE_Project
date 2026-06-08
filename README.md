@@ -59,3 +59,16 @@ Dự án được xây dựng bằng các công nghệ web thuần (Vanilla) đ�
 - [x] **Chân trang Biên tập (Editorial Footer)**: Khu vực liên hệ có kích thước chữ siêu lớn đầy ấn tượng để khuyến khích hợp tác.
 - [x] **Hiệu ứng Xuất hiện khi Cuộn (Scroll Reveal)**: Tất cả các phần và mục sử dụng `IntersectionObserver` để tự động mờ dần và trượt vào khung nhìn khi người dùng cuộn xuống.
 - [x] **Hỗ trợ Tiếng Việt & Font Space Grotesk**: Toàn bộ trang web đã được Việt hóa và tối ưu hóa font chữ Space Grotesk để không bị lỗi hiển thị dấu tiếng Việt, tinh chỉnh khoảng cách dòng (line-height) ngăn việc mất chữ khi zoom 100%.
+
+
+## Chạy bản fullstack
+
+```bash
+cp .env.example .env
+docker compose up --build
+docker compose exec app npm run prisma:deploy
+docker compose exec app npm run prisma:seed
+```
+
+Ứng dụng chạy tại `http://localhost:3000`.
+Admin chạy tại `http://localhost:3000/admin/login`.

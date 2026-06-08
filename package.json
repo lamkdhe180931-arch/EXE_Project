@@ -8,10 +8,11 @@
     "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "node --import tsx --test tests/unit/*.test.ts",
+    "test": "for file in tests/unit/*.test.ts; do node --experimental-strip-types \"$file\" || exit 1; done",
     "test:smoke": "node scratch/verify_index.js && node scratch/verify.js && node scratch/verify_authors.js",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
+    "prisma:deploy": "prisma migrate deploy",
     "prisma:seed": "tsx prisma/seed.ts",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,css,md}\""
   },

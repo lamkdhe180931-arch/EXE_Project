@@ -1,10 +1,9 @@
 import { PublishStatus } from "@prisma/client";
+import { calculateOrderTotal } from "@/lib/money";
 import { prisma } from "@/lib/prisma";
 import { createOrderSchema } from "@/lib/validation";
 
-export function calculateOrderTotal(items: Array<{ unitPrice: number; quantity: number }>) {
-  return items.reduce((total, item) => total + item.unitPrice * item.quantity, 0);
-}
+export { calculateOrderTotal };
 
 export async function createOrder(input: unknown) {
   const data = createOrderSchema.parse(input);

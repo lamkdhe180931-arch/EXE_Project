@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { createOrderSchema } from "@/lib/validation";
+import { createOrderSchema } from "../../lib/validation.ts";
 
 test("createOrderSchema rejects empty order items", () => {
   const result = createOrderSchema.safeParse({
