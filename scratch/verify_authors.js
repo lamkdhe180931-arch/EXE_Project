@@ -18,7 +18,19 @@ async function assertRoute(pathname, markers) {
 (async () => {
   console.log("Starting smoke verification for Next.js authors page...");
 
-  await assertRoute("/authors", ["authors-main", "wavy-slider-track"]);
+  await assertRoute("/authors", [
+    "authors-main",
+    "team-sec",
+    "wavy-slider-track",
+    "team-title-img"
+  ]);
 
-  console.log("Authors page verification passed successfully!");
+  await assertRoute("/authors/kieu-duc-lam", [
+    "author-main",
+    "author-hero",
+    "author-name-title",
+    "author-timeline-sec"
+  ]);
+
+  console.log("Authors and author detail verification passed successfully!");
 })();

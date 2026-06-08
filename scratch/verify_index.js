@@ -18,7 +18,15 @@ async function assertRoute(pathname, markers) {
 (async () => {
   console.log("Starting smoke verification for Next.js home page...");
 
-  await assertRoute("/", ["hero-sec", "main-header", "Đồ để chơi!", "Chất để đời!"]);
+  await assertRoute("/", [
+    "hero-sec",
+    "main-header",
+    "manifesto-sec",
+    "categories-sec",
+    "shirts-showcase-sec",
+    "Đồ để chơi!",
+    "Chất để đời!"
+  ]);
 
   console.log("Home page verification passed successfully!");
 })();

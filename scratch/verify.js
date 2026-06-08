@@ -18,7 +18,19 @@ async function assertRoute(pathname, markers) {
 (async () => {
   console.log("Starting smoke verification for Next.js catalogue page...");
 
-  await assertRoute("/catalogue", ["catalogue-main", "catalogue-grid"]);
+  await assertRoute("/catalogue", [
+    "catalogue-main",
+    "catalogue-grid",
+    "filter-panel",
+    "Áo Đồ để chơi Chất để đời"
+  ]);
 
-  console.log("Catalogue page verification passed successfully!");
+  await assertRoute("/products/ao-do-de-choi-chat-de-doi", [
+    "pdp-main",
+    "pdp-showcase",
+    "pdp-tabs",
+    "pdp-reviews-section"
+  ]);
+
+  console.log("Catalogue and product detail verification passed successfully!");
 })();

@@ -1,28 +1,145 @@
-import Image from "next/image";
-import Link from "next/link";
-import { listPublishedAuthors } from "@/lib/data/authors";
-
-export const dynamic = "force-dynamic";
-
-export default async function AuthorsPage() {
-  const authors = await listPublishedAuthors();
-  return (
-    <main className="authors-main">
-      <section className="team">
-        <div className="wavy-slider-track">
-          {authors.map((author) => (
-            <Link key={author.id} href={`/authors/${author.slug}`} className="artist-wavy-card">
-              <div className="artist-card-img-wrapper">
-                <Image src={author.portraitSrc} alt={author.name} width={480} height={640} className="artist-card-img" />
-              </div>
-              <div className="artist-meta-box">
-                <h3 className="artist-card-name">{author.name}</h3>
-                <p className="artist-card-style">{author.style}</p>
-              </div>
-            </Link>
-          ))}
+import { BodyClass } from "@/components/site/BodyClass";
+const html = `<main class="authors-main" style="
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-top: 100px;
+      ">
+    <!-- Team / Wavy Artists Section -->
+    <section class="team" id="team-sec" style="border-top: none; padding: 1rem 0">
+      <div class="team-header-wavy" data-reveal>
+        <div class="team-title-image-wrapper">
+          <img src="/assets/Frame 112.png" alt="ờ" class="team-title-img" />
         </div>
-      </section>
-    </main>
+        <h2 class="team-subtitle-wavy">
+          Hãy gặp gỡ những tác giả đằng sau những <br />
+          "tác phẩm chất để đời"
+        </h2>
+      </div>
+
+      <div class="wavy-slider-container" id="wavy-slider-container" data-reveal>
+        <div class="wavy-slider-track" id="wavy-slider-track">
+          <!-- Slide 1 -->
+          <a href="/authors/kieu-duc-lam" class="artist-wavy-card">
+            <div class="artist-card-img-wrapper">
+              <img src="/artdictor/705325896_1167896908801291_6802666704949378051_n.png" alt="Kiều Đức Lâm"
+                class="artist-card-img" />
+            </div>
+            <div class="artist-meta-box">
+              <h3 class="artist-card-name">Kiều Đức Lâm</h3>
+              <p class="artist-card-style">Nghệ thuật Kim hoàn</p>
+            </div>
+          </a>
+
+          <!-- Slide 2 -->
+          <a href="#" class="artist-wavy-card">
+            <div class="artist-card-img-wrapper">
+              <img src="/artdictor/3.png" alt="Nguyễn Hoàng Mai Linh" class="artist-card-img" />
+            </div>
+            <div class="artist-meta-box">
+              <h3 class="artist-card-name">Nguyễn Hoàng Mai Linh</h3>
+              <p class="artist-card-style">Thiết kế Đồ họa & Streetwear</p>
+            </div>
+          </a>
+
+          <!-- Slide 3 -->
+          <a href="#" class="artist-wavy-card">
+            <div class="artist-card-img-wrapper">
+              <img src="/artdictor/4.png" alt="Đàm Phương Anh" class="artist-card-img" />
+            </div>
+            <div class="artist-meta-box">
+              <h3 class="artist-card-name">Đàm Phương Anh</h3>
+              <p class="artist-card-style">Tranh in Đông Hồ cách tân</p>
+            </div>
+          </a>
+
+          <!-- Slide 4 -->
+          <a href="#" class="artist-wavy-card">
+            <div class="artist-card-img-wrapper">
+              <img src="/assets/art_one.png" alt="Nguyễn Vinh Quang" class="artist-card-img" />
+            </div>
+            <div class="artist-meta-box">
+              <h3 class="artist-card-name">Nguyễn Vinh Quang</h3>
+              <p class="artist-card-style">Điêu khắc Đương đại</p>
+            </div>
+          </a>
+
+          <!-- Slide 5 -->
+          <a href="#" class="artist-wavy-card">
+            <div class="artist-card-img-wrapper">
+              <img src="/assets/art_two.png" alt="Nguyễn Quý Thiện" class="artist-card-img" />
+            </div>
+            <div class="artist-meta-box">
+              <h3 class="artist-card-name">Nguyễn Quý Thiện</h3>
+              <p class="artist-card-style">Thư pháp Hiện đại</p>
+            </div>
+          </a>
+
+          <!-- Slide 6 -->
+          <a href="#" class="artist-wavy-card">
+            <div class="artist-card-img-wrapper">
+              <img src="/assets/art_three.png" alt="Nguyễn Văn Khuyến" class="artist-card-img" />
+            </div>
+            <div class="artist-meta-box">
+              <h3 class="artist-card-name">Nguyễn Văn Khuyến</h3>
+              <p class="artist-card-style">Nhiếp ảnh Đường phố</p>
+            </div>
+          </a>
+
+          <!-- Slide 7 -->
+          <a href="#" class="artist-wavy-card">
+            <div class="artist-card-img-wrapper">
+              <img src="/assets/art_four.png" alt="Lê Anh Tuấn" class="artist-card-img" />
+            </div>
+            <div class="artist-meta-box">
+              <h3 class="artist-card-name">Lê Anh Tuấn</h3>
+              <p class="artist-card-style">Thiết kế Đa phương tiện</p>
+            </div>
+          </a>
+
+          <!-- Slide 8 -->
+          <a href="#" class="artist-wavy-card">
+            <div class="artist-card-img-wrapper">
+              <img src="/assets/art_five.png" alt="Trần Thu Trang" class="artist-card-img" />
+            </div>
+            <div class="artist-meta-box">
+              <h3 class="artist-card-name">Trần Thu Trang</h3>
+              <p class="artist-card-style">Gốm Nghệ thuật cách tân</p>
+            </div>
+          </a>
+
+          <!-- Slide 9 -->
+          <a href="#" class="artist-wavy-card">
+            <div class="artist-card-img-wrapper">
+              <img src="/assets/artist_portrait.png" alt="Phạm Minh Hoàng" class="artist-card-img" />
+            </div>
+            <div class="artist-meta-box">
+              <h3 class="artist-card-name">Phạm Minh Hoàng</h3>
+              <p class="artist-card-style">Tranh Minh họa & Pop Art</p>
+            </div>
+          </a>
+
+          <!-- Slide 10 -->
+          <a href="#" class="artist-wavy-card">
+            <div class="artist-card-img-wrapper">
+              <img src="/assets/Ảnh 2.png" alt="Vũ Đức Huy" class="artist-card-img" />
+            </div>
+            <div class="artist-meta-box">
+              <h3 class="artist-card-name">Vũ Đức Huy</h3>
+              <p class="artist-card-style">Nghệ thuật Sắp đặt Ánh sáng</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>`;
+
+export default function AuthorsPage() {
+  return (
+    <>
+      <BodyClass className="authors-page" />
+      <div dangerouslySetInnerHTML={{ __html: html }} />
+    </>
   );
 }

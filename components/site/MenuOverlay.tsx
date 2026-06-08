@@ -1,63 +1,43 @@
-"use client";
-
-import Link from "next/link";
 import type { CSSProperties } from "react";
-import { useState } from "react";
 
 export function MenuOverlay() {
-  const [open, setOpen] = useState(false);
-
-  function closeMenu() {
-    setOpen(false);
-  }
-
   return (
     <>
-      <button
-        type="button"
-        id="menu-open-btn"
-        className="menu-trigger"
-        onClick={() => setOpen(true)}
-        aria-label="Open menu"
-      >
-        Menu
-      </button>
-      <div id="main-menu-overlay" className={open ? "menu-overlay active" : "menu-overlay"}>
-        <button
-          type="button"
-          id="menu-close-btn"
-          className="menu-close"
-          onClick={closeMenu}
-          aria-label="Close menu"
-        >
+      <div id="main-menu-overlay" className="menu-overlay">
+        <div id="menu-close-btn" className="menu-close">
           Đóng
-        </button>
-        <nav aria-label="Menu navigation">
+        </div>
+        <nav>
           <ul>
             <li style={{ "--i": 1 } as CSSProperties}>
-              <Link href="/" className="menu-link" id="nav-home" onClick={closeMenu}>
+              <a href="/" className="menu-link" id="nav-home">
                 Trang chủ
-              </Link>
+              </a>
             </li>
             <li style={{ "--i": 2 } as CSSProperties}>
-              <Link href="/#manifesto-sec" className="menu-link" id="nav-about" onClick={closeMenu}>
+              <a href="/#manifesto-sec" className="menu-link" id="nav-about">
                 Tuyên ngôn
-              </Link>
+              </a>
             </li>
             <li style={{ "--i": 3 } as CSSProperties}>
-              <Link href="/catalogue" className="menu-link" id="nav-catalogue" onClick={closeMenu}>
+              <a href="/catalogue" className="menu-link" id="nav-catalogue">
                 Sản phẩm
-              </Link>
+              </a>
             </li>
             <li style={{ "--i": 4 } as CSSProperties}>
-              <Link href="/authors" className="menu-link" id="nav-author" onClick={closeMenu}>
-                Tác giả
-              </Link>
+              <a href="/#team-sec" className="menu-link" id="nav-team">
+                Đội ngũ
+              </a>
             </li>
             <li style={{ "--i": 5 } as CSSProperties}>
-              <Link href="/#footer-sec" className="menu-link" id="nav-contact" onClick={closeMenu}>
+              <a href="/authors" className="menu-link" id="nav-author">
+                Tác giả
+              </a>
+            </li>
+            <li style={{ "--i": 6 } as CSSProperties}>
+              <a href="/#footer-sec" className="menu-link" id="nav-contact">
                 Liên hệ
-              </Link>
+              </a>
             </li>
           </ul>
         </nav>

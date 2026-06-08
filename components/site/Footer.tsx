@@ -3,7 +3,7 @@ export function Footer() {
     <footer id="footer-sec" className="bg-dark-section">
       <div className="footer-hero" data-reveal>
         <h2 className="footer-big-text" id="footer-big-heading">
-          <a href="mailto:contact@artdict.studio">
+          <a href="mailto:artdict@studio.com">
             <span className="footer-line">Contact</span>
             <span className="footer-line">
               Us <span className="footer-arrow-inline">↗</span>
