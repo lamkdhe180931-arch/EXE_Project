@@ -1,0 +1,13 @@
+@import "../style.css";
+
+html {
+  scroll-behavior: smooth;
+}
+
+button.menu-trigger,
+button.menu-close {
+  appearance: none;
+  border: 0;
+  font: inherit;
+  background: transparent;
+}
