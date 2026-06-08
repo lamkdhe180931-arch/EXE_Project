@@ -4,12 +4,19 @@
   "description": "A premium minimalist Art Gallery, Artist Showcase, and Streetwear Product Catalogue website connecting student designers with collectors.",
   "main": "main.js",
   "scripts": {
-    "start": "npm run dev",
-    "dev": "browser-sync start --server --files \"*.html, *.css, *.js\"",
-    "test": "node scratch/verify.js && node scratch/verify_authors.js",
-    "test:catalogue": "node scratch/verify.js",
-    "test:authors": "node scratch/verify_authors.js",
-    "format": "prettier --write \"*.html\" \"*.css\" \"*.js\" \"scratch/*.js\""
+    "dev": "next dev",
+    "build": "prisma generate && next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test": "node --import tsx --test tests/unit/*.test.ts",
+    "test:smoke": "node scratch/verify_index.js && node scratch/verify.js && node scratch/verify_authors.js",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:seed": "tsx prisma/seed.ts",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,css,md}\""
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
   },
   "keywords": [
     "art-gallery",
@@ -33,8 +40,23 @@
   },
   "homepage": "https://github.com/lamkdhe180931-arch/EXE_Project#readme",
   "devDependencies": {
+    "@types/node": "^25.9.2",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
     "browser-sync": "^3.0.3",
     "playwright": "^1.60.0",
-    "prettier": "^3.2.5"
+    "prettier": "^3.2.5",
+    "prisma": "^7.8.0",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3"
+  },
+  "dependencies": {
+    "@prisma/client": "^7.8.0",
+    "bcryptjs": "^3.0.3",
+    "jose": "^6.2.3",
+    "next": "^16.2.7",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "zod": "^4.4.3"
   }
 }
