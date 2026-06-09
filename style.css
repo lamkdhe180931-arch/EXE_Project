@@ -3301,6 +3301,7 @@ body.author-page {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  gap: 1rem;
   padding: 0.8rem 0 2rem;
 }
 
@@ -3308,15 +3309,20 @@ body.author-page {
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
+  min-width: 0;
+  flex: 1 1 auto;
 }
 
 .product-card-title {
+  display: block;
   font-family: var(--font-display);
   font-size: 0.85rem;
   font-weight: 600;
   letter-spacing: 0.02em;
   color: var(--color-black);
   line-height: 1.2;
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 
 .product-card-category-price {
@@ -3328,6 +3334,8 @@ body.author-page {
 }
 
 .view-details-txt {
+  flex: 0 0 auto;
+  white-space: nowrap;
   font-family: var(--font-display);
   font-size: 0.75rem;
   font-weight: 600;
@@ -3382,6 +3390,8 @@ body.author-page {
   }
 
   .product-card-meta {
+    flex-direction: column;
+    gap: 0.35rem;
     padding: 0.6rem 0 1.5rem;
   }
 }
