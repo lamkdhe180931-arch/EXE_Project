@@ -7,3 +7,5 @@ Thumbs.db
 dist/
 build/
 *.log
+.vercel
+.next/
