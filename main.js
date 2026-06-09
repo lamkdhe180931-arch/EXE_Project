@@ -671,43 +671,13 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    // Masonry Grid Layout Function
+    // Catalogue Grid Layout Function
     function layoutMasonry() {
-      // Select only items that are not filtered out AND not hidden by pagination
-      const items = Array.from(
-        catalogueGrid.querySelectorAll(".product-card:not(.filtered-out)"),
-      ).filter((item) => item.style.display !== "none");
-      const width = catalogueGrid.clientWidth;
-
-      let columnCount = 4;
-      if (window.innerWidth <= 768) {
-        columnCount = 1;
-      } else if (window.innerWidth <= 1024) {
-        columnCount = 2;
-      }
-
-      const gap = window.innerWidth <= 768 ? 16 : 32; // Gap of 1rem on mobile, 2rem on desktop
-      const colWidth = (width - (columnCount - 1) * gap) / columnCount;
-
-      const colHeights = Array(columnCount).fill(0);
-
-      items.forEach((item) => {
-        item.style.width = `${colWidth}px`;
-
-        // Find column with min height
-        const minCol = colHeights.indexOf(Math.min(...colHeights));
-
-        const left = minCol * (colWidth + gap);
-        const top = colHeights[minCol];
-
-        item.style.transform = `translate3d(${left}px, ${top}px, 0)`;
-
-        colHeights[minCol] += item.offsetHeight + gap;
+      catalogueGrid.style.height = "";
+      catalogueGrid.querySelectorAll(".product-card").forEach((item) => {
+        item.style.width = "";
+        item.style.transform = "";
       });
-
-      // Set container height to max column height
-      const maxColHeight = Math.max(...colHeights);
-      catalogueGrid.style.height = `${maxColHeight > 0 ? maxColHeight - gap : 0}px`;
     }
 
     // Paginate Items Function
