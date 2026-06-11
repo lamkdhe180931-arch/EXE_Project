@@ -1,0 +1,38 @@
+{
+  "name": "artdict-backend",
+  "version": "1.0.0",
+  "description": "REST API backend for Artdict",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "node --watch src/index.js",
+    "start": "node src/index.js",
+    "test": "jest --runInBand",
+    "test:watch": "jest --watch",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:studio": "prisma studio"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "clearMocks": true,
+    "resetMocks": true,
+    "testPathIgnorePatterns": ["/node_modules/", "/__tests__/helpers/"]
+  },
+  "dependencies": {
+    "@prisma/client": "^5.22.0",
+    "bcryptjs": "^3.0.3",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3"
+  },
+  "devDependencies": {
+    "jest": "^30.4.2",
+    "prisma": "^5.22.0",
+    "supertest": "^7.2.2"
+  }
+}
