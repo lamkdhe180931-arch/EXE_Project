@@ -44,7 +44,7 @@ Hướng dẫn cho Claude. **Đọc rules trong `.claude/rules/` TRƯỚC khi co
 - **Tồn đọng**:
   - DB Migrate: **Chờ `DATABASE_URL` Neon thật** → `npm run db:migrate` (schema đã `prisma validate` ✓, sẵn sàng). Test backend dùng mockDb nên không cần DB.
   - Env thật khi deploy: `CLOUDINARY_*` · `MOMO_*` · `RESEND_API_KEY` (code + test đã xong, chỉ thiếu credential).
-  - Open question (hoãn — cần bạn quyết): phí ship (cố định? miễn phí >500K?) + tra cứu đơn guest bằng email+mã.
   - Chưa làm: Phase 5 (Content/Posts), Phase 6 còn lại (template Shipped/Application), Phase 7 (Admin Panel HTML).
+- **Quyết định chốt** (2026-06-11): phí ship = **miễn phí toàn bộ** (total = tiền hàng, không cần cột `shippingFee` — đúng với code hiện tại); tra cứu đơn guest = **không làm** (khách chỉ nhận email xác nhận).
 
 

@@ -91,7 +91,8 @@
 - [x] `GET /api/orders` (Admin) · `GET /api/orders/my` (Customer) · `GET /api/orders/:id` (Admin/Owner) · `PATCH /api/orders/:id/status` (Admin)
 - [x] `src/middlewares/auth.js` — thêm `optionalAuth`; `src/app.js` — `createApp(db, deps)` để inject `momo`
 
-> Trừ tồn kho khi callback `PAID` (theo plan flow). **Email xác nhận (Resend): đã nối vào callback** (best-effort — xem Phase 6). Phí ship & tra cứu đơn guest bằng email+mã: open question, hoãn.
+> Trừ tồn kho khi callback `PAID` (theo plan flow). **Email xác nhận (Resend): đã nối vào callback** (best-effort — xem Phase 6).
+> **Chốt open question:** phí ship = miễn phí toàn bộ (`total` = tiền hàng, không thêm cột `shippingFee`); không làm tra cứu đơn guest (chỉ email xác nhận).
 
 ## Phase 5 — Content API ⏳
 - News / Journal CRUD
