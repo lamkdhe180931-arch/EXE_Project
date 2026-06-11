@@ -37,7 +37,7 @@
 - [x] `POST /api/products` — tạo mới (Admin), validate required fields
 - [x] `PATCH /api/products/:id` — cập nhật (Admin), 404 nếu không tìm thấy
 - [x] `DELETE /api/products/:id` — soft delete `isActive=false` (Admin)
-- [ ] `POST /api/products/:id/images` — **stub 501** — chờ Cloudinary service (Phase 3 còn lại)
+- [x] `POST /api/products/:id/images` — **upload Cloudinary** (signed REST qua `fetch`+`crypto`, không thêm dep); tạo `ProductImage` (url = `secure_url`, order = index). Cần `CLOUDINARY_*` thật khi deploy.
 
 ### Artists (13 tests)
 - [x] `GET /api/artists` — danh sách
@@ -69,8 +69,10 @@
 | products.test.js | 16 | ✅ PASS |
 | artists.test.js | 13 | ✅ PASS |
 | momo.test.js | 4 | ✅ PASS |
-| orders.test.js | 27 | ✅ PASS |
-| **Tổng** | **77** | **✅ 77/77** |
+| orders.test.js | 28 | ✅ PASS |
+| cloudinary.test.js | 2 | ✅ PASS |
+| email.test.js | 5 | ✅ PASS |
+| **Tổng** | **90** | **✅ 90/90** |
 
 ---
 
@@ -89,14 +91,15 @@
 - [x] `GET /api/orders` (Admin) · `GET /api/orders/my` (Customer) · `GET /api/orders/:id` (Admin/Owner) · `PATCH /api/orders/:id/status` (Admin)
 - [x] `src/middlewares/auth.js` — thêm `optionalAuth`; `src/app.js` — `createApp(db, deps)` để inject `momo`
 
-> Trừ tồn kho khi callback `PAID` (theo plan flow). **Email xác nhận (Resend) → gộp vào Phase 6.** Phí ship & tra cứu đơn guest bằng email+mã: open question, hoãn.
+> Trừ tồn kho khi callback `PAID` (theo plan flow). **Email xác nhận (Resend): đã nối vào callback** (best-effort — xem Phase 6). Phí ship & tra cứu đơn guest bằng email+mã: open question, hoãn.
 
 ## Phase 5 — Content API ⏳
 - News / Journal CRUD
 
-## Phase 6 — Email ⏳
-- Resend integration
-- Order confirmation template
+## Phase 6 — Email 🔄 (một phần)
+- [x] Resend integration (`src/services/email.js`, `fetch`, không thêm dep) — 5 tests
+- [x] Order Confirmation — gửi khi MoMo callback `PAID` (best-effort, không chặn ack); recipient = `guestEmail` || `user.email`
+- [ ] Template Order Shipped, Artist Application
 
 ## Phase 7 — Admin Panel HTML ⏳
 - Dashboard CRUD UI
@@ -104,4 +107,4 @@
 ---
 
 ## Còn lại từ Phase 3
-- [ ] `POST /api/products/:id/images` — Cloudinary upload (cần `CLOUDINARY_*` env)
+- [x] `POST /api/products/:id/images` — Cloudinary upload ✅ (cần `CLOUDINARY_*` env khi deploy)

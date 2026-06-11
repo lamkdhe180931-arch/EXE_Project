@@ -199,3 +199,77 @@ describe('DELETE /api/products/:id', () => {
     expect(res.status).toBe(403);
   });
 });
+
+// ─── POST images (Cloudinary) ──────────────────────────────────────────────────
+
+describe('POST /api/products/:id/images', () => {
+  let cloudinary;
+
+  beforeEach(() => {
+    cloudinary = {
+      uploadImage: jest
+        .fn()
+        .mockResolvedValue({ url: 'https://res.cloudinary.com/demo/x.png' }),
+    };
+    app = createApp(db, { cloudinary });
+  });
+
+  test('201: admin uploads images → Cloudinary called, ProductImage rows created', async () => {
+    db.product.findUnique.mockResolvedValue({ id: 1, isActive: true });
+    db.productImage.createMany.mockResolvedValue({ count: 2 });
+
+    const res = await request(app)
+      .post('/api/products/1/images')
+      .set('Authorization', adminToken())
+      .send({ images: ['data:image/png;base64,AAA', 'https://x/y.png'] });
+
+    expect(res.status).toBe(201);
+    expect(cloudinary.uploadImage).toHaveBeenCalledTimes(2);
+    expect(db.productImage.createMany).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: [
+          expect.objectContaining({
+            productId: 1,
+            url: 'https://res.cloudinary.com/demo/x.png',
+            order: 0,
+          }),
+          expect.objectContaining({ productId: 1, order: 1 }),
+        ],
+      })
+    );
+  });
+
+  test('400: no images provided', async () => {
+    db.product.findUnique.mockResolvedValue({ id: 1, isActive: true });
+    const res = await request(app)
+      .post('/api/products/1/images')
+      .set('Authorization', adminToken())
+      .send({ images: [] });
+    expect(res.status).toBe(400);
+    expect(cloudinary.uploadImage).not.toHaveBeenCalled();
+  });
+
+  test('404: product not found', async () => {
+    db.product.findUnique.mockResolvedValue(null);
+    const res = await request(app)
+      .post('/api/products/999/images')
+      .set('Authorization', adminToken())
+      .send({ images: ['x'] });
+    expect(res.status).toBe(404);
+  });
+
+  test('403: customer cannot upload', async () => {
+    const res = await request(app)
+      .post('/api/products/1/images')
+      .set('Authorization', customerToken())
+      .send({ images: ['x'] });
+    expect(res.status).toBe(403);
+  });
+
+  test('401: unauthenticated', async () => {
+    const res = await request(app)
+      .post('/api/products/1/images')
+      .send({ images: ['x'] });
+    expect(res.status).toBe(401);
+  });
+});

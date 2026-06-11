@@ -3,6 +3,7 @@ const VALID_STATUSES = ['PENDING', 'PAID', 'SHIPPED', 'DELIVERED', 'CANCELLED'];
 function makeOrdersController(db, deps = {}) {
   // External boundaries are injectable for testing; default to the real ones.
   const momo = deps.momo || require('../services/momo');
+  const email = deps.email || require('../services/email');
 
   // POST /api/orders — optional auth (guest allowed). Cart already validated by
   // `validateCart`, which put server-priced items + total on `req.cart`.
@@ -76,7 +77,7 @@ function makeOrdersController(db, deps = {}) {
     const orderId = parseInt(req.body.orderId, 10);
     const order = await db.order.findUnique({
       where: { id: orderId },
-      include: { items: true },
+      include: { items: true, user: true },
     });
     if (!order) {
       return res.status(404).json({ error: 'Đơn hàng không tồn tại' });
@@ -101,7 +102,13 @@ function makeOrdersController(db, deps = {}) {
       ),
     ]);
 
-    // TODO Phase 6: gửi email xác nhận đơn hàng qua Resend.
+    // Confirmation email is best-effort — never fail the IPN ack over it.
+    try {
+      await email.sendOrderConfirmation(order);
+    } catch {
+      /* swallow: email failure must not break the payment acknowledgement */
+    }
+
     return res.status(204).end();
   }
 

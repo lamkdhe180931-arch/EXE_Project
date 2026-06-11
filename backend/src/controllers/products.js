@@ -1,4 +1,6 @@
-function makeProductsController(db) {
+function makeProductsController(db, deps = {}) {
+  const cloudinary = deps.cloudinary || require('../services/cloudinary');
+
   async function list(req, res) {
     const where = { isActive: true };
     if (req.query.category) where.category = req.query.category;
@@ -57,7 +59,28 @@ function makeProductsController(db) {
     return res.json({ message: 'Đã xóa sản phẩm' });
   }
 
-  return { list, detail, create, update, softDelete };
+  async function uploadImages(req, res) {
+    const id = parseInt(req.params.id, 10);
+    const product = await db.product.findUnique({ where: { id } });
+    if (!product) {
+      return res.status(404).json({ error: 'Sản phẩm không tồn tại' });
+    }
+
+    const images = req.body.images;
+    if (!Array.isArray(images) || images.length === 0) {
+      return res.status(400).json({ error: 'Cần ít nhất 1 ảnh' });
+    }
+
+    const created = [];
+    for (let i = 0; i < images.length; i++) {
+      const { url } = await cloudinary.uploadImage(images[i]);
+      created.push({ productId: id, url, order: i });
+    }
+    await db.productImage.createMany({ data: created });
+    return res.status(201).json({ images: created });
+  }
+
+  return { list, detail, create, update, softDelete, uploadImages };
 }
 
 module.exports = makeProductsController;

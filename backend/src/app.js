@@ -22,7 +22,7 @@ function createApp(db, deps = {}) {
   });
 
   app.use('/api/auth', authRouter(db));
-  app.use('/api/products', productsRouter(db));
+  app.use('/api/products', productsRouter(db, deps));
   app.use('/api/artists', artistsRouter(db));
   app.use('/api/orders', ordersRouter(db, deps));
 

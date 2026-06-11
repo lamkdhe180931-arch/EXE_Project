@@ -40,11 +40,11 @@ Hướng dẫn cho Claude. **Đọc rules trong `.claude/rules/` TRƯỚC khi co
 ## 2. Backend (`backend/`)
 **Stack**: Node + Express 5 + Prisma 5.22 + Postgres (Neon). TDD Jest.
 
-- **Hoàn thành (Phase 1-4)**: Setup · Auth (15m access, 7d refresh httpOnly) · Products & Artists CRUD · **Order & Checkout + MoMo** — `POST /orders` (optional auth, guest OK, `validateCart` snapshot `priceAtTime` từ giá server), list/my/detail/status, IPN `momo-callback` (verify HMAC → `PAID` → trừ kho trong `$transaction`, idempotent). MoMo qua `fetch`+`crypto` built-in (mock trong test). (Test: **77/77 PASS**; Phase 1-3 commit `5c2d73e`.)
+- **Hoàn thành (Phase 1-4 + upload ảnh + email đơn)**: Setup · Auth (15m access, 7d refresh httpOnly) · Products & Artists CRUD · **Order & Checkout + MoMo** (`POST /orders` optional auth/guest, `validateCart` snapshot `priceAtTime` từ giá server, IPN `momo-callback`: verify HMAC → `PAID` → trừ kho trong `$transaction`, idempotent) · **upload ảnh Cloudinary** (`POST /products/:id/images`) · **email xác nhận đơn (Resend)** nối vào callback PAID (best-effort). MoMo/Cloudinary/Resend đều dùng `fetch`+`crypto` built-in (không thêm dep), mock trong test. (Test: **90/90 PASS**.)
 - **Tồn đọng**:
-  - `POST /products/:id/images`: Chờ Cloudinary.
-  - DB Migrate: Chờ chuỗi kết nối Neon (chưa chạy `npm run db:migrate`).
-  - Phase 4 còn lại: email xác nhận đơn (Resend) → gộp Phase 6; phí ship + tra cứu đơn guest = open question (hoãn).
-  - Chưa làm: Phase 5 (Content/Posts), 6 (Email/Resend), 7 (Admin Panel).
+  - DB Migrate: **Chờ `DATABASE_URL` Neon thật** → `npm run db:migrate` (schema đã `prisma validate` ✓, sẵn sàng). Test backend dùng mockDb nên không cần DB.
+  - Env thật khi deploy: `CLOUDINARY_*` · `MOMO_*` · `RESEND_API_KEY` (code + test đã xong, chỉ thiếu credential).
+  - Open question (hoãn — cần bạn quyết): phí ship (cố định? miễn phí >500K?) + tra cứu đơn guest bằng email+mã.
+  - Chưa làm: Phase 5 (Content/Posts), Phase 6 còn lại (template Shipped/Application), Phase 7 (Admin Panel HTML).
 
 

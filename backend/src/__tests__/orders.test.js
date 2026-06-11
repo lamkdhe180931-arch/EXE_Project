@@ -10,6 +10,7 @@ const customerToken = (userId = 2) =>
 let app;
 let db;
 let momo;
+let email;
 
 beforeEach(() => {
   db = makeMockDb();
@@ -19,7 +20,8 @@ beforeEach(() => {
       .mockResolvedValue({ payUrl: 'https://pay.momo/abc' }),
     verifyIpnSignature: jest.fn().mockReturnValue(true),
   };
-  app = createApp(db, { momo });
+  email = { sendOrderConfirmation: jest.fn().mockResolvedValue({ id: 'em_1' }) };
+  app = createApp(db, { momo, email });
 });
 
 // ─── POST /api/orders — create ─────────────────────────────────────────────────
@@ -257,6 +259,7 @@ describe('POST /api/orders/momo-callback', () => {
         data: { stock: { decrement: 2 } },
       })
     );
+    expect(email.sendOrderConfirmation).toHaveBeenCalledTimes(1);
   });
 
   test('400: invalid signature leaves the order untouched', async () => {
@@ -298,6 +301,24 @@ describe('POST /api/orders/momo-callback', () => {
     expect(res.status).toBe(204);
     expect(db.order.update).not.toHaveBeenCalled();
     expect(db.product.update).not.toHaveBeenCalled();
+  });
+
+  test('204: a failing confirmation email does not break the callback', async () => {
+    momo.verifyIpnSignature.mockReturnValue(true);
+    db.order.findUnique.mockResolvedValue({
+      id: 7,
+      status: 'PENDING',
+      items: [{ productId: 1, qty: 1 }],
+    });
+    db.order.update.mockResolvedValue({});
+    db.product.update.mockResolvedValue({});
+    email.sendOrderConfirmation.mockRejectedValue(new Error('Resend down'));
+
+    const res = await request(app)
+      .post('/api/orders/momo-callback')
+      .send(ipnBody());
+
+    expect(res.status).toBe(204);
   });
 });
 
