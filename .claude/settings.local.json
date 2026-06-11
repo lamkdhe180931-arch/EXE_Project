@@ -10,40 +10,11 @@
       "Bash(node shot.js)",
       "Bash(node shot-header.js)",
       "Bash(node -e ' *)",
-      "Bash(npx skills@latest add mattpocock/skills)"
-    ]
-  },
-  "hooks": {
-    "PostToolUse": [
-      {
-        "matcher": "Write|Edit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "npx prettier --write \"$CLAUDE_TOOL_OUTPUT_FILE\" 2>/dev/null || true"
-          }
-        ]
-      }
-    ],
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "powershell -ExecutionPolicy Bypass -File \"C:/Users/Admin/Desktop/Adddirct/.claude/play-sound.ps1\""
-          }
-        ]
-      }
-    ],
-    "Notification": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "powershell -ExecutionPolicy Bypass -File \"C:/Users/Admin/Desktop/Adddirct/.claude/play-sound.ps1\""
-          }
-        ]
-      }
+      "Bash(npx skills@latest add mattpocock/skills)",
+      "Bash(git remote *)",
+      "Bash(git push *)",
+      "Bash(dir /s /b \"c:\\\\Users\\\\Admin\\\\Desktop\\\\Adddirct\\\\backend\")",
+      "Bash(findstr /v \"node_modules\")"
     ]
   }
 }
