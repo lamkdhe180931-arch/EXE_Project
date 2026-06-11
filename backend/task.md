@@ -68,14 +68,28 @@
 | middleware.test.js | 5 | ✅ PASS |
 | products.test.js | 16 | ✅ PASS |
 | artists.test.js | 13 | ✅ PASS |
-| **Tổng** | **46** | **✅ 46/46** |
+| momo.test.js | 4 | ✅ PASS |
+| orders.test.js | 27 | ✅ PASS |
+| **Tổng** | **77** | **✅ 77/77** |
 
 ---
 
-## Phase 4 — Order & Checkout ⏳ (chưa bắt đầu)
-- MoMo payment integration
-- Guest checkout flow
-- Order status management
+## Phase 4 — Order & Checkout ✅  (31 tests passing)
+
+### MoMo service (`src/services/momo.js`) — 4 tests
+- [x] `createPayment()` — ký HMAC-SHA256, POST `/v2/gateway/api/create` qua `fetch` built-in, trả `payUrl`; throw nếu `resultCode != 0`
+- [x] `verifyIpnSignature()` — xác minh chữ ký IPN, so sánh **constant-time** (`crypto.timingSafeEqual`)
+- [x] Không thêm dependency — dùng `fetch` + `crypto` của Node ≥18; HTTP được mock trong test
+
+### Orders (`src/routes/orders.js`) — 27 tests
+- [x] `POST /api/orders` — **optional auth** (guest OK): validate giỏ → tạo Order `PENDING` → gọi MoMo → `{ orderId, total, momoPaymentUrl }`
+- [x] `src/middlewares/validateCart.js` — kiểm tra tồn tại/active/đủ tồn kho, **snapshot `priceAtTime` từ giá server** (bỏ qua giá client), tính `total`
+- [x] Guest checkout — `userId` null + bắt buộc `guestEmail`; token có-nhưng-sai → 401 (không âm thầm hạ xuống guest)
+- [x] `POST /api/orders/momo-callback` — verify HMAC → `PAID` + trừ tồn kho **trong `$transaction`** + **idempotent** (IPN trùng không trừ kho 2 lần); chữ ký sai → 400; thanh toán fail → ack 204 không đổi đơn
+- [x] `GET /api/orders` (Admin) · `GET /api/orders/my` (Customer) · `GET /api/orders/:id` (Admin/Owner) · `PATCH /api/orders/:id/status` (Admin)
+- [x] `src/middlewares/auth.js` — thêm `optionalAuth`; `src/app.js` — `createApp(db, deps)` để inject `momo`
+
+> Trừ tồn kho khi callback `PAID` (theo plan flow). **Email xác nhận (Resend) → gộp vào Phase 6.** Phí ship & tra cứu đơn guest bằng email+mã: open question, hoãn.
 
 ## Phase 5 — Content API ⏳
 - News / Journal CRUD

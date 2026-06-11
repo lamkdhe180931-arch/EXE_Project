@@ -5,8 +5,9 @@ const cookieParser = require('cookie-parser');
 const authRouter = require('./routes/auth');
 const productsRouter = require('./routes/products');
 const artistsRouter = require('./routes/artists');
+const ordersRouter = require('./routes/orders');
 
-function createApp(db) {
+function createApp(db, deps = {}) {
   const app = express();
 
   app.use(cors({
@@ -23,6 +24,7 @@ function createApp(db) {
   app.use('/api/auth', authRouter(db));
   app.use('/api/products', productsRouter(db));
   app.use('/api/artists', artistsRouter(db));
+  app.use('/api/orders', ordersRouter(db, deps));
 
   return app;
 }

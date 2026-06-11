@@ -40,10 +40,11 @@ Hướng dẫn cho Claude. **Đọc rules trong `.claude/rules/` TRƯỚC khi co
 ## 2. Backend (`backend/`)
 **Stack**: Node + Express 5 + Prisma 5.22 + Postgres (Neon). TDD Jest.
 
-- **Hoàn thành (Phase 1-3)**: Setup, Auth API (15m access, 7d refresh HTTP-only), Products & Artists CRUD. (Test: 46/46 PASS). **Đã commit + push** (`5c2d73e`).
+- **Hoàn thành (Phase 1-4)**: Setup · Auth (15m access, 7d refresh httpOnly) · Products & Artists CRUD · **Order & Checkout + MoMo** — `POST /orders` (optional auth, guest OK, `validateCart` snapshot `priceAtTime` từ giá server), list/my/detail/status, IPN `momo-callback` (verify HMAC → `PAID` → trừ kho trong `$transaction`, idempotent). MoMo qua `fetch`+`crypto` built-in (mock trong test). (Test: **77/77 PASS**; Phase 1-3 commit `5c2d73e`.)
 - **Tồn đọng**:
   - `POST /products/:id/images`: Chờ Cloudinary.
-  - DB Migrate: Chờ chuỗi kết nối Neon.
-  - Chưa làm: Phase 4 (Order/MoMo), 5/6/7 (Content, Email, Admin).
+  - DB Migrate: Chờ chuỗi kết nối Neon (chưa chạy `npm run db:migrate`).
+  - Phase 4 còn lại: email xác nhận đơn (Resend) → gộp Phase 6; phí ship + tra cứu đơn guest = open question (hoãn).
+  - Chưa làm: Phase 5 (Content/Posts), 6 (Email/Resend), 7 (Admin Panel).
 
 

@@ -22,4 +22,18 @@ function requireAdmin(req, res, next) {
   next();
 }
 
-module.exports = { verifyToken, requireAdmin };
+// Auth is optional: no token → continue as guest; a present token must be valid.
+function optionalAuth(req, res, next) {
+  const header = req.headers.authorization;
+  if (!header || !header.startsWith('Bearer ')) {
+    return next();
+  }
+  try {
+    req.user = verifyAccess(header.slice(7));
+    next();
+  } catch {
+    return res.status(401).json({ error: 'Token không hợp lệ hoặc đã hết hạn' });
+  }
+}
+
+module.exports = { verifyToken, requireAdmin, optionalAuth };

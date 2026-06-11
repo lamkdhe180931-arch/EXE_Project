@@ -45,6 +45,8 @@ function makeMockDb() {
     orderItem: {
       createMany: jest.fn(),
     },
+    // Prisma interactive/array transaction — default runs the ops together.
+    $transaction: jest.fn((ops) => Promise.all(ops)),
   };
 }
 
