@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Áo thun "Mực Tàu" — Artdict</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <style>
+      .pd {
+        padding: calc(120px + 24px) 0 0;
+      }
+      .breadcrumb {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        font-family: var(--display);
+        font-weight: 500;
+        font-size: 0.85rem;
+        color: color-mix(in srgb, var(--ink) 55%, transparent);
+        margin-bottom: 36px;
+      }
+      .breadcrumb a:hover {
+        color: var(--crimson);
+      }
+      .breadcrumb .sep {
+        opacity: 0.4;
+      }
+      .breadcrumb .cur {
+        color: var(--ink);
+      }
+
+      .pd-grid {
+        display: grid;
+        grid-template-columns: 1.15fr 1fr;
+        gap: clamp(32px, 5vw, 72px);
+        align-items: start;
+      }
+      .pd-info {
+        position: sticky;
+        top: 100px;
+      }
+
+      .pd-title {
+        font-family: var(--display);
+        font-weight: 700;
+        letter-spacing: -0.045em;
+        line-height: 1;
+        font-size: clamp(2.4rem, 4.5vw, 3.6rem);
+        margin: 14px 0 18px;
+      }
+      .pd-price-row {
+        display: flex;
+        align-items: baseline;
+        gap: 14px;
+        margin-bottom: 24px;
+      }
+      .pd-price {
+        font-size: 1.9rem;
+      }
+      .pd-price-old {
+        font-family: var(--display);
+        font-weight: 500;
+        font-size: 1.1rem;
+        color: color-mix(in srgb, var(--ink) 45%, transparent);
+        text-decoration: line-through;
+      }
+      .pd-lede {
+        font-size: 1.02rem;
+        line-height: 1.6;
+        color: color-mix(in srgb, var(--ink) 80%, transparent);
+        max-width: 46ch;
+        margin-bottom: 32px;
+      }
+      .pd-block {
+        margin-bottom: 28px;
+      }
+      .pd-block__head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 12px;
+      }
+      .pd-sizeguide {
+        font-family: var(--display);
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: var(--crimson);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+      .pd-actions {
+        display: flex;
+        gap: 12px;
+        align-items: stretch;
+        margin: 30px 0 14px;
+      }
+      .pd-actions .circle-btn {
+        flex: 1;
+      }
+      .pd-reassure {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        font-family: var(--display);
+        font-size: 0.82rem;
+        font-weight: 500;
+        color: color-mix(in srgb, var(--ink) 60%, transparent);
+        padding-top: 6px;
+        margin-bottom: 36px;
+      }
+      .pd-reassure span {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45em;
+      }
+      .pd-reassure .dot {
+        width: 6px;
+        height: 6px;
+        background: var(--crimson);
+        transform: rotate(45deg);
+      }
+
+      .craft-strip {
+        margin-top: 96px;
+      }
+      .craft-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+        margin-top: 36px;
+      }
+
+      .related {
+        margin-top: 110px;
+      }
+      .related__head {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        margin-bottom: 36px;
+        gap: 20px;
+      }
+      .rel-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+
+      @media (max-width: 900px) {
+        .pd-grid {
+          grid-template-columns: 1fr;
+        }
+        .pd-info {
+          position: static;
+        }
+        .craft-grid {
+          grid-template-columns: 1fr;
+        }
+        .rel-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <site-header active="catalogue"></site-header>
+
+    <main class="wrap pd">
+      <nav class="breadcrumb reveal">
+        <a href="catalogue.html">Bộ sưu tập</a>
+        <span class="sep">/</span>
+        <a href="catalogue.html">Áo thun</a>
+        <span class="sep">/</span>
+        <span class="cur">Mực Tàu</span>
+      </nav>
+
+      <div class="pd-grid">
+        <!-- GALLERY -->
+        <div class="gallery reveal">
+          <div class="gallery__thumbs">
+            <button class="thumb is-active" data-thumb data-label="front">
+              <div class="ph"><span class="ph__label">front</span></div>
+            </button>
+            <button class="thumb" data-thumb data-label="back">
+              <div class="ph"><span class="ph__label">back</span></div>
+            </button>
+            <button class="thumb" data-thumb data-label="detail">
+              <div class="ph"><span class="ph__label">detail</span></div>
+            </button>
+            <button class="thumb" data-thumb data-label="model">
+              <div class="ph"><span class="ph__label">model</span></div>
+            </button>
+          </div>
+          <div class="gallery__main" data-gallery-main>
+            <div class="ph"><span class="ph__label">áo thun · front</span></div>
+          </div>
+        </div>
+
+        <!-- INFO -->
+        <div class="pd-info reveal" data-delay="120">
+          <div
+            style="
+              display: flex;
+              gap: 10px;
+              align-items: center;
+              margin-bottom: 6px;
+            "
+          >
+            <span class="eyebrow" style="white-space: nowrap"
+              >Áo thun · Mùa 04</span
+            >
+            <span class="badge">Mới</span>
+          </div>
+          <h1 class="pd-title">“Hiếu đẹp zai”</h1>
+
+          <div class="pd-price-row">
+            <span class="price pd-price">420.000₫</span>
+            <span class="pd-price-old">490.000₫</span>
+            <span class="badge badge--ghost">−14%</span>
+          </div>
+
+          <p class="pd-lede">
+            Bản in lưới thủ công lấy cảm hứng từ thư pháp mực tàu và những bức
+            tường loang vết thời gian của phố cổ. Cotton 250gsm dệt compact,
+            form rộng vừa, in một mặt trước. Phát hành giới hạn 120 chiếc — đánh
+            số tay.
+          </p>
+
+          <!-- SIZE -->
+          <div class="pd-block">
+            <div class="pd-block__head">
+              <span class="spec-label" style="margin: 0">Chọn size</span>
+              <a class="pd-sizeguide" href="size-guide.html">Bảng size</a>
+            </div>
+            <div class="size-group" data-size-group>
+              <button class="size-btn" data-size="S">S</button>
+              <button class="size-btn" data-size="M">M</button>
+              <button class="size-btn" data-size="L">L</button>
+              <button class="size-btn" data-size="XL">XL</button>
+              <button class="size-btn" data-size="2XL" disabled>2XL</button>
+            </div>
+          </div>
+
+          <!-- QTY -->
+          <div class="pd-block">
+            <span class="spec-label">Số lượng</span>
+            <div class="qty" data-qty>
+              <button data-qty-step="-1" aria-label="Giảm">−</button>
+              <span class="qty__val" data-qty-val>1</span>
+              <button data-qty-step="1" aria-label="Tăng">+</button>
+            </div>
+          </div>
+
+          <!-- ACTIONS -->
+          <div class="pd-actions">
+            <button
+              class="circle-btn circle-btn--solid"
+              data-product-add="aothun-muc-tau"
+              data-name="Áo thun Mực Tàu"
+              data-cat="Áo thun"
+              data-price="420000"
+            >
+              Thêm vào giỏ
+            </button>
+            <button class="icon-btn" aria-label="Yêu thích">♡</button>
+          </div>
+
+          <div class="pd-reassure">
+            <span><span class="dot"></span>Đánh số 120 bản</span>
+            <span><span class="dot"></span>Miễn phí ship &gt; 500K</span>
+            <span><span class="dot"></span>Đổi size trong 7 ngày</span>
+          </div>
+
+          <!-- ACCORDION -->
+          <div class="pd-accordion">
+            <div class="acc-item open" data-acc-item>
+              <button class="acc-trigger" data-acc-trigger aria-expanded="true">
+                Chi tiết &amp; chất liệu <span class="acc-ico"></span>
+              </button>
+              <div class="acc-panel" data-acc-panel style="max-height: 400px">
+                <div class="acc-panel__inner">
+                  <ul>
+                    <li>Cotton 100% — 250gsm, dệt compact, ít xù lông</li>
+                    <li>In lưới thủ công mực gốc nước, một mặt trước</li>
+                    <li>Form Boxy / oversize nhẹ, cổ bo rib 2 lớp</li>
+                    <li>May tại xưởng Artdict, Quận 4 — Sài Gòn</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="acc-item" data-acc-item>
+              <button
+                class="acc-trigger"
+                data-acc-trigger
+                aria-expanded="false"
+              >
+                Hướng dẫn bảo quản <span class="acc-ico"></span>
+              </button>
+              <div class="acc-panel" data-acc-panel>
+                <div class="acc-panel__inner">
+                  <ul>
+                    <li>Giặt máy nước lạnh, lộn trái để bảo vệ bản in</li>
+                    <li>Không tẩy, không là trực tiếp lên hình in</li>
+                    <li>Phơi nơi thoáng, tránh nắng gắt</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="acc-item" data-acc-item>
+              <button
+                class="acc-trigger"
+                data-acc-trigger
+                aria-expanded="false"
+              >
+                Vận chuyển &amp; đổi trả <span class="acc-ico"></span>
+              </button>
+              <div class="acc-panel" data-acc-panel>
+                <div class="acc-panel__inner">
+                  <ul>
+                    <li>Giao toàn quốc 2–4 ngày làm việc</li>
+                    <li>Miễn phí vận chuyển cho đơn trên 500.000₫</li>
+                    <li>Đổi size miễn phí trong 7 ngày nếu còn tag</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CRAFT STRIP -->
+      <section class="craft-strip reveal">
+        <p class="eyebrow">Quy trình</p>
+        <h2
+          class="section-title"
+          style="font-size: clamp(1.8rem, 3.5vw, 2.8rem); margin-top: 10px"
+        >
+          Từ bản phác đến bản in.
+        </h2>
+        <div class="craft-grid">
+          <div class="craft-card">
+            <span class="craft-card__n">01 — Phác thảo</span>
+            <p>
+              Mỗi mẫu bắt đầu từ một bản vẽ tay trong sổ — ý tưởng được nuôi vài
+              tuần trước khi lên khung.
+            </p>
+          </div>
+          <div class="craft-card">
+            <span class="craft-card__n">02 — Tách màu</span>
+            <p>
+              Tách lớp thủ công, pha mực gốc nước theo từng mẻ để giữ đúng sắc
+              đỏ son đặc trưng.
+            </p>
+          </div>
+          <div class="craft-card">
+            <span class="craft-card__n">03 — In tay</span>
+            <p>
+              Kéo lụa từng chiếc, sấy và đánh số. Không có hai bản in nào giống
+              hệt nhau.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- RELATED -->
+      <section class="related">
+        <div class="related__head reveal">
+          <div>
+            <p class="eyebrow">Cùng bộ sưu tập</p>
+            <h2
+              class="section-title"
+              style="font-size: clamp(1.8rem, 3.5vw, 2.8rem); margin-top: 10px"
+            >
+              Có thể bạn thích.
+            </h2>
+          </div>
+          <a class="circle-btn" href="catalogue.html">Xem tất cả</a>
+        </div>
+        <div class="rel-grid">
+          <a class="card reveal" data-tilt href="product.html" data-delay="0">
+            <div class="card__media card__media--upload">
+              <span class="card__badge-rect">Giới hạn</span>
+              <img
+                src="/assets/ao-artdict.png"
+                alt="Áo thun Phố Cổ"
+                loading="lazy"
+              />
+            </div>
+            <div class="card__meta-upload">
+              <p class="card__number">№ 02 &nbsp;–&nbsp; Áo thun</p>
+              <div class="card__row">
+                <h3 class="card__name">Phố Cổ</h3>
+                <div class="card__price-group">
+                  <span class="price card__price">390.000₫</span>
+                  <button
+                    class="card__add"
+                    data-add="aothun-pho-co"
+                    data-name="Áo thun Phố Cổ"
+                    data-cat="Áo thun"
+                    data-price="390000"
+                    data-img="/assets/ao-artdict.png"
+                  >
+                    Thêm +
+                  </button>
+                </div>
+              </div>
+            </div>
+          </a>
+          <a class="card reveal" data-tilt href="product.html" data-delay="60">
+            <div class="card__media card__media--upload">
+              <span class="card__badge-rect">Mới</span>
+              <img src="/assets/mu.png" alt="Mũ Lập Thể" loading="lazy" />
+            </div>
+            <div class="card__meta-upload">
+              <p class="card__number">№ 04 &nbsp;–&nbsp; Mũ</p>
+              <div class="card__row">
+                <h3 class="card__name">Lập Thể</h3>
+                <div class="card__price-group">
+                  <span class="price card__price">320.000₫</span>
+                  <button
+                    class="card__add"
+                    data-add="mu-lap-the"
+                    data-name="Mũ Lập Thể"
+                    data-cat="Mũ"
+                    data-price="320000"
+                    data-img="/assets/mu.png"
+                  >
+                    Thêm +
+                  </button>
+                </div>
+              </div>
+            </div>
+          </a>
+          <a class="card reveal" data-tilt href="product.html" data-delay="120">
+            <div class="card__media card__media--upload">
+              <span class="card__badge-rect">Mới</span>
+              <img
+                src="/assets/so-tay.png"
+                alt="Sổ tay Bản Thảo"
+                loading="lazy"
+              />
+            </div>
+            <div class="card__meta-upload">
+              <p class="card__number">№ 07 &nbsp;–&nbsp; Sổ tay</p>
+              <div class="card__row">
+                <h3 class="card__name">Bản Thảo</h3>
+                <div class="card__price-group">
+                  <span class="price card__price">180.000₫</span>
+                  <button
+                    class="card__add"
+                    data-add="sotay-ban-thao"
+                    data-name="Sổ tay Bản Thảo"
+                    data-cat="Sổ tay"
+                    data-price="180000"
+                    data-img="/assets/so-tay.png"
+                  >
+                    Thêm +
+                  </button>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <site-footer></site-footer>
+
+    <!-- CART DRAWER -->
+    <div class="cart-scrim" data-cart-scrim></div>
+    <aside class="cart-drawer" data-cart-drawer aria-label="Giỏ hàng">
+      <div class="cart-drawer__head">
+        <span class="cart-drawer__title">Giỏ hàng</span>
+        <button class="cart-close" data-close-cart aria-label="Đóng">✕</button>
+      </div>
+      <div class="cart-items" data-cart-items></div>
+      <div class="cart-drawer__foot">
+        <div class="cart-total">
+          <span class="cart-total__label">Tạm tính</span>
+          <span class="cart-total__val" data-cart-total>0₫</span>
+        </div>
+        <button class="circle-btn circle-btn--solid circle-btn--block">
+          Thanh toán
+        </button>
+      </div>
+    </aside>
+
+    <script src="/components/site-header.js" defer></script>
+    <script src="/components/site-footer.js" defer></script>
+    <script src="/js/artdict.js" defer></script>
+  </body>
+</html>

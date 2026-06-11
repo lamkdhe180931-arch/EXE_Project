@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bộ sưu tập — Artdict</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <style>
+      /* page-local */
+      .cat-hero {
+        padding: calc(120px + 40px) 0 40px;
+      }
+
+      .cat-hero__grid {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: end;
+        gap: 40px;
+      }
+
+      .cat-hero__lede {
+        max-width: 30ch;
+        font-size: 1.05rem;
+        color: color-mix(in srgb, var(--ink) 72%, transparent);
+        text-align: right;
+      }
+
+      .cat-meta {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        flex-wrap: wrap;
+        padding: 22px 0 30px;
+        border-top: 1px solid var(--line-light);
+        border-bottom: 1px solid var(--line-light);
+        margin-bottom: 44px;
+      }
+
+      /* .cat-count {
+        font-family: var(--display);
+        font-weight: 600;
+        font-size: 0.92rem;
+        color: color-mix(in srgb, var(--ink) 60%, transparent);
+      }
+      .cat-count b {
+        color: var(--crimson);
+      } */
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+
+      @media (max-width: 1024px) {
+        .grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+
+        .cat-hero__grid {
+          grid-template-columns: 1fr;
+        }
+
+        .cat-hero__lede {
+          text-align: left;
+        }
+      }
+
+      @media (max-width: 900px) {
+        .cat-hero {
+          padding: 40px 0 28px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <site-header active="catalogue"></site-header>
+
+    <main class="wrap">
+      <!-- HERO -->
+      <section class="cat-hero">
+        <div class="cat-hero__grid">
+          <div class="reveal">
+            <p class="eyebrow" style="margin-bottom: 18px">
+              Bộ sưu tập · Mùa 04
+            </p>
+            <h1 class="display-xl">Mực &amp;<br />Giấy.</h1>
+          </div>
+          <p class="cat-hero__lede reveal" data-delay="120">
+            Số lượng giới hạn. In thủ công tại Sài Gòn. Mỗi món đồ là một bản
+            in, không tái bản — đeo, mặc và mang theo một mảnh nghệ thuật đường
+            phố.
+          </p>
+        </div>
+      </section>
+
+      <!-- FILTER + COUNT -->
+      <section class="cat-meta reveal">
+        <div class="filter-bar" role="group" aria-label="Lọc theo danh mục">
+          <button
+            class="filter-pill is-active"
+            data-filter="all"
+            aria-pressed="true"
+          >
+            Tất cả <span class="fp-count">09</span>
+          </button>
+
+          <div class="filter-divider" aria-hidden="true"></div>
+
+          <button class="filter-pill" data-filter="aothun" aria-pressed="false">
+            Áo thun <span class="fp-count">03</span>
+          </button>
+          <button class="filter-pill" data-filter="mu" aria-pressed="false">
+            Mũ <span class="fp-count">03</span>
+          </button>
+          <button
+            class="filter-pill"
+            data-filter="vongtay"
+            aria-pressed="false"
+          >
+            Vòng tay <span class="fp-count">00</span>
+          </button>
+
+          <div class="filter-divider" aria-hidden="true"></div>
+
+          <button class="filter-pill" data-filter="sotay" aria-pressed="false">
+            Sổ tay <span class="fp-count">03</span>
+          </button>
+          <button
+            class="filter-pill"
+            data-filter="nhandan"
+            aria-pressed="false"
+          >
+            Nhãn dán <span class="fp-count">00</span>
+          </button>
+          <button
+            class="filter-pill"
+            data-filter="mockhoa"
+            aria-pressed="false"
+          >
+            Móc khóa <span class="fp-count">00</span>
+          </button>
+          <button class="filter-pill" data-filter="tranh" aria-pressed="false">
+            Tranh <span class="fp-count">00</span>
+          </button>
+          <button class="filter-pill" data-filter="khac" aria-pressed="false">
+            Khác <span class="fp-count">00</span>
+          </button>
+        </div>
+        <!-- <p class="cat-count"><b data-result-count>9</b> sản phẩm</p> -->
+      </section>
+
+      <!-- GRID -->
+      <section class="grid" id="grid">
+        <!-- ÁO THUN -->
+        <a
+          class="card reveal"
+          data-tilt
+          data-cat="aothun"
+          href="product.html"
+          data-delay="0"
+        >
+          <div class="card__media card__media--upload">
+            <span class="card__badge-rect">Mới</span>
+            <img
+              src="/assets/ao-meo-no-2.png"
+              alt="Áo thun Mực Tàu"
+              loading="lazy"
+            />
+          </div>
+          <div class="card__meta-upload">
+            <p class="card__number">№ 01 &nbsp;–&nbsp; Áo thun</p>
+            <div class="card__row">
+              <h3 class="card__name">Mực Tàu</h3>
+              <div class="card__price-group">
+                <span class="price card__price">420.000₫</span>
+                <button
+                  class="card__add"
+                  data-add="aothun-muc-tau"
+                  data-name="Áo thun Mực Tàu"
+                  data-cat="Áo thun"
+                  data-price="420000"
+                  data-img="/assets/ao-meo-no-2.png"
+                >
+                  Thêm +
+                </button>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <a
+          class="card reveal"
+          data-tilt
+          data-cat="aothun"
+          href="product.html"
+          data-delay="60"
+        >
+          <div class="card__media card__media--upload">
+            <span class="card__badge-rect">Giới hạn</span>
+            <img
+              src="/assets/ao-artdict.png"
+              alt="Áo thun Phố Cổ"
+              loading="lazy"
+            />
+          </div>
+          <div class="card__meta-upload">
+            <p class="card__number">№ 02 &nbsp;–&nbsp; Áo thun</p>
+            <div class="card__row">
+              <h3 class="card__name">Phố Cổ</h3>
+              <div class="card__price-group">
+                <span class="price card__price">390.000₫</span>
+                <button
+                  class="card__add"
+                  data-add="aothun-pho-co"
+                  data-name="Áo thun Phố Cổ"
+                  data-cat="Áo thun"
+                  data-price="390000"
+                  data-img="/assets/ao-artdict.png"
+                >
+                  Thêm +
+                </button>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <a
+          class="card card--soldout reveal"
+          data-tilt
+          data-cat="aothun"
+          href="product.html"
+          data-delay="120"
+        >
+          <div class="card__media card__media--upload">
+            <span class="card__badge-rect" style="background: var(--ink)"
+              >Hết hàng</span
+            >
+            <img
+              src="/assets/ao-do-de-choi.png"
+              alt="Áo thun Giao Mùa"
+              loading="lazy"
+            />
+          </div>
+          <div class="card__meta-upload">
+            <p class="card__number">№ 03 &nbsp;–&nbsp; Áo thun</p>
+            <div class="card__row">
+              <h3 class="card__name">Giao Mùa</h3>
+              <div class="card__price-group">
+                <span class="price card__price">450.000₫</span>
+                <span
+                  class="card__add"
+                  style="
+                    opacity: 0.5;
+                    color: color-mix(in srgb, var(--ink) 50%, transparent);
+                  "
+                  >Sold out</span
+                >
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- MŨ -->
+        <a
+          class="card reveal"
+          data-tilt
+          data-cat="mu"
+          href="product.html"
+          data-delay="0"
+        >
+          <div class="card__media card__media--upload">
+            <span class="card__badge-rect">Mới</span>
+            <img src="/assets/mu.png" alt="Mũ Lập Thể" loading="lazy" />
+          </div>
+          <div class="card__meta-upload">
+            <p class="card__number">№ 04 &nbsp;–&nbsp; Mũ</p>
+            <div class="card__row">
+              <h3 class="card__name">Lập Thể</h3>
+              <div class="card__price-group">
+                <span class="price card__price">320.000₫</span>
+                <button
+                  class="card__add"
+                  data-add="mu-lap-the"
+                  data-name="Mũ Lập Thể"
+                  data-cat="Mũ"
+                  data-price="320000"
+                  data-img="/assets/mu.png"
+                >
+                  Thêm +
+                </button>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <a
+          class="card reveal"
+          data-tilt
+          data-cat="mu"
+          href="product.html"
+          data-delay="60"
+        >
+          <div class="card__media card__media--upload">
+            <img src="/assets/mu-xanh.png" alt="Mũ Sương Sớm" loading="lazy" />
+          </div>
+          <div class="card__meta-upload">
+            <p class="card__number">№ 05 &nbsp;–&nbsp; Mũ</p>
+            <div class="card__row">
+              <h3 class="card__name">Sương Sớm</h3>
+              <div class="card__price-group">
+                <span class="price card__price">350.000₫</span>
+                <button
+                  class="card__add"
+                  data-add="mu-suong-som"
+                  data-name="Mũ Sương Sớm"
+                  data-cat="Mũ"
+                  data-price="350000"
+                  data-img="/assets/mu-xanh.png"
+                >
+                  Thêm +
+                </button>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <a
+          class="card reveal"
+          data-tilt
+          data-cat="mu"
+          href="product.html"
+          data-delay="120"
+        >
+          <div class="card__media card__media--upload">
+            <span class="card__badge-rect">Giới hạn</span>
+            <img src="/assets/mu.png" alt="Mũ Trăng Khuyết" loading="lazy" />
+          </div>
+          <div class="card__meta-upload">
+            <p class="card__number">№ 06 &nbsp;–&nbsp; Mũ</p>
+            <div class="card__row">
+              <h3 class="card__name">Trăng Khuyết</h3>
+              <div class="card__price-group">
+                <span class="price card__price">290.000₫</span>
+                <button
+                  class="card__add"
+                  data-add="mu-trang-khuyet"
+                  data-name="Mũ Trăng Khuyết"
+                  data-cat="Mũ"
+                  data-price="290000"
+                  data-img="/assets/mu.png"
+                >
+                  Thêm +
+                </button>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- SỔ TAY -->
+        <a
+          class="card reveal"
+          data-tilt
+          data-cat="sotay"
+          href="product.html"
+          data-delay="0"
+        >
+          <div class="card__media card__media--upload">
+            <span class="card__badge-rect">Mới</span>
+            <img
+              src="/assets/so-tay.png"
+              alt="Sổ tay Bản Thảo"
+              loading="lazy"
+            />
+          </div>
+          <div class="card__meta-upload">
+            <p class="card__number">№ 07 &nbsp;–&nbsp; Sổ tay</p>
+            <div class="card__row">
+              <h3 class="card__name">Bản Thảo</h3>
+              <div class="card__price-group">
+                <span class="price card__price">180.000₫</span>
+                <button
+                  class="card__add"
+                  data-add="sotay-ban-thao"
+                  data-name="Sổ tay Bản Thảo"
+                  data-cat="Sổ tay"
+                  data-price="180000"
+                  data-img="/assets/so-tay.png"
+                >
+                  Thêm +
+                </button>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <a
+          class="card reveal"
+          data-tilt
+          data-cat="sotay"
+          href="product.html"
+          data-delay="60"
+        >
+          <div class="card__media card__media--upload">
+            <img src="/assets/so-tay.png" alt="Sổ tay Vết Mực" loading="lazy" />
+          </div>
+          <div class="card__meta-upload">
+            <p class="card__number">№ 08 &nbsp;–&nbsp; Sổ tay</p>
+            <div class="card__row">
+              <h3 class="card__name">Vết Mực</h3>
+              <div class="card__price-group">
+                <span class="price card__price">160.000₫</span>
+                <button
+                  class="card__add"
+                  data-add="sotay-vet-muc"
+                  data-name="Sổ tay Vết Mực"
+                  data-cat="Sổ tay"
+                  data-price="160000"
+                  data-img="/assets/so-tay.png"
+                >
+                  Thêm +
+                </button>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <a
+          class="card reveal"
+          data-tilt
+          data-cat="sotay"
+          href="product.html"
+          data-delay="120"
+        >
+          <div class="card__media card__media--upload">
+            <span class="card__badge-rect">Giới hạn</span>
+            <img
+              src="/assets/so-tay.png"
+              alt="Sổ tay Trang Trắng"
+              loading="lazy"
+            />
+          </div>
+          <div class="card__meta-upload">
+            <p class="card__number">№ 09 &nbsp;–&nbsp; Sổ tay</p>
+            <div class="card__row">
+              <h3 class="card__name">Trang Trắng</h3>
+              <div class="card__price-group">
+                <span class="price card__price">150.000₫</span>
+                <button
+                  class="card__add"
+                  data-add="sotay-trang-trang"
+                  data-name="Sổ tay Trang Trắng"
+                  data-cat="Sổ tay"
+                  data-price="150000"
+                  data-img="/assets/so-tay.png"
+                >
+                  Thêm +
+                </button>
+              </div>
+            </div>
+          </div>
+        </a>
+      </section>
+    </main>
+
+    <site-footer></site-footer>
+
+    <!-- CART DRAWER -->
+    <div class="cart-scrim" data-cart-scrim></div>
+    <aside class="cart-drawer" data-cart-drawer aria-label="Giỏ hàng">
+      <div class="cart-drawer__head">
+        <span class="cart-drawer__title">Giỏ hàng</span>
+        <button class="cart-close" data-close-cart aria-label="Đóng">✕</button>
+      </div>
+      <div class="cart-items" data-cart-items></div>
+      <div class="cart-drawer__foot">
+        <div class="cart-total">
+          <span class="cart-total__label">Tạm tính</span>
+          <span class="cart-total__val" data-cart-total>0₫</span>
+        </div>
+        <button class="circle-btn circle-btn--solid circle-btn--block">
+          Thanh toán
+        </button>
+      </div>
+    </aside>
+
+    <script src="/components/site-header.js" defer></script>
+    <script src="/components/site-footer.js" defer></script>
+    <script src="/js/artdict.js" defer></script>
+  </body>
+</html>

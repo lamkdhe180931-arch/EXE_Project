@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Artdict — Đồ để chơi! Chất để đời!</title>
+    <meta
+      name="description"
+      content="Artdict — xưởng nghệ thuật số. Sản phẩm nghệ thuật đương đại do nghệ sĩ trẻ làm ra: áo, mũ, sổ tay và in ấn giới hạn."
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+
+  <body>
+    <!-- HEADER (component tái sử dụng) -->
+    <site-header active="home"></site-header>
+
+    <!-- ============ HERO (collage) ============ -->
+    <section class="hero" id="top">
+      <div class="hero__bg" aria-hidden="true"></div>
+
+      <div class="hero__content">
+        <p class="eyebrow" data-reveal>ARTDICT — XƯỞNG NGHỆ THUẬT SỐ</p>
+        <h1 class="hero__title">
+          <span class="hero__line hero__line--1" data-converge="1"
+            >Đồ để chơi!</span
+          >
+          <span class="hero__line hero__line--2" data-converge="2"
+            >Chất để đời!</span
+          >
+        </h1>
+        <p class="hero__sub" data-reveal>
+          Sản phẩm nghệ thuật đương đại do nghệ sĩ trẻ làm ra — mặc lên người,
+          để lại dấu ấn.
+        </p>
+        <div class="hero__cta" data-reveal>
+          <a href="/pages/catalogue.html" class="circle-btn">
+            <span class="circle-btn__ring"></span>
+            <span class="circle-btn__label">Khám phá</span>
+            <span class="circle-btn__arrow" aria-hidden="true">→</span>
+          </a>
+          <a href="#manifesto" class="link-underline">Đọc Manifesto</a>
+        </div>
+      </div>
+
+      <!-- Mockup collage: 6 sản phẩm nghiêng lệch góc kiểu mood board -->
+      <div class="hero__collage" aria-hidden="true">
+        <figure class="mock mock--a" data-float="0.06">
+          <img src="/assets/ao-meo-no-1.png" alt="" />
+        </figure>
+        <figure class="mock mock--b" data-float="-0.04">
+          <img src="/assets/mu.png" alt="" />
+        </figure>
+        <figure class="mock mock--c" data-float="0.08">
+          <img src="/assets/so-tay.png" alt="" />
+        </figure>
+        <figure class="mock mock--d" data-float="-0.05">
+          <img src="/assets/ao-artdict.png" alt="" />
+        </figure>
+        <figure class="mock mock--e" data-float="0.05">
+          <img src="/assets/ao-do-de-choi.png" alt="" />
+        </figure>
+        <figure class="mock mock--f" data-float="-0.07">
+          <img src="/assets/mu-xanh.png" alt="" />
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============ MARQUEE ============ -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <span
+          >ĐỒ ĐỂ CHƠI <i>✺</i> CHẤT ĐỂ ĐỜI <i>✺</i> NGHỆ THUẬT ĐƯƠNG ĐẠI
+          <i>✺</i> PHIÊN BẢN GIỚI HẠN <i>✺</i> MADE BY ARTISTS <i>✺</i></span
+        >
+        <span
+          >ĐỒ ĐỂ CHƠI <i>✺</i> CHẤT ĐỂ ĐỜI <i>✺</i> NGHỆ THUẬT ĐƯƠNG ĐẠI
+          <i>✺</i> PHIÊN BẢN GIỚI HẠN <i>✺</i> MADE BY ARTISTS <i>✺</i></span
+        >
+      </div>
+    </div>
+
+    <!-- ============ CATALOGUE (grid đều, mỗi thẻ 1 nền màu) ============ -->
+    <section class="catalogue" id="catalogue">
+      <header class="section-head" data-reveal>
+        <h2 class="section-title">Bộ sưu tập đang mở bán</h2>
+        <p class="section-lead">
+          Mỗi sản phẩm là một tác phẩm — số lượng giới hạn, in theo mẻ.
+        </p>
+      </header>
+
+      <!-- prices = mock / sample, chưa phải giá thật -->
+      <div class="products">
+        <article class="card tilt" data-reveal>
+          <div class="card__media card__media--upload">
+            <span class="card__badge-rect">Mới</span>
+            <img
+              src="/assets/ao-meo-no-1.png"
+              alt="Áo thun Mèo Nổ"
+              loading="lazy"
+            />
+          </div>
+          <div class="card__meta-upload">
+            <p class="card__number">№ 01 &nbsp;–&nbsp; Áo thun</p>
+            <div class="card__row">
+              <h3 class="card__name">Áo “Mèo Nổ”</h3>
+              <div class="card__price-group">
+                <span class="price card__price">390.000₫</span>
+                <button
+                  class="card__add"
+                  data-add="aothun-meo-no"
+                  data-name="Áo Mèo Nổ"
+                  data-cat="Áo thun"
+                  data-price="390000"
+                  data-img="/assets/ao-meo-no-1.png"
+                >
+                  Thêm +
+                </button>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card tilt" data-reveal>
+          <div class="card__media card__media--upload">
+            <img src="/assets/mu.png" alt="Mũ Đồ để chơi" loading="lazy" />
+          </div>
+          <div class="card__meta-upload">
+            <p class="card__number">№ 02 &nbsp;–&nbsp; Mũ</p>
+            <div class="card__row">
+              <h3 class="card__name">Mũ “Đồ để chơi”</h3>
+              <div class="card__price-group">
+                <span class="price card__price">250.000₫</span>
+                <button
+                  class="card__add"
+                  data-add="mu-do-de-choi"
+                  data-name="Mũ Đồ để chơi"
+                  data-cat="Mũ"
+                  data-price="250000"
+                  data-img="/assets/mu.png"
+                >
+                  Thêm +
+                </button>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card tilt" data-reveal>
+          <div class="card__media card__media--upload">
+            <img src="/assets/so-tay.png" alt="Sổ tay Artdict" loading="lazy" />
+          </div>
+          <div class="card__meta-upload">
+            <p class="card__number">№ 03 &nbsp;–&nbsp; Sổ tay</p>
+            <div class="card__row">
+              <h3 class="card__name">Sổ tay Artdict</h3>
+              <div class="card__price-group">
+                <span class="price card__price">180.000₫</span>
+                <button
+                  class="card__add"
+                  data-add="sotay-artdict"
+                  data-name="Sổ tay Artdict"
+                  data-cat="Sổ tay"
+                  data-price="180000"
+                  data-img="/assets/so-tay.png"
+                >
+                  Thêm +
+                </button>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card tilt" data-reveal>
+          <div class="card__media card__media--upload">
+            <img src="/assets/ao-artdict.png" alt="Áo Artdict" loading="lazy" />
+          </div>
+          <div class="card__meta-upload">
+            <p class="card__number">№ 04 &nbsp;–&nbsp; Áo thun</p>
+            <div class="card__row">
+              <h3 class="card__name">Áo Artdict</h3>
+              <div class="card__price-group">
+                <span class="price card__price">390.000₫</span>
+                <button
+                  class="card__add"
+                  data-add="aothun-artdict"
+                  data-name="Áo Artdict"
+                  data-cat="Áo thun"
+                  data-price="390000"
+                  data-img="/assets/ao-artdict.png"
+                >
+                  Thêm +
+                </button>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card tilt" data-reveal>
+          <div class="card__media card__media--upload">
+            <span class="card__badge-rect">Giới hạn</span>
+            <img
+              src="/assets/mu-xanh.png"
+              alt="Mũ Đồ để chơi bản xanh"
+              loading="lazy"
+            />
+          </div>
+          <div class="card__meta-upload">
+            <p class="card__number">№ 05 &nbsp;–&nbsp; Mũ</p>
+            <div class="card__row">
+              <h3 class="card__name">Mũ “Đồ để chơi” — Xanh</h3>
+              <div class="card__price-group">
+                <span class="price card__price">250.000₫</span>
+                <button
+                  class="card__add"
+                  data-add="mu-do-de-choi-xanh"
+                  data-name="Mũ Đồ để chơi Xanh"
+                  data-cat="Mũ"
+                  data-price="250000"
+                  data-img="/assets/mu-xanh.png"
+                >
+                  Thêm +
+                </button>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card tilt" data-reveal>
+          <div class="card__media card__media--upload">
+            <img
+              src="/assets/ao-do-de-choi.png"
+              alt="Áo Đồ để chơi"
+              loading="lazy"
+            />
+          </div>
+          <div class="card__meta-upload">
+            <p class="card__number">№ 06 &nbsp;–&nbsp; Áo thun</p>
+            <div class="card__row">
+              <h3 class="card__name">Áo “Đồ để chơi”</h3>
+              <div class="card__price-group">
+                <span class="price card__price">390.000₫</span>
+                <button
+                  class="card__add"
+                  data-add="aothun-do-de-choi"
+                  data-name="Áo Đồ để chơi"
+                  data-cat="Áo thun"
+                  data-price="390000"
+                  data-img="/assets/ao-do-de-choi.png"
+                >
+                  Thêm +
+                </button>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ MANIFESTO (dark, overlapping scroll) ============ -->
+    <section class="manifesto" id="manifesto">
+      <div class="manifesto__inner">
+        <p class="eyebrow eyebrow--light" data-reveal>MANIFESTO</p>
+        <p class="manifesto__text">
+          <span data-word>Không</span> <span data-word>gian</span>
+          <span data-word>trưng</span> <span data-word>bày</span>
+          <span data-word>nên</span> <span data-word>tôn</span>
+          <span data-word>vinh</span> <span data-word>tác</span>
+          <span data-word>phẩm</span> <span data-word data-accent>nghệ</span>
+          <span data-word data-accent>thuật,</span> <span data-word>chứ</span>
+          <span data-word>không</span> <span data-word>cạnh</span>
+          <span data-word>tranh</span> <span data-word>với</span>
+          <span data-word>nó.</span>
+        </p>
+        <p class="manifesto__by" data-reveal>— Triết lý thiết kế Artdict</p>
+      </div>
+    </section>
+
+    <!-- ============ XƯỞNG / DANH MỤC SẢN PHẨM (bento + tilt 3D theo chuột) ============ -->
+    <section class="craft" id="craft">
+      <header class="section-head" data-reveal>
+        <p class="eyebrow eyebrow--line">DANH MỤC SẢN PHẨM</p>
+        <h2 class="section-title">Chúng tôi <em>tạo ra gì</em></h2>
+        <p class="section-lead">
+          Tuyển chọn sản phẩm thiết kế sáng tạo, mang đậm dấu ấn cá nhân từ các
+          nghệ sĩ & sinh viên thiết kế trẻ.
+        </p>
+      </header>
+
+      <div class="craft-bento">
+        <a
+          class="craft-card craft-card--a tilt"
+          href="/pages/catalogue.html"
+          data-reveal
+        >
+          <img
+            class="craft-card__img"
+            src="/assets/art-3.png"
+            alt="Bộ sưu tập tranh in"
+            loading="lazy"
+          />
+          <div class="craft-card__label">
+            <span class="craft-card__tag">Tranh in</span>
+            Bộ sưu tập linh thú
+          </div>
+        </a>
+
+        <a
+          class="craft-card craft-card--b craft-card--light tilt"
+          href="/pages/catalogue.html"
+          data-reveal
+        >
+          <img
+            class="craft-card__img"
+            src="/assets/ao-meo-no-1.png"
+            alt="Áo thun Mèo Nổ"
+            loading="lazy"
+          />
+          <div class="craft-card__label">
+            <span class="craft-card__tag">Áo thun</span>
+            Mèo Nổ Series
+          </div>
+        </a>
+
+        <a
+          class="craft-card craft-card--c craft-card--light tilt"
+          href="/pages/catalogue.html"
+          data-reveal
+        >
+          <img
+            class="craft-card__img"
+            src="/assets/so-tay.png"
+            alt="Sổ tay tác phẩm"
+            loading="lazy"
+          />
+          <div class="craft-card__label">
+            <span class="craft-card__tag">Sổ tay</span>
+            Sổ tay tác phẩm
+          </div>
+        </a>
+
+        <a
+          class="craft-card craft-card--d tilt"
+          href="/pages/catalogue.html"
+          data-reveal
+        >
+          <img
+            class="craft-card__img"
+            src="/assets/art-4.png"
+            alt="Phiên bản giới hạn"
+            loading="lazy"
+          />
+          <div class="craft-card__label">
+            <span class="craft-card__tag">Giới hạn</span>
+            Phiên bản đánh số
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- ============ STATS ============ -->
+    <!-- numbers below = sample / mock data, chưa phải số liệu thật -->
+    <section class="stats">
+      <div class="stat" data-reveal>
+        <span class="stat__num" data-count="48">0</span>
+        <span class="stat__label">thiết kế giới hạn</span>
+      </div>
+      <div class="stat" data-reveal>
+        <span class="stat__num" data-count="12">0</span>
+        <span class="stat__label">nghệ sĩ cộng tác</span>
+      </div>
+      <div class="stat" data-reveal>
+        <span class="stat__num" data-count="3" data-suffix="k+">0</span>
+        <span class="stat__label">đơn đã giao</span>
+      </div>
+    </section>
+
+    <!-- ============ WORDMARK ============ -->
+    <section class="wordmark">
+      <h2 class="wordmark__text" data-reveal>Artdict<span>.</span></h2>
+      <p class="wordmark__sub" data-reveal>
+        MADE BY ARTISTS &nbsp;·&nbsp; ĐỒ ĐỂ CHƠI, CHẤT ĐỂ ĐỜI
+      </p>
+    </section>
+
+    <!-- ============ CTA ============ -->
+    <section class="cta" id="contact">
+      <div class="cta__inner">
+        <p class="eyebrow eyebrow--line eyebrow--light" data-reveal>
+          MANG NGHỆ THUẬT VỀ NHÀ
+        </p>
+        <h2 class="cta__title" data-reveal>
+          Sẵn sàng <em>sưu tầm</em> tác phẩm của riêng bạn?
+        </h2>
+        <a href="/pages/catalogue.html" class="cta__btn" data-reveal
+          >MUA NGAY &nbsp;→</a
+        >
+      </div>
+    </section>
+
+    <!-- CART DRAWER -->
+    <div class="cart-scrim" data-cart-scrim></div>
+    <aside class="cart-drawer" data-cart-drawer aria-label="Giỏ hàng">
+      <div class="cart-drawer__head">
+        <span class="cart-drawer__title">Giỏ hàng</span>
+        <button class="cart-close" data-close-cart aria-label="Đóng">✕</button>
+      </div>
+      <div class="cart-items" data-cart-items></div>
+      <div class="cart-drawer__foot">
+        <div class="cart-total">
+          <span class="cart-total__label">Tạm tính</span>
+          <span class="cart-total__val" data-cart-total>0₫</span>
+        </div>
+        <button class="circle-btn circle-btn--solid circle-btn--block">
+          Thanh toán
+        </button>
+      </div>
+    </aside>
+
+    <!-- FOOTER (component tái sử dụng) -->
+    <site-footer></site-footer>
+
+    <!-- Components (render header/footer trước main.js) -->
+    <script src="/components/site-header.js" defer></script>
+    <script src="/components/site-footer.js" defer></script>
+    <!-- GSAP + ScrollTrigger qua CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script src="/js/main.js" defer></script>
+    <!-- artdict.js: giỏ hàng + nav dùng chung với các trang khác -->
+    <script src="/js/artdict.js" defer></script>
+  </body>
+</html>

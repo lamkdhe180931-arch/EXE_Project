@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lê Minh Quân — Phỏng vấn · Artdict</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <style>
+      .iv-top {
+        padding: calc(120px + 24px) 0 0;
+      }
+      .iv-related {
+        margin-top: 96px;
+      }
+      .iv-related__head {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 20px;
+        margin-bottom: 32px;
+      }
+      .rel-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+      .iv-next {
+        margin-top: 80px;
+        padding: 40px 0;
+        border-top: 1px solid var(--line-light);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+      .iv-next__k {
+        font-family: var(--display);
+        font-weight: 600;
+        font-size: 0.75rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: color-mix(in srgb, var(--ink) 50%, transparent);
+      }
+      .iv-next__name {
+        font-family: var(--display);
+        font-weight: 700;
+        letter-spacing: -0.04em;
+        font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+        margin-top: 4px;
+      }
+      .iv-next__name a:hover {
+        color: var(--crimson);
+      }
+      @media (max-width: 900px) {
+        .rel-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <site-header active="tacgia"></site-header>
+
+    <main class="wrap iv-top">
+      <nav
+        class="breadcrumb reveal"
+        style="
+          display: flex;
+          gap: 10px;
+          align-items: center;
+          font-family: var(--display);
+          font-weight: 500;
+          font-size: 0.85rem;
+          color: color-mix(in srgb, var(--ink) 55%, transparent);
+          margin-bottom: 32px;
+        "
+      >
+        <a href="artists.html" style="transition: color 0.25s">Tác giả</a>
+        <span style="opacity: 0.4">/</span>
+        <span style="color: var(--ink)">Lê Minh Quân</span>
+      </nav>
+
+      <!-- HERO -->
+      <section class="iv-hero">
+        <div class="iv-portrait reveal">
+          <div class="ph" style="font-weight: 400">
+            <span class="ph__label">chân dung · Quân</span>
+          </div>
+        </div>
+        <div class="reveal" data-delay="120">
+          <p class="eyebrow">artdictờ · 01</p>
+          <h1 class="iv-name">Lê Minh Quân</h1>
+          <div class="iv-meta" style="height: 435px">
+            <div class="iv-meta__item">
+              <div class="iv-meta__k">Vai trò</div>
+              <div class="iv-meta__v">Họa sĩ minh họa</div>
+            </div>
+            <div class="iv-meta__item">
+              <div class="iv-meta__k">Thành phố</div>
+              <div class="iv-meta__v">Sài Gòn</div>
+            </div>
+            <div class="iv-meta__item">
+              <div class="iv-meta__k">Hoạt động</div>
+              <div class="iv-meta__v">Từ 2018</div>
+            </div>
+            <div class="iv-meta__item" style="height: 45px">
+              <div class="iv-meta__k">Tác phẩm</div>
+              <div class="iv-meta__v">Mực Tàu · Phố Cổ</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- BIG PULL QUOTE -->
+      <section class="iv-banner reveal">
+        <p class="pull-quote">
+          <span class="q-mark">“</span>Tôi không vẽ để treo lên tường. Tôi vẽ để
+          người ta mặc nó ra phố — nơi bức tranh thực sự bắt đầu sống.<span
+            class="q-mark"
+            >”</span
+          >
+        </p>
+        <p class="iv-banner__by">— Lê Minh Quân</p>
+      </section>
+
+      <!-- INTERVIEW BODY -->
+      <section class="iv-body">
+        <aside class="iv-toc reveal">
+          <p class="iv-toc__title">Nội dung</p>
+          <ul>
+            <li><a href="#cau-chuyen">01 — Câu chuyện đằng sau tác phẩm</a></li>
+            <li><a href="#ngon-ngu">02 — Ngôn ngữ nghệ thuật</a></li>
+            <li><a href="#goc-nhin">03 — Góc nhìn về nghệ thuật</a></li>
+          </ul>
+        </aside>
+
+        <div class="iv-qas">
+          <article class="qa reveal" id="cau-chuyen">
+            <h2 class="qa__q">Câu chuyện đằng sau “Mực Tàu” bắt đầu từ đâu?</h2>
+            <div class="qa__a">
+              <p>
+                <span class="lead-letter">M</span>ình lớn lên trong một con hẻm
+                ở Quận 5, nơi những bức tường được quét vôi rồi dán chồng lên
+                nhau bao nhiêu lớp áp phích, vẽ bậy, vết nước. Mỗi sáng đi học
+                mình đều nhìn chúng. Lớn lên mới hiểu đó chính là một bức tranh
+                tập thể, vẽ bởi thời gian.
+              </p>
+              <p>
+                “Mực Tàu” là nỗ lực mang chất liệu đó lên vải: nét bút thư pháp
+                khô, mảng đỏ son loang như vết tường cũ. Mình muốn ai mặc nó
+                cũng thấy một góc Sài Gòn rất riêng — không phải bưu thiếp du
+                lịch, mà là cái Sài Gòn lấm lem và thật.
+              </p>
+            </div>
+          </article>
+
+          <article class="qa reveal" id="ngon-ngu">
+            <h2 class="qa__q">
+              Ngôn ngữ tạo hình của bạn được định hình thế nào?
+            </h2>
+            <div class="qa__a">
+              <p>
+                Mình giới hạn rất chặt: gần như chỉ có mực đen và đỏ son. Càng
+                ít màu, mình càng phải nói nhiều bằng nét và bố cục. Texture của
+                in lưới thủ công — chỗ đậm chỗ nhạt, đôi khi lệch — với mình
+                không phải lỗi, mà là chữ ký.
+              </p>
+              <p>
+                Mình tin vào sự không hoàn hảo có kiểm soát. Một bản in quá sạch
+                sẽ làm mất đi bàn tay con người. Mình để lại đủ dấu vết để người
+                xem biết: cái này được làm ra, chứ không phải in công nghiệp
+                hàng loạt.
+              </p>
+            </div>
+          </article>
+
+          <article class="qa reveal" id="goc-nhin">
+            <h2 class="qa__q">Với bạn, nghệ thuật nên sống ở đâu?</h2>
+            <div class="qa__a">
+              <p>
+                Trong tủ quần áo, trên ba lô, ở quán cà phê — chứ không chỉ
+                trong gallery. Mình thuộc thế hệ lớn lên cùng đường phố, nên với
+                mình phố mới là phòng trưng bày lớn nhất.
+              </p>
+              <p>
+                Khi một bạn trẻ mặc áo của mình đi chơi, bức tranh đó được nhìn
+                thấy hàng trăm lần trong ngày, ở những bối cảnh mình không bao
+                giờ kiểm soát được. Đó mới là lúc tác phẩm thực sự thuộc về
+                người khác — và mình thấy đó là điều đẹp nhất của việc làm nghệ
+                thuật ứng dụng.
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ARTIST'S WORKS -->
+      <section class="iv-related">
+        <div class="iv-related__head reveal">
+          <div>
+            <p class="eyebrow">Tác phẩm của Quân</p>
+            <h2
+              class="section-title"
+              style="font-size: clamp(1.8rem, 3.5vw, 2.8rem); margin-top: 10px"
+            >
+              Mua một bản in.
+            </h2>
+          </div>
+          <a class="circle-btn" href="catalogue.html">Xem bộ sưu tập</a>
+        </div>
+        <div class="rel-grid">
+          <a class="card reveal" data-tilt href="product.html" data-delay="0">
+            <div class="card__media card__media--upload">
+              <span class="card__badge-rect">Mới</span>
+              <img
+                src="/assets/ao-meo-no-2.png"
+                alt="Áo thun Mực Tàu"
+                loading="lazy"
+              />
+            </div>
+            <div class="card__meta-upload">
+              <p class="card__number">№ 01 &nbsp;–&nbsp; Áo thun</p>
+              <div class="card__row">
+                <h3 class="card__name">Mực Tàu</h3>
+                <div class="card__price-group">
+                  <span class="price card__price">420.000₫</span>
+                  <button
+                    class="card__add"
+                    data-add="aothun-muc-tau"
+                    data-name="Áo thun Mực Tàu"
+                    data-cat="Áo thun"
+                    data-price="420000"
+                    data-img="/assets/ao-meo-no-2.png"
+                  >
+                    Thêm +
+                  </button>
+                </div>
+              </div>
+            </div>
+          </a>
+          <a class="card reveal" data-tilt href="product.html" data-delay="60">
+            <div class="card__media card__media--upload">
+              <span class="card__badge-rect">Giới hạn</span>
+              <img
+                src="/assets/ao-artdict.png"
+                alt="Áo thun Phố Cổ"
+                loading="lazy"
+              />
+            </div>
+            <div class="card__meta-upload">
+              <p class="card__number">№ 02 &nbsp;–&nbsp; Áo thun</p>
+              <div class="card__row">
+                <h3 class="card__name">Phố Cổ</h3>
+                <div class="card__price-group">
+                  <span class="price card__price">390.000₫</span>
+                  <button
+                    class="card__add"
+                    data-add="aothun-pho-co"
+                    data-name="Áo thun Phố Cổ"
+                    data-cat="Áo thun"
+                    data-price="390000"
+                    data-img="/assets/ao-artdict.png"
+                  >
+                    Thêm +
+                  </button>
+                </div>
+              </div>
+            </div>
+          </a>
+          <a class="card reveal" data-tilt href="product.html" data-delay="120">
+            <div class="card__media card__media--upload">
+              <img src="/assets/art-1.png" alt="Sổ phác “Hẻm”" loading="lazy" />
+            </div>
+            <div class="card__meta-upload">
+              <p class="card__number">№ 10 &nbsp;–&nbsp; Bản in</p>
+              <div class="card__row">
+                <h3 class="card__name">Sổ phác “Hẻm”</h3>
+                <div class="card__price-group">
+                  <span class="price card__price">220.000₫</span>
+                  <button
+                    class="card__add"
+                    data-add="print-hem"
+                    data-name="Sổ phác Hẻm"
+                    data-cat="Bản in"
+                    data-price="220000"
+                    data-img="/assets/art-1.png"
+                  >
+                    Thêm +
+                  </button>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <!-- NEXT ARTIST -->
+      <section class="iv-next reveal">
+        <div>
+          <div class="iv-next__k">artdictờ tiếp theo · 02</div>
+          <div class="iv-next__name">
+            <a href="artist.html">Trần Hà My →</a>
+          </div>
+        </div>
+        <a class="circle-btn" href="artists.html">Tất cả tác giả</a>
+      </section>
+    </main>
+
+    <site-footer></site-footer>
+
+    <!-- CART DRAWER -->
+    <div class="cart-scrim" data-cart-scrim></div>
+    <aside class="cart-drawer" data-cart-drawer aria-label="Giỏ hàng">
+      <div class="cart-drawer__head">
+        <span class="cart-drawer__title">Giỏ hàng</span>
+        <button class="cart-close" data-close-cart aria-label="Đóng">✕</button>
+      </div>
+      <div class="cart-items" data-cart-items></div>
+      <div class="cart-drawer__foot">
+        <div class="cart-total">
+          <span class="cart-total__label">Tạm tính</span>
+          <span class="cart-total__val" data-cart-total>0₫</span>
+        </div>
+        <button class="circle-btn circle-btn--solid circle-btn--block">
+          Thanh toán
+        </button>
+      </div>
+    </aside>
+
+    <script src="/components/site-header.js" defer></script>
+    <script src="/components/site-footer.js" defer></script>
+    <script src="/js/artdict.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,49 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm --version)",
+      "Bash(npx --version)",
+      "Bash(ls \"C:/Users/Admin/Desktop\" 2>&1 | head -30; echo \"===\"; find \"C:/Users/Admin/Desktop\" -maxdepth 3 -type d -name \"node_modules\" 2>/dev/null | head; echo \"=== playwright cache ===\"; ls \"C:/Users/Admin/AppData/Local/ms-playwright\" 2>&1 | head)",
+      "Read(//c/Users/Admin/Desktop/**)",
+      "Read(//c/Users/Admin/AppData/Local/ms-playwright/**)",
+      "Bash(mkdir -p \"C:/Users/Admin/Desktop/Adddirct/screenshots\")",
+      "Bash(node shot.js)",
+      "Bash(node shot-header.js)",
+      "Bash(node -e ' *)",
+      "Bash(npx skills@latest add mattpocock/skills)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "npx prettier --write \"$CLAUDE_TOOL_OUTPUT_FILE\" 2>/dev/null || true"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell -ExecutionPolicy Bypass -File \"C:/Users/Admin/Desktop/Adddirct/.claude/play-sound.ps1\""
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell -ExecutionPolicy Bypass -File \"C:/Users/Admin/Desktop/Adddirct/.claude/play-sound.ps1\""
+          }
+        ]
+      }
+    ]
+  }
+}

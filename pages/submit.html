@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gửi tác phẩm — Artdict</title>
+    <meta
+      name="description"
+      content="Trở thành một artdictờ — gửi portfolio và câu chuyện của bạn. Email liên hệ trực tiếp cho nghệ sĩ muốn cộng tác với Artdict."
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <style>
+      /* ============ SUBMIT — page-local ============ */
+
+      /* HERO */
+      .sub-hero {
+        padding: calc(120px + 40px) 0 clamp(40px, 6vw, 72px);
+        max-width: 22ch;
+      }
+      .sub-hero__title {
+        font-family: var(--display);
+        font-weight: var(--fw-bold);
+        font-size: var(--fs-display-lg);
+        line-height: var(--lh-tightest);
+        letter-spacing: var(--ls-display-lg);
+        margin: 22px 0 26px;
+        text-wrap: balance;
+      }
+      .sub-hero__title em {
+        font-style: italic;
+        color: var(--crimson);
+      }
+      .sub-hero__lede {
+        font-size: var(--fs-body-lg);
+        line-height: var(--lh-body);
+        color: color-mix(in srgb, var(--ink) 76%, transparent);
+        max-width: 52ch;
+      }
+
+      /* STEPS — gửi gì cho chúng tôi (3 mục ngăn bằng divider) */
+      .sub-steps {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0;
+        padding: clamp(40px, 5vw, 64px) 0;
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+      }
+      .sub-step {
+        padding: 4px clamp(20px, 3vw, 44px);
+        border-left: 1px solid var(--line);
+      }
+      .sub-step:first-child {
+        border-left: none;
+        padding-left: 0;
+      }
+      .sub-step__n {
+        font-family: var(--display);
+        font-weight: var(--fw-bold);
+        font-size: var(--fs-h3);
+        color: var(--crimson);
+        letter-spacing: var(--ls-display-sm);
+      }
+      .sub-step__h {
+        font-family: var(--display);
+        font-weight: var(--fw-bold);
+        font-size: var(--fs-h2);
+        letter-spacing: var(--ls-display-sm);
+        line-height: var(--lh-tight);
+        margin: 14px 0 10px;
+      }
+      .sub-step__p {
+        font-size: var(--fs-body-md);
+        line-height: var(--lh-body);
+        color: color-mix(in srgb, var(--ink) 70%, transparent);
+        max-width: 32ch;
+      }
+
+      /* MAIL HIGHLIGHT — email + nút copy */
+      .sub-mail {
+        margin: clamp(48px, 7vw, 96px) 0 clamp(40px, 6vw, 80px);
+        background: var(--ink);
+        color: var(--cream-50);
+        border-radius: var(--r-craft);
+        padding: clamp(36px, 5vw, 72px) clamp(28px, 5vw, 76px);
+      }
+      .sub-mail__k {
+        font-family: var(--display);
+        font-weight: var(--fw-regular);
+        font-size: var(--fs-body-xs);
+        letter-spacing: var(--ls-eyebrow-lg);
+        text-transform: uppercase;
+        color: var(--crimson-hi);
+        margin-bottom: 18px;
+      }
+      .sub-mail__row {
+        display: flex;
+        align-items: center;
+        gap: clamp(16px, 3vw, 32px);
+        flex-wrap: wrap;
+      }
+      .sub-mail__addr {
+        font-family: var(--display);
+        font-weight: var(--fw-bold);
+        font-size: clamp(1.6rem, 5vw, 3.4rem);
+        letter-spacing: var(--ls-display-md);
+        line-height: var(--lh-tightest);
+        color: var(--cream-50);
+        transition: color 0.25s var(--ease);
+        word-break: break-word;
+      }
+      .sub-mail__addr:hover,
+      .sub-mail__addr:focus-visible {
+        color: var(--crimson-hi);
+      }
+      .sub-copy {
+        flex-shrink: 0;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55em;
+        font-family: var(--display);
+        font-weight: var(--fw-semibold);
+        font-size: var(--fs-body-sm);
+        letter-spacing: var(--ls-display-sm);
+        color: var(--ink);
+        background: var(--cream-50);
+        border: 1.5px solid var(--cream-50);
+        border-radius: var(--r-pill);
+        padding: 0.8em 1.5em;
+        transition:
+          background 0.25s var(--ease),
+          color 0.25s var(--ease),
+          border-color 0.25s var(--ease),
+          transform 0.18s var(--ease);
+      }
+      .sub-copy:hover {
+        background: var(--crimson);
+        border-color: var(--crimson);
+        color: var(--cream-50);
+      }
+      .sub-copy:active {
+        transform: scale(0.96);
+      }
+      .sub-copy.is-copied {
+        background: transparent;
+        color: var(--cream-50);
+        border-color: var(--crimson-hi);
+      }
+      .sub-copy__ico {
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+      }
+      .sub-mail__note {
+        font-family: var(--body);
+        font-size: var(--fs-body-md);
+        line-height: var(--lh-body);
+        color: color-mix(in srgb, var(--cream-50) 64%, transparent);
+        max-width: 56ch;
+        margin-top: 26px;
+      }
+      .sub-mail__socials {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 22px;
+      }
+      .sub-mail__social {
+        font-family: var(--display);
+        font-weight: var(--fw-medium);
+        font-size: var(--fs-body-sm);
+        color: color-mix(in srgb, var(--cream-50) 82%, transparent);
+        border: 1px solid color-mix(in srgb, var(--cream-50) 30%, transparent);
+        border-radius: var(--r-pill);
+        padding: 0.42em 1em;
+        transition:
+          background 0.25s var(--ease),
+          color 0.25s var(--ease),
+          border-color 0.25s var(--ease);
+      }
+      .sub-mail__social:hover {
+        background: var(--crimson);
+        border-color: var(--crimson);
+        color: var(--cream);
+      }
+      .sub-mail a:focus-visible,
+      .sub-copy:focus-visible {
+        outline: 2px solid var(--crimson-hi);
+        outline-offset: 3px;
+      }
+
+      /* ============ RESPONSIVE ============ */
+      @media (max-width: 768px) {
+        .sub-hero {
+          padding: calc(var(--nav-h) + 24px) 0 36px;
+        }
+        .sub-steps {
+          grid-template-columns: 1fr;
+        }
+        .sub-step {
+          border-left: none;
+          border-top: 1px solid var(--line);
+          padding: 24px 0;
+        }
+        .sub-step:first-child {
+          padding-top: 0;
+          border-top: none;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <site-header active="tacgia"></site-header>
+
+    <main class="wrap">
+      <!-- HERO -->
+      <section class="sub-hero reveal">
+        <p class="eyebrow">Gửi tác phẩm</p>
+        <h1 class="sub-hero__title">Trở thành một <em>artdictờ.</em></h1>
+        <p class="sub-hero__lede">
+          Chúng tôi luôn tìm những người kể chuyện bằng hình ảnh. Nếu bạn vẽ,
+          làm chữ hay in lưới — gửi tác phẩm cho chúng tôi, biết đâu mẻ in giới
+          hạn tiếp theo mang tên bạn.
+        </p>
+      </section>
+
+      <!-- WHAT TO SEND -->
+      <section class="sub-steps">
+        <div class="sub-step reveal">
+          <div class="sub-step__n">01</div>
+          <h2 class="sub-step__h">Portfolio</h2>
+          <p class="sub-step__p">
+            Link Behance, Instagram hoặc một PDF. 5–10 tác phẩm bạn tâm đắc nhất
+            là đủ.
+          </p>
+        </div>
+        <div class="sub-step reveal" data-delay="100">
+          <div class="sub-step__n">02</div>
+          <h2 class="sub-step__h">Câu chuyện</h2>
+          <p class="sub-step__p">
+            Vài dòng về bạn và thứ bạn muốn kể. Chúng tôi quan tâm góc nhìn hơn
+            là kỹ thuật.
+          </p>
+        </div>
+        <div class="sub-step reveal" data-delay="200">
+          <div class="sub-step__n">03</div>
+          <h2 class="sub-step__h">Liên hệ</h2>
+          <p class="sub-step__p">
+            Tên, thành phố và cách chúng tôi gọi lại cho bạn. Vậy là xong.
+          </p>
+        </div>
+      </section>
+
+      <!-- MAIL HIGHLIGHT -->
+      <!-- artist@artdict.vn = email nhận tác phẩm (placeholder) -->
+      <section class="sub-mail reveal" id="lien-he">
+        <p class="sub-mail__k">Gửi tác phẩm tới</p>
+        <div class="sub-mail__row">
+          <a class="sub-mail__addr" href="mailto:artist@artdict.vn"
+            >artist@artdict.vn</a
+          >
+          <button
+            class="sub-copy"
+            type="button"
+            data-copy="artist@artdict.vn"
+            aria-label="Sao chép địa chỉ email"
+          >
+            <svg
+              class="sub-copy__ico"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+            >
+              <rect
+                x="9"
+                y="9"
+                width="11"
+                height="11"
+                rx="2"
+                stroke="currentColor"
+                stroke-width="1.8"
+              />
+              <path
+                d="M5 15V5a2 2 0 0 1 2-2h10"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+              />
+            </svg>
+            <span class="sub-copy__label">Sao chép</span>
+          </button>
+        </div>
+        <p class="sub-mail__note">
+          Kèm portfolio và vài dòng giới thiệu. Chúng tôi đọc mọi email và phản
+          hồi trong 3–5 ngày làm việc.
+        </p>
+        <div class="sub-mail__socials">
+          <a
+            class="sub-mail__social"
+            href="https://www.instagram.com/artdict.vn/"
+            target="_blank"
+            rel="noopener"
+            >Instagram</a
+          >
+          <a
+            class="sub-mail__social"
+            href="https://www.tiktok.com/@artdict.vn"
+            target="_blank"
+            rel="noopener"
+            >TikTok</a
+          >
+          <a
+            class="sub-mail__social"
+            href="https://www.facebook.com/artdict.vn"
+            target="_blank"
+            rel="noopener"
+            >Facebook</a
+          >
+        </div>
+      </section>
+    </main>
+
+    <site-footer></site-footer>
+
+    <!-- CART DRAWER -->
+    <div class="cart-scrim" data-cart-scrim></div>
+    <aside class="cart-drawer" data-cart-drawer aria-label="Giỏ hàng">
+      <div class="cart-drawer__head">
+        <span class="cart-drawer__title">Giỏ hàng</span>
+        <button class="cart-close" data-close-cart aria-label="Đóng">✕</button>
+      </div>
+      <div class="cart-items" data-cart-items></div>
+      <div class="cart-drawer__foot">
+        <div class="cart-total">
+          <span class="cart-total__label">Tạm tính</span>
+          <span class="cart-total__val" data-cart-total>0₫</span>
+        </div>
+        <button class="circle-btn circle-btn--solid circle-btn--block">
+          Thanh toán
+        </button>
+      </div>
+    </aside>
+
+    <script src="/components/site-header.js" defer></script>
+    <script src="/components/site-footer.js" defer></script>
+    <script src="/js/artdict.js" defer></script>
+    <script>
+      /* Copy-to-clipboard cho email (progressive enhancement) */
+      document.addEventListener("click", (e) => {
+        const btn = e.target.closest("[data-copy]");
+        if (!btn) return;
+        const text = btn.dataset.copy;
+        const label = btn.querySelector(".sub-copy__label");
+        const done = () => {
+          btn.classList.add("is-copied");
+          if (label) label.textContent = "Đã chép!";
+          setTimeout(() => {
+            btn.classList.remove("is-copied");
+            if (label) label.textContent = "Sao chép";
+          }, 2000);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(done).catch(fallback);
+        } else {
+          fallback();
+        }
+        function fallback() {
+          const ta = document.createElement("textarea");
+          ta.value = text;
+          ta.style.position = "fixed";
+          ta.style.opacity = "0";
+          document.body.appendChild(ta);
+          ta.select();
+          try {
+            document.execCommand("copy");
+            done();
+          } catch (err) {
+            /* nếu không copy được, mailto vẫn dùng được */
+          }
+          document.body.removeChild(ta);
+        }
+      });
+    </script>
+  </body>
+</html>

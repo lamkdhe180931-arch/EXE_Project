@@ -1,0 +1,558 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Về chúng tôi — Artdict</title>
+    <meta
+      name="description"
+      content="Artdict là xưởng nghệ thuật số của những nghệ sĩ trẻ Việt — biến bản in giới hạn thành áo, mũ, sổ tay để chơi mỗi ngày. Câu chuyện và thông tin liên hệ."
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <style>
+      /* ============ ABOUT — page-local ============ */
+
+      /* 1. HERO (split: text + visual lệch góc) */
+      .ab-hero {
+        padding: calc(120px + 40px) 0 clamp(56px, 8vw, 96px);
+        display: grid;
+        grid-template-columns: 1.45fr 1fr;
+        gap: clamp(32px, 5vw, 72px);
+        align-items: center;
+      }
+      .ab-hero__title {
+        font-family: var(--display);
+        font-weight: var(--fw-bold);
+        font-size: clamp(2.4rem, 5vw, 4.8rem);
+        line-height: var(--lh-tightest);
+        letter-spacing: var(--ls-display-lg);
+        margin: 22px 0 26px;
+        text-wrap: balance;
+      }
+      .ab-hero__title em {
+        font-style: italic;
+        color: var(--crimson);
+      }
+      .ab-hero__lede {
+        font-size: var(--fs-body-lg);
+        line-height: var(--lh-body);
+        color: color-mix(in srgb, var(--ink) 76%, transparent);
+        max-width: 46ch;
+        margin-bottom: 32px;
+      }
+      .ab-hero__media {
+        position: relative;
+        aspect-ratio: 4 / 5;
+        border-radius: var(--r-craft);
+        overflow: hidden;
+        background: var(--card);
+        transform: rotate(2deg);
+        transition: transform 0.6s var(--ease);
+      }
+      .ab-hero:hover .ab-hero__media {
+        transform: rotate(0deg);
+      }
+      .ab-hero__media img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .ab-hero__tag {
+        position: absolute;
+        left: 16px;
+        bottom: 16px;
+        z-index: 2;
+        font-family: var(--display);
+        font-weight: var(--fw-regular);
+        font-size: var(--fs-body-xs);
+        letter-spacing: var(--ls-eyebrow);
+        text-transform: uppercase;
+        color: var(--cream);
+        background: var(--crimson);
+        padding: 0.45em 0.9em;
+        border-radius: var(--r-pill);
+      }
+
+      /* 2. STORY (editorial, drop-cap) */
+      .ab-story {
+        padding: clamp(56px, 8vw, 104px) 0;
+        border-top: 1px solid var(--line);
+        display: grid;
+        grid-template-columns: 0.8fr 1.2fr;
+        gap: clamp(28px, 5vw, 80px);
+        align-items: start;
+      }
+      .ab-story__h {
+        font-family: var(--display);
+        font-weight: var(--fw-bold);
+        font-size: var(--fs-display-md);
+        line-height: var(--lh-tighter);
+        letter-spacing: var(--ls-display-md);
+        text-wrap: balance;
+        position: sticky;
+        top: calc(var(--nav-h) + 24px);
+      }
+      .ab-story__body p {
+        font-size: var(--fs-body-lg);
+        line-height: var(--lh-body);
+        color: color-mix(in srgb, var(--ink) 80%, transparent);
+        margin-bottom: 22px;
+        max-width: 60ch;
+      }
+      .ab-story__body p:last-child {
+        margin-bottom: 0;
+      }
+      .ab-story__body strong {
+        font-weight: var(--fw-bold);
+        color: var(--ink);
+      }
+
+      /* 3. PULL-QUOTE banner (reuse .iv-banner + .pull-quote) */
+      .ab-quote {
+        padding: clamp(48px, 7vw, 96px) 0;
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+      }
+      .ab-quote .pull-quote {
+        font-size: var(--fs-display-md);
+        max-width: 20ch;
+      }
+      .ab-quote__by {
+        font-family: var(--display);
+        font-weight: var(--fw-regular);
+        font-size: var(--fs-body-xs);
+        letter-spacing: var(--ls-eyebrow);
+        text-transform: uppercase;
+        color: color-mix(in srgb, var(--ink) 62%, transparent);
+        margin-top: 28px;
+      }
+
+      /* 4. VALUES (3 principles, ngăn bằng divider — không card) */
+      .ab-values {
+        padding: clamp(56px, 8vw, 100px) 0 clamp(40px, 6vw, 72px);
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0;
+      }
+      .ab-value {
+        padding: 4px clamp(20px, 3vw, 44px);
+        border-left: 1px solid var(--line);
+      }
+      .ab-value:first-child {
+        border-left: none;
+        padding-left: 0;
+      }
+      .ab-value__n {
+        font-family: var(--display);
+        font-weight: var(--fw-bold);
+        font-size: var(--fs-h3);
+        color: var(--crimson);
+        letter-spacing: var(--ls-display-sm);
+      }
+      .ab-value__h {
+        font-family: var(--display);
+        font-weight: var(--fw-bold);
+        font-size: var(--fs-h2);
+        letter-spacing: var(--ls-display-sm);
+        line-height: var(--lh-tight);
+        margin: 16px 0 12px;
+      }
+      .ab-value__p {
+        font-size: var(--fs-body-md);
+        line-height: var(--lh-body);
+        color: color-mix(in srgb, var(--ink) 70%, transparent);
+        max-width: 34ch;
+      }
+
+      /* 5. STATS strip (số tĩnh, như trang Tác giả) */
+      .ab-stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 32px;
+        padding: clamp(44px, 6vw, 72px) 0;
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+      }
+      .ab-stat__n {
+        font-family: var(--display);
+        font-weight: var(--fw-bold);
+        font-size: var(--fs-display-md);
+        letter-spacing: var(--ls-display-md);
+        line-height: var(--lh-tightest);
+        color: var(--crimson);
+      }
+      .ab-stat__l {
+        font-family: var(--display);
+        font-weight: var(--fw-medium);
+        font-size: var(--fs-body-sm);
+        color: color-mix(in srgb, var(--ink) 60%, transparent);
+        margin-top: 8px;
+      }
+
+      /* 6. CONTACT HIGHLIGHT (ink panel — điểm nhấn) */
+      .ab-contact {
+        margin: clamp(64px, 9vw, 120px) 0 clamp(40px, 6vw, 80px);
+        background: var(--ink);
+        color: var(--cream-50);
+        border-radius: var(--r-craft);
+        padding: clamp(40px, 6vw, 84px) clamp(28px, 5vw, 76px);
+      }
+      .ab-contact__top {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 32px;
+        flex-wrap: wrap;
+        margin-bottom: clamp(36px, 5vw, 56px);
+      }
+      .ab-contact__eyebrow {
+        font-family: var(--display);
+        font-weight: var(--fw-regular);
+        font-size: var(--fs-body-xs);
+        letter-spacing: var(--ls-eyebrow-lg);
+        text-transform: uppercase;
+        color: var(--crimson-hi);
+      }
+      .ab-contact__title {
+        font-family: var(--display);
+        font-weight: var(--fw-bold);
+        font-size: var(--fs-display-md);
+        letter-spacing: var(--ls-display-md);
+        line-height: var(--lh-tighter);
+        margin-top: 16px;
+        text-wrap: balance;
+      }
+      .ab-contact__grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1px;
+        background: var(--line-dark);
+        border: 1px solid var(--line-dark);
+      }
+      .ab-contact__cell {
+        background: var(--ink);
+        padding: clamp(22px, 3vw, 34px);
+      }
+      .ab-contact__k {
+        font-family: var(--display);
+        font-weight: var(--fw-regular);
+        font-size: var(--fs-body-xs);
+        letter-spacing: var(--ls-eyebrow);
+        text-transform: uppercase;
+        color: color-mix(in srgb, var(--cream-50) 48%, transparent);
+        margin-bottom: 10px;
+      }
+      .ab-contact__v {
+        font-family: var(--display);
+        font-weight: var(--fw-semibold);
+        font-size: clamp(1.15rem, 2vw, 1.6rem);
+        letter-spacing: var(--ls-display-sm);
+        line-height: var(--lh-tight);
+        color: var(--cream-50);
+      }
+      a.ab-contact__v {
+        display: inline-block;
+        transition: color 0.25s var(--ease);
+      }
+      a.ab-contact__v:hover {
+        color: var(--crimson-hi);
+      }
+      .ab-contact__sub {
+        font-family: var(--body);
+        font-size: var(--fs-body-sm);
+        color: color-mix(in srgb, var(--cream-50) 60%, transparent);
+        margin-top: 8px;
+      }
+      .ab-contact__socials {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 14px;
+      }
+      .ab-contact__social {
+        font-family: var(--display);
+        font-weight: var(--fw-medium);
+        font-size: var(--fs-body-sm);
+        color: color-mix(in srgb, var(--cream-50) 82%, transparent);
+        border: 1px solid color-mix(in srgb, var(--cream-50) 30%, transparent);
+        border-radius: var(--r-pill);
+        padding: 0.42em 1em;
+        transition:
+          background 0.25s var(--ease),
+          color 0.25s var(--ease),
+          border-color 0.25s var(--ease);
+      }
+      .ab-contact__social:hover {
+        background: var(--crimson);
+        border-color: var(--crimson);
+        color: var(--cream);
+      }
+      .ab-contact__cta {
+        margin-top: clamp(32px, 4vw, 48px);
+      }
+      /* circle-btn biến thể sáng cho nền tối */
+      .ab-contact .circle-btn {
+        color: var(--cream-50);
+        border-color: var(--cream-50);
+      }
+      .ab-contact .circle-btn:hover {
+        color: var(--cream);
+        border-color: var(--crimson);
+      }
+      .ab-contact a:focus-visible {
+        outline: 2px solid var(--crimson-hi);
+        outline-offset: 2px;
+      }
+
+      /* ============ RESPONSIVE ============ */
+      @media (max-width: 900px) {
+        .ab-hero,
+        .ab-story {
+          grid-template-columns: 1fr;
+        }
+        .ab-hero {
+          padding-top: calc(var(--nav-h) + 36px);
+        }
+        .ab-story__h {
+          position: static;
+        }
+        .ab-hero__media {
+          order: -1;
+          max-height: 420px;
+        }
+        .ab-stats {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 28px 24px;
+        }
+      }
+      @media (max-width: 768px) {
+        .ab-hero {
+          padding: calc(var(--nav-h) + 24px) 0 44px;
+        }
+        .ab-values {
+          grid-template-columns: 1fr;
+        }
+        .ab-value {
+          border-left: none;
+          border-top: 1px solid var(--line);
+          padding: 24px 0;
+        }
+        .ab-value:first-child {
+          padding-top: 0;
+          border-top: none;
+        }
+        .ab-contact__grid {
+          grid-template-columns: 1fr;
+        }
+        .ab-contact__social {
+          padding: 0.7em 1.1em;
+        }
+      }
+      @media (max-width: 600px) {
+        .ab-stats {
+          grid-template-columns: 1fr;
+          gap: 24px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <site-header active="khampha"></site-header>
+
+    <main class="wrap">
+      <!-- 1 · HERO -->
+      <section class="ab-hero">
+        <div class="reveal">
+          <p class="eyebrow">Về chúng tôi</p>
+          <h1 class="ab-hero__title">
+            Nghệ thuật<br />không treo tường.<br />Nó <em>mặc lên người.</em>
+          </h1>
+          <p class="ab-hero__lede">
+            Artdict là xưởng nghệ thuật số của những nghệ sĩ trẻ Việt — biến bản
+            in giới hạn thành áo, mũ và sổ tay để bạn dùng mỗi ngày.
+          </p>
+          <a class="circle-btn circle-btn--solid" href="/pages/collection.html">
+            Xem bộ sưu tập →
+          </a>
+        </div>
+        <div class="ab-hero__media reveal" data-delay="120">
+          <span class="ab-hero__tag">Xưởng Artdict</span>
+          <img
+            src="/assets/art-1.png"
+            alt="Một tác phẩm in của Artdict"
+            width="900"
+            height="1125"
+          />
+        </div>
+      </section>
+
+      <!-- 2 · STORY -->
+      <section class="ab-story">
+        <h2 class="ab-story__h reveal">Bắt đầu từ một cuốn sổ phác họa.</h2>
+        <div class="ab-story__body reveal" data-delay="120">
+          <p>
+            <span class="lead-letter">A</span>rtdict ra đời từ thói quen cũ: vẽ
+            lại những bức tường loang lổ, những con mèo hàng xóm, những dòng chữ
+            nguệch ngoạc trên trang sổ tay. Chúng tôi thấy tiếc khi tác phẩm chỉ
+            nằm yên trong ngăn kéo, nên quyết định đưa chúng ra phố — in lên
+            vải, lên mũ, lên giấy.
+          </p>
+          <p>
+            Cái tên ghép từ <strong>Art</strong> và <strong>dict.</strong> như
+            một cuốn từ điển hình ảnh: mỗi sản phẩm là một mục từ, một mảnh ngôn
+            ngữ thị giác của người làm ra nó. Không có dây chuyền, không có bản
+            sao vô hạn. Mỗi mẻ in là một lần thủ công, đánh số và dừng lại.
+          </p>
+          <p>
+            Đến nay, Artdict là nơi gặp nhau của những họa sĩ, người làm chữ và
+            thợ in lưới trẻ. Chúng tôi không bán quần áo. Chúng tôi bán những
+            tác phẩm bạn có thể mặc.
+          </p>
+        </div>
+      </section>
+
+      <!-- 3 · PULL QUOTE -->
+      <section class="ab-quote reveal">
+        <p class="pull-quote">
+          <span class="q-mark">“</span>Đồ để chơi, nhưng làm bằng thái độ
+          <em>để đời.</em><span class="q-mark">”</span>
+        </p>
+        <p class="ab-quote__by">Triết lý Artdict</p>
+      </section>
+
+      <!-- 4 · VALUES -->
+      <section class="ab-values">
+        <div class="ab-value reveal">
+          <div class="ab-value__n">01</div>
+          <h3 class="ab-value__h">In thủ công</h3>
+          <p class="ab-value__p">
+            Kéo lụa từng chiếc tại Việt Nam. Vết mực lệch là dấu vân tay của bàn
+            tay làm ra nó — chúng tôi giữ, không sửa.
+          </p>
+        </div>
+        <div class="ab-value reveal" data-delay="100">
+          <div class="ab-value__n">02</div>
+          <h3 class="ab-value__h">Phiên bản giới hạn</h3>
+          <p class="ab-value__p">
+            Mỗi thiết kế in theo mẻ, đánh số và dừng. Không tái bản, để thứ bạn
+            cầm trên tay luôn là một bản gốc.
+          </p>
+        </div>
+        <div class="ab-value reveal" data-delay="200">
+          <div class="ab-value__n">03</div>
+          <h3 class="ab-value__h">Nghệ sĩ làm ra</h3>
+          <p class="ab-value__p">
+            Đứng sau mỗi bản in là một nghệ sĩ trẻ có tên. Họ kể chuyện, chúng
+            tôi đưa câu chuyện ấy lên sản phẩm.
+          </p>
+        </div>
+      </section>
+
+      <!-- 5 · STATS -->
+      <section class="ab-stats reveal">
+        <div class="ab-stat">
+          <div class="ab-stat__n">05</div>
+          <div class="ab-stat__l">Nghệ sĩ cộng tác</div>
+        </div>
+        <div class="ab-stat">
+          <div class="ab-stat__n">04</div>
+          <div class="ab-stat__l">Thành phố</div>
+        </div>
+        <div class="ab-stat">
+          <div class="ab-stat__n">100%</div>
+          <div class="ab-stat__l">In thủ công</div>
+        </div>
+        <div class="ab-stat">
+          <div class="ab-stat__n">2024</div>
+          <div class="ab-stat__l">Năm thành lập</div>
+        </div>
+      </section>
+
+      <!-- 6 · CONTACT HIGHLIGHT -->
+      <section class="ab-contact reveal" id="contact">
+        <div class="ab-contact__top">
+          <div>
+            <p class="ab-contact__eyebrow">Liên hệ</p>
+            <h2 class="ab-contact__title">Ghé xưởng, hoặc nhắn một tiếng.</h2>
+          </div>
+        </div>
+
+        <div class="ab-contact__grid">
+          <div class="ab-contact__cell">
+            <p class="ab-contact__k">Email</p>
+            <a class="ab-contact__v" href="mailto:hello@artdict.vn"
+              >hello@artdict.vn</a
+            >
+            <p class="ab-contact__sub">Hợp tác, đặt riêng & báo chí.</p>
+          </div>
+          <div class="ab-contact__cell">
+            <p class="ab-contact__k">Hotline</p>
+            <a class="ab-contact__v" href="tel:+842471099099">024 7109 9099</a>
+            <p class="ab-contact__sub">Thứ 2 – Thứ 7 · 9:00 – 18:00</p>
+          </div>
+          <div class="ab-contact__cell">
+            <p class="ab-contact__k">Xưởng</p>
+            <span class="ab-contact__v">Hà Nội, Việt Nam</span>
+            <p class="ab-contact__sub">Ghé thăm theo lịch hẹn trước.</p>
+          </div>
+          <div class="ab-contact__cell">
+            <p class="ab-contact__k">Theo dõi</p>
+            <div class="ab-contact__socials">
+              <a
+                class="ab-contact__social"
+                href="https://www.instagram.com/artdict.vn/"
+                target="_blank"
+                rel="noopener"
+                >Instagram</a
+              >
+              <a
+                class="ab-contact__social"
+                href="https://www.tiktok.com/@artdict.vn"
+                target="_blank"
+                rel="noopener"
+                >TikTok</a
+              >
+              <a
+                class="ab-contact__social"
+                href="https://www.facebook.com/artdict.vn"
+                target="_blank"
+                rel="noopener"
+                >Facebook</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="ab-contact__cta">
+          <a class="circle-btn" href="mailto:hello@artdict.vn">Gửi email →</a>
+        </div>
+      </section>
+    </main>
+
+    <site-footer></site-footer>
+
+    <!-- CART DRAWER -->
+    <div class="cart-scrim" data-cart-scrim></div>
+    <aside class="cart-drawer" data-cart-drawer aria-label="Giỏ hàng">
+      <div class="cart-drawer__head">
+        <span class="cart-drawer__title">Giỏ hàng</span>
+        <button class="cart-close" data-close-cart aria-label="Đóng">✕</button>
+      </div>
+      <div class="cart-items" data-cart-items></div>
+      <div class="cart-drawer__foot">
+        <div class="cart-total">
+          <span class="cart-total__label">Tạm tính</span>
+          <span class="cart-total__val" data-cart-total>0₫</span>
+        </div>
+        <button class="circle-btn circle-btn--solid circle-btn--block">
+          Thanh toán
+        </button>
+      </div>
+    </aside>
+
+    <script src="/components/site-header.js" defer></script>
+    <script src="/components/site-footer.js" defer></script>
+    <script src="/js/artdict.js" defer></script>
+  </body>
+</html>

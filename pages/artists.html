@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>artdictờ — Tác giả · Artdict</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <style>
+      .art-hero {
+        padding: calc(120px + 40px) 0 56px;
+      }
+
+      .art-hero__top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 40px;
+        flex-wrap: wrap;
+      }
+
+      .art-hero__lede {
+        max-width: 38ch;
+        font-size: 1.08rem;
+        line-height: 1.62;
+        color: color-mix(in srgb, var(--ink) 76%, transparent);
+        align-self: center;
+      }
+
+      .art-hero h1 {
+        margin: 22px 0 0;
+      }
+
+      .art-hero h1 .lc {
+        color: var(--crimson);
+      }
+
+      .art-stats {
+        display: flex;
+        gap: 40px;
+        margin-top: 40px;
+        padding-top: 30px;
+        border-top: 1px solid var(--line-light);
+        flex-wrap: wrap;
+      }
+
+      .art-stat__n {
+        font-family: var(--display);
+        font-weight: 700;
+        letter-spacing: -0.04em;
+        font-size: 2.4rem;
+        color: var(--crimson);
+      }
+
+      .art-stat__l {
+        font-family: var(--display);
+        font-weight: 500;
+        font-size: 0.88rem;
+        color: color-mix(in srgb, var(--ink) 60%, transparent);
+      }
+
+      @media (max-width: 768px) {
+        .art-hero {
+          padding: 44px 0 36px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <site-header active="tacgia"></site-header>
+
+    <main class="wrap">
+      <!-- HERO -->
+      <section class="art-hero">
+        <div class="art-hero__top">
+          <div class="reveal">
+            <p class="eyebrow">Tác giả · The Makers</p>
+            <img
+              src="/assets/Frame%20112.png"
+              alt="artdictờ."
+              width="484"
+              height="228"
+              style="
+                max-width: 60%;
+                height: auto;
+                margin-top: 22px;
+                display: block;
+              "
+            />
+          </div>
+          <p class="art-hero__lede reveal" data-delay="120">
+            Đằng sau mỗi bản in giới hạn là một con người. <em>artdictờ</em> là
+            cách chúng tôi gọi những nghệ sĩ làm nên Artdict — họa sĩ, người làm
+            chữ, thợ in lưới. Mỗi người ngồi xuống kể lại câu chuyện sau tác
+            phẩm, ngôn ngữ tạo hình riêng và cách họ nhìn nghệ thuật.
+          </p>
+        </div>
+        <div class="art-stats reveal" data-delay="180">
+          <div class="art-stat">
+            <div class="art-stat__n">05</div>
+            <div class="art-stat__l">Tác giả</div>
+          </div>
+          <div class="art-stat">
+            <div class="art-stat__n">04</div>
+            <div class="art-stat__l">Thành phố</div>
+          </div>
+          <div class="art-stat">
+            <div class="art-stat__n">100%</div>
+            <div class="art-stat__l">In thủ công</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ARTIST ROWS -->
+      <section class="artists-list">
+        <!-- 01 -->
+        <article class="artist-row reveal">
+          <a
+            class="artist-row__media"
+            href="artist.html"
+            style="display: block"
+          >
+            <div class="artist-portrait">
+              <span class="artist-portrait__n">01</span>
+              <div class="ph">
+                <span class="ph__label">chân dung · Quân</span>
+              </div>
+            </div>
+          </a>
+          <div class="artist-row__text">
+            <p class="eyebrow">Sài Gòn</p>
+            <h2 class="artist-row__name">Lê Minh Quân</h2>
+            <div class="artist-row__role">
+              Họa sĩ minh họa <span class="sep"></span> Sáng lập Artdict
+            </div>
+            <p class="artist-row__quote">
+              <span class="q-mark">“</span>Tôi vẽ lại những bức tường mình lớn
+              lên cùng — loang lổ, chồng lớp, không hoàn hảo.<span
+                class="q-mark"
+                >”</span
+              >
+            </p>
+            <p class="artist-row__bio">
+              Quân bắt đầu từ những trang sổ phác họa phố cổ. Anh đưa chất mực
+              tàu và texture tường cũ vào vải, biến ký ức đô thị thành thứ có
+              thể mặc lên người.
+            </p>
+            <div class="artist-works">
+              <span class="work-chip">Áo thun “Mực Tàu”</span>
+              <span class="work-chip">Áo thun “Phố Cổ”</span>
+            </div>
+            <a class="circle-btn" href="artist.html">Đọc phỏng vấn →</a>
+          </div>
+        </article>
+
+        <!-- 02 -->
+        <article class="artist-row reveal">
+          <a
+            class="artist-row__media"
+            href="artist.html"
+            style="display: block"
+          >
+            <div class="artist-portrait">
+              <span class="artist-portrait__n">02</span>
+              <div class="ph">
+                <span class="ph__label">chân dung · Hà My</span>
+              </div>
+            </div>
+          </a>
+          <div class="artist-row__text">
+            <p class="eyebrow">Đà Lạt</p>
+            <h2 class="artist-row__name">Trần Hà My</h2>
+            <div class="artist-row__role">
+              Nghệ sĩ bố cục &amp; in lưới <span class="sep"></span> artdictờ
+            </div>
+            <p class="artist-row__quote">
+              <span class="q-mark">“</span>Khoảng trắng cũng biết nói — tôi chỉ
+              cố gắng đừng lấp đầy nó.<span class="q-mark">”</span>
+            </p>
+            <p class="artist-row__bio">
+              Hà My làm việc với sự tối giản và nhịp điệu của trang giấy. Những
+              cuốn sổ của cô để lại nhiều chỗ trống có chủ đích, mời người dùng
+              tự viết tiếp câu chuyện.
+            </p>
+            <div class="artist-works">
+              <span class="work-chip">Sổ tay “Bản Thảo”</span>
+              <span class="work-chip">Sổ tay “Trang Trắng”</span>
+            </div>
+            <a class="circle-btn" href="artist.html">Đọc phỏng vấn →</a>
+          </div>
+        </article>
+
+        <!-- 03 -->
+        <article class="artist-row reveal">
+          <a
+            class="artist-row__media"
+            href="artist.html"
+            style="display: block"
+          >
+            <div class="artist-portrait">
+              <span class="artist-portrait__n">03</span>
+              <div class="ph">
+                <span class="ph__label">chân dung · Phúc</span>
+              </div>
+            </div>
+          </a>
+          <div class="artist-row__text">
+            <p class="eyebrow">Hà Nội</p>
+            <h2 class="artist-row__name">Nguyễn Hoàng Phúc</h2>
+            <div class="artist-row__role">
+              Nghệ sĩ chữ &amp; thiết kế đồ họa
+              <span class="sep"></span> artdictờ
+            </div>
+            <p class="artist-row__quote">
+              <span class="q-mark">“</span>Một con chữ với tôi là một nhân vật,
+              có dáng đi và tính cách riêng.<span class="q-mark">”</span>
+            </p>
+            <p class="artist-row__bio">
+              Phúc nghiên cứu chữ Việt lập thể, bẻ gãy và dựng lại từng nét. Mẫu
+              mũ “Lập Thể” là kết quả của hàng trăm bản phác chữ trên giấy kẻ ô.
+            </p>
+            <div class="artist-works">
+              <span class="work-chip">Mũ “Lập Thể”</span>
+            </div>
+            <a class="circle-btn" href="artist.html">Đọc phỏng vấn →</a>
+          </div>
+        </article>
+
+        <!-- 04 -->
+        <article class="artist-row reveal">
+          <a
+            class="artist-row__media"
+            href="artist.html"
+            style="display: block"
+          >
+            <div class="artist-portrait">
+              <span class="artist-portrait__n">04</span>
+              <div class="ph">
+                <span class="ph__label">chân dung · Thu Trang</span>
+              </div>
+            </div>
+          </a>
+          <div class="artist-row__text">
+            <p class="eyebrow">Sài Gòn</p>
+            <h2 class="artist-row__name">Phạm Thu Trang</h2>
+            <div class="artist-row__role">
+              In lưới &amp; nhiếp ảnh <span class="sep"></span> artdictờ
+            </div>
+            <p class="artist-row__quote">
+              <span class="q-mark">“</span>Mỗi vết mực lệch là một dấu vân tay —
+              tôi không sửa, tôi giữ.<span class="q-mark">”</span>
+            </p>
+            <p class="artist-row__bio">
+              Trang xem lỗi in là phần đẹp nhất của thủ công. Cô kéo lụa từng
+              chiếc, để ngẫu nhiên và độ ẩm Sài Gòn ghi dấu lên từng sản phẩm.
+            </p>
+            <div class="artist-works">
+              <span class="work-chip">Sổ tay “Vết Mực”</span>
+              <span class="work-chip">Mũ “Sương Sớm”</span>
+            </div>
+            <a class="circle-btn" href="artist.html">Đọc phỏng vấn →</a>
+          </div>
+        </article>
+
+        <!-- 05 -->
+        <article class="artist-row reveal">
+          <a
+            class="artist-row__media"
+            href="artist.html"
+            style="display: block"
+          >
+            <div class="artist-portrait">
+              <span class="artist-portrait__n">05</span>
+              <div class="ph">
+                <span class="ph__label">chân dung · Gia Bảo</span>
+              </div>
+            </div>
+          </a>
+          <div class="artist-row__text">
+            <p class="eyebrow">Huế</p>
+            <h2 class="artist-row__name">Đỗ Gia Bảo</h2>
+            <div class="artist-row__role">
+              Nghệ sĩ thị giác <span class="sep"></span> artdictờ
+            </div>
+            <p class="artist-row__quote">
+              <span class="q-mark">“</span>Nghệ thuật là cách tôi ghi chú thời
+              gian đang trôi qua.<span class="q-mark">”</span>
+            </p>
+            <p class="artist-row__bio">
+              Gia Bảo lấy cảm hứng từ trăng, nước và những khoảng lặng cố đô.
+              Tác phẩm của anh thường tối giản về màu nhưng giàu lớp nghĩa.
+            </p>
+            <div class="artist-works">
+              <span class="work-chip">Mũ “Trăng Khuyết”</span>
+            </div>
+            <a class="circle-btn" href="artist.html">Đọc phỏng vấn →</a>
+          </div>
+        </article>
+      </section>
+
+      <!-- JOIN BAND -->
+      <section class="join-band reveal">
+        <div>
+          <p class="eyebrow" style="margin-bottom: 14px">Cộng tác</p>
+          <h2 class="join-band__title">Bạn cũng là một artdictờ?</h2>
+          <p
+            style="
+              margin-top: 16px;
+              max-width: 46ch;
+              color: color-mix(in srgb, var(--ink) 75%, transparent);
+            "
+          >
+            Chúng tôi luôn tìm những người kể chuyện bằng hình ảnh. Gửi
+            portfolio và câu chuyện của bạn.
+          </p>
+        </div>
+        <a class="circle-btn circle-btn--solid" href="submit.html"
+          >Gửi tác phẩm</a
+        >
+      </section>
+    </main>
+
+    <site-footer></site-footer>
+
+    <!-- CART DRAWER -->
+    <div class="cart-scrim" data-cart-scrim></div>
+    <aside class="cart-drawer" data-cart-drawer aria-label="Giỏ hàng">
+      <div class="cart-drawer__head">
+        <span class="cart-drawer__title">Giỏ hàng</span>
+        <button class="cart-close" data-close-cart aria-label="Đóng">✕</button>
+      </div>
+      <div class="cart-items" data-cart-items></div>
+      <div class="cart-drawer__foot">
+        <div class="cart-total">
+          <span class="cart-total__label">Tạm tính</span>
+          <span class="cart-total__val" data-cart-total>0₫</span>
+        </div>
+        <button class="circle-btn circle-btn--solid circle-btn--block">
+          Thanh toán
+        </button>
+      </div>
+    </aside>
+
+    <script src="/components/site-header.js" defer></script>
+    <script src="/components/site-footer.js" defer></script>
+    <script src="/js/artdict.js" defer></script>
+  </body>
+</html>
