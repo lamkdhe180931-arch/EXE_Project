@@ -29,7 +29,7 @@ Hướng dẫn cho Claude. **Đọc rules trong `.claude/rules/` TRƯỚC khi co
 ---
 
 # Tiến độ dự án
-*Cập nhật: 2026-06-13*
+*Cập nhật: 2026-06-14*
 
 ## 1. Frontend (`/`)
 - **Hoàn thành**: `index.html`, components, `catalogue.html`, `collection.html`, `about.html`, `submit.html`, `artists.html`, `artist.html`, `product.html`. Tất cả đã dùng **ảnh thật**. Hợp nhất `style.css`.
@@ -45,12 +45,11 @@ Hướng dẫn cho Claude. **Đọc rules trong `.claude/rules/` TRƯỚC khi co
   > Email đổi từ `fetch` thuần → **SDK `resend`** (thêm dep `resend@^6`, theo yêu cầu chủ dự án — ghi đè quyết định "no dep" cũ cho email).
 - **Admin Panel** (`admin/`, ngang hàng `backend/`): HTML/CSS/JS thuần. login + dashboard + products (artist picker + upload ảnh) + orders (đổi status) + artists (3 block Q&A) + posts. Logic thuần ở `admin/js/core.js` (14 test). **Cố ý tĩnh** (rule animation áp cho trang showcase công khai, không phải dashboard nội bộ).
 
-- **Tồn đọng (chỉ còn cấu hình + chạy thật — KHÔNG còn việc code):**
-  - **Chưa tạo `backend/.env`** (chứa secret thật → user tự điền, xem hướng dẫn dưới). Đã có `.env.example`.
-  - **Chưa migrate DB**: cần `DATABASE_URL` Neon thật → `npm run db:migrate` (schema đã `prisma validate` ✓).
-  - **Chưa seed admin**: cần `ADMIN_EMAIL`+`ADMIN_PASSWORD` → `npm run db:seed`.
-  - Credential bên thứ 3 (chỉ cần khi dùng tính năng đó): `CLOUDINARY_*` (upload ảnh) · `MOMO_*` (thanh toán) · `RESEND_API_KEY`+`EMAIL_FROM` (email). **E2E tạo Product+Post KHÔNG cần các key này** — chỉ cần `DATABASE_URL` + `JWT_*` + admin seed.
-  - **Chưa commit git** — đang ở branch `feature/artdict-ui`, nhiều file mới chưa add.
+- **Trạng thái chạy thật (2026-06-14): ĐÃ CHẠY E2E TRÊN NEON ✓ — hết tồn đọng BE bắt buộc.**
+  - `backend/.env` đã tạo (JWT secret sinh sẵn; `DATABASE_URL` Neon thật). DB đã `db:migrate` (migration `init` đã commit) + `db:seed` (admin `admin@artdict.vn`). 127/127 test pass; `prisma validate` ✓.
+  - **E2E verified** bằng smoke test: boot app → login admin → tạo + list Product & Post → POST khi chưa auth bị `401` → đã dọn sạch row test (DB chỉ còn admin user).
+  - Toàn bộ Phase 1-7 + admin + migration **đã commit** lên `feature/artdict-ui` (chưa push).
+  - Credential bên thứ 3 vẫn rỗng (chỉ cần khi bật tính năng đó): `CLOUDINARY_*` (upload ảnh) · `MOMO_*` (thanh toán) · `RESEND_API_KEY`+`EMAIL_FROM` (email). Backend chạy bình thường không cần các key này.
 
 - **Quyết định chốt** (2026-06-11): phí ship = **miễn phí toàn bộ** (total = tiền hàng, không cột `shippingFee`); tra cứu đơn guest = **không làm** (khách chỉ nhận email xác nhận).
 
