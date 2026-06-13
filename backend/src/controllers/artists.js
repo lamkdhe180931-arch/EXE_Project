@@ -1,4 +1,6 @@
-function makeArtistsController(db) {
+function makeArtistsController(db, deps = {}) {
+  const email = deps.email || require('../services/email');
+
   async function list(_req, res) {
     const artists = await db.artist.findMany({ orderBy: { createdAt: 'desc' } });
     return res.json(artists);
@@ -47,7 +49,34 @@ function makeArtistsController(db) {
     return res.json({ message: 'Đã xóa nghệ sĩ' });
   }
 
-  return { list, detail, create, update, remove };
+  // POST /api/artists/apply — public; an artist submits their portfolio. We email
+  // the admin inbox (no DB row). The email is the only record, so a send failure
+  // must surface (502) rather than be swallowed — otherwise the application is lost.
+  async function apply(req, res) {
+    const { name, email: applicantEmail, portfolio, city, message } = req.body;
+    if (!name || !applicantEmail || !portfolio) {
+      return res
+        .status(400)
+        .json({ error: 'name, email, portfolio là bắt buộc' });
+    }
+
+    const adminEmail = process.env.ADMIN_EMAIL || process.env.EMAIL_FROM;
+    try {
+      await email.sendArtistApplication(adminEmail, {
+        name,
+        email: applicantEmail,
+        portfolio,
+        city,
+        message,
+      });
+    } catch {
+      return res.status(502).json({ error: 'Không gửi được hồ sơ, vui lòng thử lại' });
+    }
+
+    return res.status(202).json({ message: 'Đã nhận hồ sơ, Artdict sẽ liên hệ lại' });
+  }
+
+  return { list, detail, create, update, remove, apply };
 }
 
 module.exports = makeArtistsController;

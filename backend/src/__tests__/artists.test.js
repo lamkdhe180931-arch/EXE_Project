@@ -183,3 +183,57 @@ describe('DELETE /api/artists/:id', () => {
     expect(res.status).toBe(403);
   });
 });
+
+// ─── POST apply — public artist application ───────────────────────────────────
+
+describe('POST /api/artists/apply', () => {
+  let email;
+  let applyApp;
+
+  beforeEach(() => {
+    process.env.ADMIN_EMAIL = 'admin@artdict.vn';
+    email = {
+      sendArtistApplication: jest.fn().mockResolvedValue({ id: 'em_app' }),
+    };
+    applyApp = createApp(db, { email });
+  });
+
+  const validApplication = {
+    name: 'Mai',
+    email: 'mai@e.com',
+    city: 'Sài Gòn',
+    portfolio: 'behance.net/mai',
+    message: 'Mình muốn hợp tác.',
+  };
+
+  test('202: forwards a valid application to the admin inbox', async () => {
+    const res = await request(applyApp)
+      .post('/api/artists/apply')
+      .send(validApplication);
+
+    expect(res.status).toBe(202);
+    expect(email.sendArtistApplication).toHaveBeenCalledTimes(1);
+    const [adminEmail, applicant] = email.sendArtistApplication.mock.calls[0];
+    expect(adminEmail).toBe('admin@artdict.vn');
+    expect(applicant.name).toBe('Mai');
+    expect(applicant.portfolio).toBe('behance.net/mai');
+  });
+
+  test('400: rejects when required fields are missing', async () => {
+    const res = await request(applyApp)
+      .post('/api/artists/apply')
+      .send({ name: 'Mai' });
+
+    expect(res.status).toBe(400);
+    expect(email.sendArtistApplication).not.toHaveBeenCalled();
+  });
+
+  test('502: surfaces an email failure so the applicant can retry', async () => {
+    email.sendArtistApplication.mockRejectedValue(new Error('Resend down'));
+    const res = await request(applyApp)
+      .post('/api/artists/apply')
+      .send(validApplication);
+
+    expect(res.status).toBe(502);
+  });
+});

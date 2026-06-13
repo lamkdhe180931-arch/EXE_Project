@@ -6,6 +6,7 @@ const authRouter = require('./routes/auth');
 const productsRouter = require('./routes/products');
 const artistsRouter = require('./routes/artists');
 const ordersRouter = require('./routes/orders');
+const postsRouter = require('./routes/posts');
 
 function createApp(db, deps = {}) {
   const app = express();
@@ -23,8 +24,9 @@ function createApp(db, deps = {}) {
 
   app.use('/api/auth', authRouter(db));
   app.use('/api/products', productsRouter(db, deps));
-  app.use('/api/artists', artistsRouter(db));
+  app.use('/api/artists', artistsRouter(db, deps));
   app.use('/api/orders', ordersRouter(db, deps));
+  app.use('/api/posts', postsRouter(db));
 
   return app;
 }

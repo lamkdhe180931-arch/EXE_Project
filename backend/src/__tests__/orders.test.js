@@ -20,7 +20,10 @@ beforeEach(() => {
       .mockResolvedValue({ payUrl: 'https://pay.momo/abc' }),
     verifyIpnSignature: jest.fn().mockReturnValue(true),
   };
-  email = { sendOrderConfirmation: jest.fn().mockResolvedValue({ id: 'em_1' }) };
+  email = {
+    sendOrderConfirmation: jest.fn().mockResolvedValue({ id: 'em_1' }),
+    sendOrderShipped: jest.fn().mockResolvedValue({ id: 'em_2' }),
+  };
   app = createApp(db, { momo, email });
 });
 
@@ -441,5 +444,59 @@ describe('PATCH /api/orders/:id/status', () => {
       .set('Authorization', customerToken())
       .send({ status: 'SHIPPED' });
     expect(res.status).toBe(403);
+  });
+
+  test('sends a shipped email when the status becomes SHIPPED', async () => {
+    db.order.findUnique.mockResolvedValue({ id: 5, status: 'PAID' });
+    db.order.update.mockResolvedValue({
+      id: 5,
+      status: 'SHIPPED',
+      guestEmail: 'g@e.com',
+    });
+    const res = await request(app)
+      .patch('/api/orders/5/status')
+      .set('Authorization', adminToken())
+      .send({ status: 'SHIPPED' });
+    expect(res.status).toBe(200);
+    expect(email.sendOrderShipped).toHaveBeenCalledTimes(1);
+  });
+
+  test('does not re-send the shipped email when the order is already SHIPPED', async () => {
+    db.order.findUnique.mockResolvedValue({ id: 5, status: 'SHIPPED' });
+    db.order.update.mockResolvedValue({
+      id: 5,
+      status: 'SHIPPED',
+      guestEmail: 'g@e.com',
+    });
+    await request(app)
+      .patch('/api/orders/5/status')
+      .set('Authorization', adminToken())
+      .send({ status: 'SHIPPED' });
+    expect(email.sendOrderShipped).not.toHaveBeenCalled();
+  });
+
+  test('does not send a shipped email for other status changes', async () => {
+    db.order.findUnique.mockResolvedValue({ id: 5, status: 'PAID' });
+    db.order.update.mockResolvedValue({ id: 5, status: 'DELIVERED' });
+    await request(app)
+      .patch('/api/orders/5/status')
+      .set('Authorization', adminToken())
+      .send({ status: 'DELIVERED' });
+    expect(email.sendOrderShipped).not.toHaveBeenCalled();
+  });
+
+  test('200: a failing shipped email does not break the status update', async () => {
+    db.order.findUnique.mockResolvedValue({ id: 5, status: 'PAID' });
+    db.order.update.mockResolvedValue({
+      id: 5,
+      status: 'SHIPPED',
+      guestEmail: 'g@e.com',
+    });
+    email.sendOrderShipped.mockRejectedValue(new Error('Resend down'));
+    const res = await request(app)
+      .patch('/api/orders/5/status')
+      .set('Authorization', adminToken())
+      .send({ status: 'SHIPPED' });
+    expect(res.status).toBe(200);
   });
 });

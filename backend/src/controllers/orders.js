@@ -160,7 +160,22 @@ function makeOrdersController(db, deps = {}) {
     if (!existing) {
       return res.status(404).json({ error: 'Đơn hàng không tồn tại' });
     }
-    const order = await db.order.update({ where: { id }, data: { status } });
+    const order = await db.order.update({
+      where: { id },
+      data: { status },
+      include: { user: true },
+    });
+
+    // Shipped notification is best-effort — never fail the status update over it.
+    // Only on the transition INTO shipped: re-PATCHing SHIPPED must not re-email.
+    if (status === 'SHIPPED' && existing.status !== 'SHIPPED') {
+      try {
+        await email.sendOrderShipped(order);
+      } catch {
+        /* swallow: email failure must not break the admin's status update */
+      }
+    }
+
     return res.json(order);
   }
 
