@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Đơn hàng · Artdict Admin</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/admin.css" />
+  </head>
+  <body>
+    <div class="admin-shell">
+      <aside class="sidebar" id="admin-nav"></aside>
+      <main class="main">
+        <div class="main__head"><h1>Đơn hàng</h1></div>
+        <div id="msg" class="msg"></div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>#</th><th>Khách</th><th>Tổng</th><th>Trạng thái</th><th>Đổi trạng thái</th><th>Ngày</th></tr>
+            </thead>
+            <tbody id="orders-body">
+              <tr><td colspan="6" class="muted">Đang tải…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+
+    <script src="js/core.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/orders.js"></script>
+  </body>
+</html>

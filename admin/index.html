@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tổng quan · Artdict Admin</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/admin.css" />
+  </head>
+  <body>
+    <div class="admin-shell">
+      <aside class="sidebar" id="admin-nav"></aside>
+      <main class="main">
+        <div class="main__head"><h1>Tổng quan</h1></div>
+        <div id="msg" class="msg msg--error"></div>
+
+        <div class="stat-grid">
+          <div class="stat"><div class="stat__k">Doanh thu (đã thanh toán)</div><div class="stat__v" id="stat-revenue">—</div></div>
+          <div class="stat"><div class="stat__k">Tổng đơn</div><div class="stat__v" id="stat-orders">—</div></div>
+          <div class="stat"><div class="stat__k">Đơn chờ xử lý</div><div class="stat__v" id="stat-pending">—</div></div>
+          <div class="stat"><div class="stat__k">Sản phẩm tồn thấp</div><div class="stat__v" id="stat-lowstock">—</div></div>
+        </div>
+
+        <div class="section-gap">
+          <h2>Đơn hàng gần đây</h2>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>#</th><th>Khách</th><th>Tổng</th><th>Trạng thái</th><th>Ngày</th></tr>
+              </thead>
+              <tbody id="recent-orders">
+                <tr><td colspan="5" class="muted">Đang tải…</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="js/core.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/index.js"></script>
+  </body>
+</html>

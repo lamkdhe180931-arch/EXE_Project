@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nghệ sĩ · Artdict Admin</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/admin.css" />
+  </head>
+  <body>
+    <div class="admin-shell">
+      <aside class="sidebar" id="admin-nav"></aside>
+      <main class="main">
+        <div class="main__head"><h1>Nghệ sĩ</h1></div>
+        <div id="msg" class="msg"></div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>#</th><th>Tên</th><th>Slug</th><th>Vai trò</th><th>Thành phố</th><th></th></tr>
+            </thead>
+            <tbody id="artists-body">
+              <tr><td colspan="6" class="muted">Đang tải…</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="section-gap">
+          <h2>Thêm nghệ sĩ mới</h2>
+          <form id="artist-form" class="card form-grid">
+            <div class="field"><label for="name">Tên nghệ sĩ</label><input id="name" required /></div>
+            <div class="field"><label for="slug">Slug</label><input id="slug" placeholder="nguyen-muc-tau" required /></div>
+            <div class="field"><label for="role">Vai trò</label><input id="role" placeholder="Họa sĩ minh họa" required /></div>
+            <div class="field"><label for="city">Thành phố</label><input id="city" required /></div>
+            <div class="field"><label for="since">Hoạt động từ năm</label><input id="since" type="number" placeholder="2019" required /></div>
+            <div class="field"><label for="avatarUrl">Ảnh chân dung (URL)</label><input id="avatarUrl" placeholder="/assets/art-1.png" /></div>
+            <div class="field"><label for="quote">Pull quote lớn</label><textarea id="quote" required></textarea></div>
+
+            <fieldset class="fieldset">
+              <legend>Câu hỏi 1</legend>
+              <div class="field"><label for="q1">Tiêu đề</label><input id="q1" required /></div>
+              <div class="field"><label for="a1">Nội dung (dùng dòng trống để xuống đoạn)</label><textarea id="a1" required></textarea></div>
+            </fieldset>
+            <fieldset class="fieldset">
+              <legend>Câu hỏi 2</legend>
+              <div class="field"><label for="q2">Tiêu đề</label><input id="q2" required /></div>
+              <div class="field"><label for="a2">Nội dung</label><textarea id="a2" required></textarea></div>
+            </fieldset>
+            <fieldset class="fieldset">
+              <legend>Câu hỏi 3</legend>
+              <div class="field"><label for="q3">Tiêu đề</label><input id="q3" required /></div>
+              <div class="field"><label for="a3">Nội dung</label><textarea id="a3" required></textarea></div>
+            </fieldset>
+
+            <button class="btn" type="submit">Tạo nghệ sĩ</button>
+          </form>
+        </div>
+      </main>
+    </div>
+
+    <script src="js/core.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/artists.js"></script>
+  </body>
+</html>

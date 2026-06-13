@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bài viết · Artdict Admin</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/admin.css" />
+  </head>
+  <body>
+    <div class="admin-shell">
+      <aside class="sidebar" id="admin-nav"></aside>
+      <main class="main">
+        <div class="main__head"><h1>Bài viết</h1></div>
+        <div id="msg" class="msg"></div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>#</th><th>Loại</th><th>Tiêu đề</th><th>Slug</th><th>Trạng thái</th></tr>
+            </thead>
+            <tbody id="posts-body">
+              <tr><td colspan="5" class="muted">Đang tải…</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="section-gap">
+          <h2>Viết bài mới</h2>
+          <form id="post-form" class="card form-grid">
+            <div class="field">
+              <label for="type">Loại</label>
+              <select id="type"><option value="NEWS">NEWS</option><option value="JOURNAL">JOURNAL</option></select>
+            </div>
+            <div class="field"><label for="title">Tiêu đề</label><input id="title" required /></div>
+            <div class="field"><label for="slug">Slug</label><input id="slug" placeholder="ra-mat-meo-no" required /></div>
+            <div class="field"><label for="body">Nội dung</label><textarea id="body" style="min-height: 160px" required></textarea></div>
+            <div class="field" style="grid-auto-flow: column; justify-content: start; align-items: center; gap: 8px">
+              <input id="publishNow" type="checkbox" style="width: auto" />
+              <label for="publishNow" style="margin: 0">Xuất bản ngay</label>
+            </div>
+            <button class="btn" type="submit">Lưu bài</button>
+          </form>
+        </div>
+      </main>
+    </div>
+
+    <script src="js/core.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/posts.js"></script>
+  </body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "artdict-admin",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Artdict admin panel (static HTML/CSS/JS). Jest only tests the pure logic in js/core.js.",
+  "scripts": {
+    "test": "jest"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "clearMocks": true
+  },
+  "devDependencies": {
+    "jest": "^30.4.2"
+  }
+}
