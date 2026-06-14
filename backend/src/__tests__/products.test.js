@@ -109,6 +109,20 @@ describe('POST /api/products', () => {
     expect(res.body.id).toBe(3);
   });
 
+  test('201: optional description is passed through to db', async () => {
+    db.product.create.mockResolvedValue({ id: 4, ...validBody, description: 'Mô tả', isActive: true, images: [] });
+
+    const res = await request(app)
+      .post('/api/products')
+      .set('Authorization', adminToken())
+      .send({ ...validBody, description: 'Mô tả' });
+
+    expect(res.status).toBe(201);
+    expect(db.product.create).toHaveBeenCalledWith(
+      expect.objectContaining({ data: expect.objectContaining({ description: 'Mô tả' }) })
+    );
+  });
+
   test('400: missing required fields', async () => {
     const res = await request(app)
       .post('/api/products')

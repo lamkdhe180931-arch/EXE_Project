@@ -169,73 +169,17 @@
       <nav class="breadcrumb reveal">
         <a href="catalogue.html">Bộ sưu tập</a>
         <span class="sep">/</span>
-        <a href="catalogue.html">Áo thun</a>
+        <a id="pd-crumb-cat" href="catalogue.html">Bộ sưu tập</a>
         <span class="sep">/</span>
-        <span class="cur">Mực Tàu</span>
+        <span class="cur" id="pd-crumb-name">Đang tải…</span>
       </nav>
 
       <div class="pd-grid">
-        <!-- GALLERY -->
+        <!-- GALLERY — rendered from product.images[] by /js/product.js -->
         <div class="gallery reveal">
-          <div class="gallery__thumbs">
-            <button
-              class="thumb is-active"
-              data-thumb
-              data-label="Mặt trước"
-              data-full="/assets/ao-meo-no-1.png"
-            >
-              <div class="ph">
-                <img
-                  src="/assets/ao-meo-no-1.png"
-                  alt="Áo thun Mực Tàu — mặt trước"
-                />
-              </div>
-            </button>
-            <button
-              class="thumb"
-              data-thumb
-              data-label="Mặt sau"
-              data-full="/assets/ao-meo-no-2.png"
-            >
-              <div class="ph">
-                <img
-                  src="/assets/ao-meo-no-2.png"
-                  alt="Áo thun Mực Tàu — mặt sau"
-                />
-              </div>
-            </button>
-            <button
-              class="thumb"
-              data-thumb
-              data-label="Phối cảnh"
-              data-full="/assets/ao-do-de-choi.png"
-            >
-              <div class="ph">
-                <img
-                  src="/assets/ao-do-de-choi.png"
-                  alt="Áo thun Mực Tàu — phối cảnh"
-                />
-              </div>
-            </button>
-            <button
-              class="thumb"
-              data-thumb
-              data-label="Chi tiết"
-              data-full="/assets/ao-artdict.png"
-            >
-              <div class="ph">
-                <img
-                  src="/assets/ao-artdict.png"
-                  alt="Áo thun Mực Tàu — chi tiết bản in"
-                />
-              </div>
-            </button>
-          </div>
+          <div class="gallery__thumbs" id="pd-thumbs"></div>
           <div class="gallery__main" data-gallery-main>
-            <img
-              src="/assets/ao-meo-no-1.png"
-              alt="Áo thun Mực Tàu — mặt trước"
-            />
+            <div class="ph"><span class="ph__label">Đang tải…</span></div>
           </div>
         </div>
 
@@ -249,28 +193,24 @@
               margin-bottom: 6px;
             "
           >
-            <span class="eyebrow" style="white-space: nowrap"
-              >Áo thun · Mùa 04</span
+            <span class="eyebrow" style="white-space: nowrap" id="pd-eyebrow"
+              >Bộ sưu tập</span
             >
-            <span class="badge">Mới</span>
+            <span class="badge" id="pd-badge" hidden></span>
           </div>
-          <h1 class="pd-title">“Mực Tàu”</h1>
+          <h1 class="pd-title" id="pd-title">Đang tải…</h1>
 
           <div class="pd-price-row">
-            <span class="price pd-price">420.000₫</span>
-            <span class="pd-price-old">490.000₫</span>
-            <span class="badge badge--ghost">−14%</span>
+            <span class="price pd-price" id="pd-price"></span>
           </div>
 
-          <p class="pd-lede">
-            Bản in lưới thủ công lấy cảm hứng từ thư pháp mực tàu và những bức
-            tường loang vết thời gian của phố cổ. Cotton 250gsm dệt compact,
-            form rộng vừa, in một mặt trước. Phát hành giới hạn 120 chiếc — đánh
-            số tay.
+          <p class="pd-lede" id="pd-lede">
+            Sản phẩm phát hành giới hạn — in &amp; hoàn thiện thủ công tại Sài
+            Gòn.
           </p>
 
-          <!-- SIZE -->
-          <div class="pd-block">
+          <!-- SIZE (apparel only; product.js removes it for other categories) -->
+          <div class="pd-block" id="pd-size-block">
             <div class="pd-block__head">
               <span class="spec-label" style="margin: 0">Chọn size</span>
               <a class="pd-sizeguide" href="size-guide.html">Bảng size</a>
@@ -280,7 +220,6 @@
               <button class="size-btn" data-size="M">M</button>
               <button class="size-btn" data-size="L">L</button>
               <button class="size-btn" data-size="XL">XL</button>
-              <button class="size-btn" data-size="2XL" disabled>2XL</button>
             </div>
           </div>
 
@@ -298,10 +237,11 @@
           <div class="pd-actions">
             <button
               class="circle-btn circle-btn--solid"
-              data-product-add="aothun-muc-tau"
-              data-name="Áo thun Mực Tàu"
-              data-cat="Áo thun"
-              data-price="420000"
+              id="pd-add"
+              data-product-add=""
+              data-name=""
+              data-cat=""
+              data-price=""
             >
               Thêm vào giỏ
             </button>
@@ -309,8 +249,8 @@
           </div>
 
           <div class="pd-reassure">
-            <span><span class="dot"></span>Đánh số 120 bản</span>
-            <span><span class="dot"></span>Miễn phí ship &gt; 500K</span>
+            <span><span class="dot"></span>In thủ công, số lượng giới hạn</span>
+            <span><span class="dot"></span>Miễn phí vận chuyển toàn quốc</span>
             <span><span class="dot"></span>Đổi size trong 7 ngày</span>
           </div>
 
@@ -318,33 +258,16 @@
           <div class="pd-accordion">
             <div class="acc-item open" data-acc-item>
               <button class="acc-trigger" data-acc-trigger aria-expanded="true">
-                Chi tiết &amp; chất liệu <span class="acc-ico"></span>
+                Hướng dẫn bảo quản <span class="acc-ico"></span>
               </button>
               <div class="acc-panel" data-acc-panel style="max-height: 400px">
                 <div class="acc-panel__inner">
                   <ul>
-                    <li>Cotton 100% — 250gsm, dệt compact, ít xù lông</li>
-                    <li>In lưới thủ công mực gốc nước, một mặt trước</li>
-                    <li>Form Boxy / oversize nhẹ, cổ bo rib 2 lớp</li>
-                    <li>May tại xưởng Artdict, Quận 4 — Sài Gòn</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div class="acc-item" data-acc-item>
-              <button
-                class="acc-trigger"
-                data-acc-trigger
-                aria-expanded="false"
-              >
-                Hướng dẫn bảo quản <span class="acc-ico"></span>
-              </button>
-              <div class="acc-panel" data-acc-panel>
-                <div class="acc-panel__inner">
-                  <ul>
-                    <li>Giặt máy nước lạnh, lộn trái để bảo vệ bản in</li>
-                    <li>Không tẩy, không là trực tiếp lên hình in</li>
-                    <li>Phơi nơi thoáng, tránh nắng gắt</li>
+                    <li>Bảo quản nơi khô ráo, thoáng mát, tránh nắng gắt</li>
+                    <li>Tránh ẩm mốc, nước và nhiệt độ cao</li>
+                    <li>
+                      Sản phẩm in: giặt/lau nhẹ, không là trực tiếp lên hình in
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -419,91 +342,7 @@
           </div>
           <a class="circle-btn" href="catalogue.html">Xem tất cả</a>
         </div>
-        <div class="rel-grid">
-          <a class="card reveal" data-tilt href="product.html" data-delay="0">
-            <div class="card__media card__media--upload">
-              <span class="card__badge-rect">Giới hạn</span>
-              <img
-                src="/assets/ao-artdict.png"
-                alt="Áo thun Phố Cổ"
-                loading="lazy"
-              />
-            </div>
-            <div class="card__meta-upload">
-              <p class="card__number">№ 02 &nbsp;–&nbsp; Áo thun</p>
-              <div class="card__row">
-                <h3 class="card__name">Phố Cổ</h3>
-                <div class="card__price-group">
-                  <span class="price card__price">390.000₫</span>
-                  <button
-                    class="card__add"
-                    data-add="aothun-pho-co"
-                    data-name="Áo thun Phố Cổ"
-                    data-cat="Áo thun"
-                    data-price="390000"
-                    data-img="/assets/ao-artdict.png"
-                  >
-                    Thêm +
-                  </button>
-                </div>
-              </div>
-            </div>
-          </a>
-          <a class="card reveal" data-tilt href="product.html" data-delay="60">
-            <div class="card__media card__media--upload">
-              <span class="card__badge-rect">Mới</span>
-              <img src="/assets/mu.png" alt="Mũ Lập Thể" loading="lazy" />
-            </div>
-            <div class="card__meta-upload">
-              <p class="card__number">№ 04 &nbsp;–&nbsp; Mũ</p>
-              <div class="card__row">
-                <h3 class="card__name">Lập Thể</h3>
-                <div class="card__price-group">
-                  <span class="price card__price">320.000₫</span>
-                  <button
-                    class="card__add"
-                    data-add="mu-lap-the"
-                    data-name="Mũ Lập Thể"
-                    data-cat="Mũ"
-                    data-price="320000"
-                    data-img="/assets/mu.png"
-                  >
-                    Thêm +
-                  </button>
-                </div>
-              </div>
-            </div>
-          </a>
-          <a class="card reveal" data-tilt href="product.html" data-delay="120">
-            <div class="card__media card__media--upload">
-              <span class="card__badge-rect">Mới</span>
-              <img
-                src="/assets/so-tay.png"
-                alt="Sổ tay Bản Thảo"
-                loading="lazy"
-              />
-            </div>
-            <div class="card__meta-upload">
-              <p class="card__number">№ 07 &nbsp;–&nbsp; Sổ tay</p>
-              <div class="card__row">
-                <h3 class="card__name">Bản Thảo</h3>
-                <div class="card__price-group">
-                  <span class="price card__price">180.000₫</span>
-                  <button
-                    class="card__add"
-                    data-add="sotay-ban-thao"
-                    data-name="Sổ tay Bản Thảo"
-                    data-cat="Sổ tay"
-                    data-price="180000"
-                    data-img="/assets/so-tay.png"
-                  >
-                    Thêm +
-                  </button>
-                </div>
-              </div>
-            </div>
-          </a>
-        </div>
+        <div class="rel-grid" id="related-grid"></div>
       </section>
     </main>
 
@@ -530,6 +369,8 @@
 
     <script src="/components/site-header.js" defer></script>
     <script src="/components/site-footer.js" defer></script>
+    <script src="/js/api.js" defer></script>
+    <script src="/js/product.js" defer></script>
     <script src="/js/artdict.js" defer></script>
   </body>
 </html>

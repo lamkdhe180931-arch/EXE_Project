@@ -35,10 +35,27 @@
             <div class="field"><label for="slug">Slug</label><input id="slug" placeholder="ao-meo-no" required /></div>
             <div class="field"><label for="price">Giá (VND)</label><input id="price" type="number" min="0" required /></div>
             <div class="field"><label for="stock">Tồn kho</label><input id="stock" type="number" min="0" value="0" /></div>
-            <div class="field"><label for="category">Danh mục</label><input id="category" placeholder="ao / mu / so-tay" required /></div>
+            <div class="field">
+              <label for="category">Danh mục</label>
+              <select id="category" required>
+                <option value="">— Chọn danh mục —</option>
+                <option value="aothun">Áo thun</option>
+                <option value="mu">Mũ</option>
+                <option value="vongtay">Vòng tay</option>
+                <option value="sotay">Sổ tay</option>
+                <option value="nhandan">Nhãn dán</option>
+                <option value="mockhoa">Móc khóa</option>
+                <option value="tranh">Tranh</option>
+                <option value="khac">Khác</option>
+              </select>
+            </div>
             <div class="field">
               <label for="artistId">Nghệ sĩ</label>
               <select id="artistId"><option value="">— Không gán —</option></select>
+            </div>
+            <div class="field">
+              <label for="description">Mô tả (hiện ở trang chi tiết)</label>
+              <textarea id="description" rows="3" placeholder="Bản in thủ công, chất liệu, cảm hứng…"></textarea>
             </div>
             <div class="field">
               <label for="images">Hình ảnh (có thể chọn nhiều)</label>

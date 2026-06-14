@@ -125,10 +125,10 @@
   }
 
   /* ---------- 3D tilt on cards ---------- */
-  function initTilt() {
+  function initTilt(root) {
     if (reduceMotion || window.matchMedia("(hover: none)").matches) return;
     const MAX = 8;
-    document.querySelectorAll("[data-tilt]").forEach((card) => {
+    (root || document).querySelectorAll("[data-tilt]").forEach((card) => {
       let raf;
       card.addEventListener("mousemove", (e) => {
         const r = card.getBoundingClientRect();
@@ -152,8 +152,8 @@
   }
 
   /* ---------- Scroll reveal ---------- */
-  function initReveal() {
-    const els = document.querySelectorAll(".reveal");
+  function initReveal(root) {
+    const els = (root || document).querySelectorAll(".reveal");
     if (reduceMotion || !("IntersectionObserver" in window)) {
       els.forEach((e) => e.classList.add("in"));
       return;
@@ -177,13 +177,13 @@
   /* ---------- Filter pills (catalogue) ---------- */
   function initFilters() {
     const pills = document.querySelectorAll("[data-filter]");
-    const cards = document.querySelectorAll(".card[data-cat]");
     const countEl = document.querySelector("[data-result-count]");
     if (!pills.length) return;
 
     function apply(cat) {
       let shown = 0;
-      cards.forEach((card) => {
+      // Query live each time so filtering works on dynamically rendered cards.
+      document.querySelectorAll(".card[data-cat]").forEach((card) => {
         const match = cat === "all" || card.dataset.cat === cat;
         if (match) {
           card.style.display = "";
@@ -274,8 +274,8 @@
   }
 
   /* ---------- Card add-to-cart (catalogue quick add) ---------- */
-  function initCardAdd() {
-    document.querySelectorAll("[data-add]").forEach((btn) => {
+  function initCardAdd(root) {
+    (root || document).querySelectorAll("[data-add]").forEach((btn) => {
       btn.addEventListener("click", (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -323,10 +323,11 @@
   }
 
   /* ---------- Product gallery thumbs ---------- */
-  function initGallery() {
-    const main = document.querySelector("[data-gallery-main]");
+  function initGallery(root) {
+    const scope = root || document;
+    const main = scope.querySelector("[data-gallery-main]");
     if (!main) return;
-    document.querySelectorAll("[data-thumb]").forEach((thumb) => {
+    scope.querySelectorAll("[data-thumb]").forEach((thumb) => {
       thumb.addEventListener("click", () => {
         document
           .querySelectorAll("[data-thumb]")
@@ -402,6 +403,14 @@
     renderCart();
   });
 
+  /* ---------- Rescan (bind interactions to dynamically injected cards) ---------- */
+  function rescan(root) {
+    initTilt(root);
+    initReveal(root);
+    initCardAdd(root);
+    initGallery(root);
+  }
+
   // expose for inline use if needed
-  window.Artdict = { addToCart, openCart, closeCart, VND };
+  window.Artdict = { addToCart, openCart, closeCart, VND, rescan };
 })();

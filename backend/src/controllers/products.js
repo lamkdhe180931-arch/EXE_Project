@@ -26,12 +26,16 @@ function makeProductsController(db, deps = {}) {
   }
 
   async function create(req, res) {
-    const { name, slug, price, stock, category, artistId } = req.body;
+    const { name, slug, price, stock, category, artistId, description } = req.body;
     if (!name || !slug || price == null || !category) {
       return res.status(400).json({ error: 'name, slug, price, category là bắt buộc' });
     }
     const product = await db.product.create({
-      data: { name, slug, price, stock: stock ?? 0, category, artistId: artistId ?? null },
+      data: {
+        name, slug, price, stock: stock ?? 0, category,
+        artistId: artistId ?? null,
+        description: description ?? null,
+      },
     });
     return res.status(201).json(product);
   }
@@ -41,7 +45,7 @@ function makeProductsController(db, deps = {}) {
     const existing = await db.product.findUnique({ where: { id } });
     if (!existing) return res.status(404).json({ error: 'Sản phẩm không tồn tại' });
 
-    const allowed = ['name', 'slug', 'price', 'stock', 'category', 'artistId', 'isActive'];
+    const allowed = ['name', 'slug', 'price', 'stock', 'category', 'artistId', 'description', 'isActive'];
     const data = {};
     for (const key of allowed) {
       if (req.body[key] !== undefined) data[key] = req.body[key];

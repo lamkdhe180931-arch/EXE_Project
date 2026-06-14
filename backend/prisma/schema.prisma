@@ -49,14 +49,15 @@ model Artist {
 }
 
 model Product {
-  id         Int            @id @default(autoincrement())
-  name       String
-  slug       String         @unique
-  price      Int            // VND, không dùng float
-  stock      Int            @default(0)
-  artistId   Int?
-  category   String
-  isActive   Boolean        @default(true)
+  id          Int            @id @default(autoincrement())
+  name        String
+  slug        String         @unique
+  price       Int            // VND, không dùng float
+  stock       Int            @default(0)
+  artistId    Int?
+  category    String
+  description String?        // mô tả sản phẩm (hiện ở trang chi tiết)
+  isActive    Boolean        @default(true)
   images     ProductImage[]
   artist     Artist?        @relation(fields: [artistId], references: [id])
   orderItems OrderItem[]

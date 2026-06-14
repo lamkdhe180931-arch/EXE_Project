@@ -73,6 +73,7 @@
       price: Number(val('price')),
       stock: Number(val('stock') || '0'),
       category: val('category'),
+      description: val('description') || null,
       artistId: artistId ? Number(artistId) : null,
     };
     try {
