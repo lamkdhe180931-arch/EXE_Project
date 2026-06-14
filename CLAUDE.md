@@ -33,7 +33,7 @@ Hướng dẫn cho Claude. **Đọc rules trong `.claude/rules/` TRƯỚC khi co
 
 ## 1. Frontend công khai (`/`)
 - **Hoàn thành (giao diện)**: `index.html`, components, `catalogue.html`, `collection.html`, `about.html`, `submit.html`, `artists.html`, `artist.html`, `product.html`. Tất cả dùng **ảnh thật**, `style.css` hợp nhất.
-- **Nối API (đang làm — mục A):** ✅ **Sản phẩm đã nối** (`catalogue.html` + `product.html` fetch `/api/products` qua `js/api.js` + `js/catalogue.js` + `js/product.js`; `artdict.js` thêm `rescan()` để bind tilt/reveal/filter/gallery/add-to-cart cho card render động). ⏳ **Còn TĨNH (hardcode)**: nghệ sĩ (`artists`/`artist`), bài viết (`news`/`journal`), ứng tuyển (`submit` vẫn `mailto:`), giỏ hàng/checkout. (Admin panel đã nối API đầy đủ từ trước.)
+- **Nối API (đang làm — mục A):** ✅ **Sản phẩm** (`catalogue`/`product` ← `/api/products`) + ✅ **Nghệ sĩ** (`artists`/`artist` ← `/api/artists`, works qua `?artistId=`) đã nối, qua `js/api.js` + page script riêng (`catalogue/product/artists/artist.js`); `artdict.js` thêm `rescan()` để bind tilt/reveal/filter/gallery/add-to-cart cho DOM render động. ⏳ **Còn TĨNH (hardcode)**: bài viết (`news`/`journal`), ứng tuyển (`submit` vẫn `mailto:`), giỏ hàng/checkout. (Admin panel đã nối API đầy đủ từ trước.)
 - **Tồn đọng giao diện**:
   - `collab.html`, `news.html`, `journal.html`, `size-guide.html` còn là stub "coming soon" (48 dòng/file).
   - `submit.html` vẫn là `mailto:artist@artdict.vn` — chưa nối `POST /api/artists/apply`.
@@ -63,7 +63,7 @@ Hướng dẫn cho Claude. **Đọc rules trong `.claude/rules/` TRƯỚC khi co
 Hiện chỉ admin tiêu thụ API; trang công khai vẫn hardcode. Làm lần lượt, mỗi bước có cách kiểm chứng:
 1. ✅ **Sản phẩm (XONG 2026-06-14)** — `catalogue.html` + `product.html` fetch `GET /api/products` (+ `/:slug`). Đã verify bằng screenshot (desktop+mobile) với 6 SP demo trên Neon: catalogue render đúng + filter/đếm theo `category` slug + sold-out + placeholder khi thiếu ảnh; product có gallery/giá/related động, size chỉ hiện cho `aothun`, sold-out disable nút, slug sai → trang 404. **Taxonomy đã chốt**: 8 slug cố định (`aothun/mu/vongtay/sotay/nhandan/mockhoa/tranh/khac`), ô category ở admin đổi `input`→`select`. **Map slug→nhãn** ở `js/api.js` (`ArtdictAPI.CATEGORIES`) là nguồn chung.
    > **Giới hạn còn lại** (model `Product` thiếu field): trang product dùng **lede generic** + accordion "chất liệu/bảo quản" **tĩnh** (vd trang sổ tay vẫn ghi "Cotton 250gsm" — sai). Muốn đúng từng SP cần thêm field `description`/`details` (+ `oldPrice` nếu muốn hiện giảm giá) vào schema → migration BE.
-2. **Nghệ sĩ** — `artists.html` + `artist.html` fetch `GET /api/artists` (+ `/:slug`). → *kiểm*: danh sách khớp DB.
+2. ✅ **Nghệ sĩ (XONG 2026-06-14)** — `artists.html` (list + stats động + work-chips từ `/products?artistId=`) & `artist.html` (hero/meta/pull-quote/Q&A từ `content.qa`/works/next-artist) fetch `GET /api/artists`. Verify screenshot desktop+mobile + 404. *Lưu ý*: model `Artist` không có `bio` → trang list bỏ đoạn bio (chỉ quote); Q&A render từ `content.qa[]` (đúng 3 mục).
 3. **Bài viết** — dựng `news.html` / `journal.html` từ stub, fetch `GET /api/posts?type=NEWS|JOURNAL` (+ `/:slug`). → *kiểm*: post tạo ở admin hiện ra.
 4. **Ứng tuyển** — `submit.html`: đổi `mailto:` → form `POST /api/artists/apply`. → *kiểm*: submit tạo log/email ở backend.
 5. **Giỏ hàng + checkout** — UI giỏ → `POST /api/orders` → redirect MoMo → trang `payment/return`. → *kiểm*: 1 đơn sandbox chạy hết luồng → IPN `momo-callback` đẩy đơn sang `PAID`.
