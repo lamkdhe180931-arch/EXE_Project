@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/lamkdhe180931-arch/EXE_Project/issues"
   },
-  "homepage": "https://github.com/lamkdhe180931-arch/EXE_Project#readme"
+  "homepage": "https://github.com/lamkdhe180931-arch/EXE_Project#readme",
+  "devDependencies": {
+    "sharp": "^0.35.1"
+  }
 }
