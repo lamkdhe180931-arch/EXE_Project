@@ -33,9 +33,11 @@ Hướng dẫn cho Claude. **Đọc rules trong `.claude/rules/` TRƯỚC khi co
 
 ## 1. Frontend công khai (`/`)
 - **Hoàn thành (giao diện)**: `index.html`, components, `catalogue.html`, `collection.html`, `about.html`, `submit.html`, `artists.html`, `artist.html`, `product.html`. Tất cả dùng **ảnh thật**, `style.css` hợp nhất.
-- **Nối API (đang làm — mục A):** ✅ **Sản phẩm** (`catalogue`/`product` ← `/api/products`) + ✅ **Nghệ sĩ** (`artists`/`artist` ← `/api/artists`, works qua `?artistId=`) + ✅ **Bài viết** (`news`/`journal`/`post` ← `/api/posts`) + ✅ **Giỏ hàng + Checkout** (`checkout`/`payment-return` ← `POST /api/orders` → MoMo) đã nối, qua `js/api.js` (giờ có cả `post()`) + page script riêng (`catalogue/product/artists/artist/posts/post/checkout/payment-return.js`); `artdict.js` thêm `rescan()` (bind tilt/reveal/filter/gallery/add-to-cart cho DOM động) + nối nút "Thanh toán" + `clearCart`. ⏳ **Còn TĨNH (hardcode)**: chỉ còn ứng tuyển (`submit` cố ý giữ `mailto:` — chủ dự án chốt chỉ hiện Gmail nhận CV/portfolio, KHÔNG nối `POST /api/artists/apply`). (Admin panel đã nối API đầy đủ từ trước.)
+- **Nối API (đang làm — mục A):** ✅ **Sản phẩm** (`catalogue`/`product` ← `/api/products`) + ✅ **Nghệ sĩ** (`artists`/`artist` ← `/api/artists`, works qua `?artistId=`) + ✅ **Bài viết** (`news`/`journal`/`post` ← `/api/posts`) + ✅ **Giỏ hàng + Checkout** (`checkout`/`payment-return` ← `POST /api/orders` → MoMo) + ✅ **Trang chủ** (`index.html` lưới "đang mở bán" ← `/api/products`, teaser 6 SP, slug thật) đã nối, qua `js/api.js` (giờ có cả `post()`) + page script riêng (`catalogue/product/artists/artist/posts/post/checkout/payment-return/index.js`); `artdict.js` thêm `rescan()` (bind tilt/reveal/filter/gallery/add-to-cart cho DOM động) + nối nút "Thanh toán" + `clearCart` + modal **size guide** (product áo thun). ⏳ **Còn TĨNH (hardcode)**: chỉ còn ứng tuyển (`submit` cố ý giữ `mailto:` — chủ dự án chốt chỉ hiện Gmail nhận CV/portfolio, KHÔNG nối `POST /api/artists/apply`). (Admin panel đã nối API đầy đủ từ trước.)
+  > **index.html nạp cả `main.js` (GSAP cho hero/manifesto/craft/stats, dùng `[data-reveal]`/`.tilt`) lẫn `artdict.js` + `api.js` + `index.js`.** Thẻ SP động dùng convention của artdict (`.reveal`/`[data-tilt]`/`data-add`) + `Artdict.rescan` → không đụng main.js. *Lưu ý*: stats `48/12/3k+` vẫn là **số mẫu** (chưa nối; "đơn giao" không có API công khai).
 - **Tồn đọng giao diện**:
-  - `collab.html`, `size-guide.html` còn là stub "coming soon" (48 dòng/file).
+  - `collab.html` còn là stub "coming soon" (chủ dự án bảo **tạm để đó**).
+  - `size-guide.html`: nội dung size đã chuyển vào **modal trong `product.html`** (chỉ hiện cho áo thun); file stub đứng riêng giờ **mồ côi** (không link từ đâu, chưa xoá). Số đo trong bảng là **tham khảo** — chờ số thật.
   - `submit.html` cố ý giữ `mailto:` (placeholder `artist@artdict.vn`, **chờ chủ dự án cho Gmail thật** để thay 3 chỗ: link/chữ/nút copy). KHÔNG nối API.
 - **Đã kiểm tra** (`node shot.js`, desktop 1440 + mobile 390): các trang chính render đúng, không vỡ layout mobile; `.reveal` hiển thị đúng ở chế độ reduced-motion. Logic đổi ảnh gallery (`data-full`) đã nối — chưa click-test live trên trình duyệt.
 
@@ -76,7 +78,9 @@ Hiện chỉ admin tiêu thụ API; trang công khai vẫn hardcode. Làm lần 
 > **CORS**: frontend gọi API phải nằm trong origin được allow. Local đã allow `:8000`; khi deploy phải set `FRONTEND_URL` = domain thật.
 
 ## B. Hoàn thiện trang còn stub
-A.3 đã nối `news`/`journal`; còn `collab.html` + `size-guide.html` là stub — dựng nội dung thật theo `design-discipline.md` + `mandatory-rules.md` (animation scroll + mobile + screenshot đối chiếu).
+- ✅ **size-guide**: đã chuyển thành **modal trong `product.html`** (áo thun) — không cần trang riêng (stub mồ côi, chưa xoá). Số đo là **tham khảo**, chờ số thật.
+- ⏸️ **`collab.html`**: chủ dự án bảo **tạm để đó** (chưa làm).
+- ✅ **Trang chủ động**: lưới SP `index.html` đã nối API (xem mục 1).
 
 ## C. Bật tính năng bên thứ 3 (điền key vào `backend/.env` — xem Bước 1)
 - **Cloudinary** (`CLOUDINARY_*`) — upload ảnh sản phẩm thật từ admin (`POST /products/:id/images`).
