@@ -128,6 +128,8 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--crimson); o
 .btn--ghost { background: transparent; color: var(--ink); }
 .btn--ghost:hover { background: var(--ink); color: #fff; }
 .btn--sm { padding: 5px 12px; font-size: 13px; }
+.form-actions { display: flex; gap: 10px; align-items: center; }
+td .btn--sm + .btn--sm { margin-left: 6px; }
 
 /* ─── Messages ──────────────────────────────────────────────────────────── */
 .msg { padding: 10px 14px; border-radius: 8px; margin: 12px 0; font-weight: 600; display: none; }

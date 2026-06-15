@@ -29,7 +29,7 @@
         </div>
 
         <div class="section-gap">
-          <h2>Thêm nghệ sĩ mới</h2>
+          <h2 id="artist-form-title">Thêm nghệ sĩ mới</h2>
           <form id="artist-form" class="card form-grid">
             <div class="field"><label for="name">Tên nghệ sĩ</label><input id="name" required /></div>
             <div class="field"><label for="slug">Slug</label><input id="slug" placeholder="nguyen-muc-tau" required /></div>
@@ -55,7 +55,10 @@
               <div class="field"><label for="a3">Nội dung</label><textarea id="a3" required></textarea></div>
             </fieldset>
 
-            <button class="btn" type="submit">Tạo nghệ sĩ</button>
+            <div class="form-actions">
+              <button class="btn" type="submit" id="artist-submit">Tạo nghệ sĩ</button>
+              <button class="btn btn--ghost" type="button" id="artist-cancel" hidden>Hủy</button>
+            </div>
           </form>
         </div>
       </main>

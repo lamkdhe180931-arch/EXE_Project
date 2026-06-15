@@ -29,7 +29,7 @@
         </div>
 
         <div class="section-gap">
-          <h2>Thêm sản phẩm mới</h2>
+          <h2 id="product-form-title">Thêm sản phẩm mới</h2>
           <form id="product-form" class="card form-grid">
             <div class="field"><label for="name">Tên</label><input id="name" required /></div>
             <div class="field"><label for="slug">Slug</label><input id="slug" placeholder="ao-meo-no" required /></div>
@@ -61,7 +61,10 @@
               <label for="images">Hình ảnh (có thể chọn nhiều)</label>
               <input id="images" type="file" accept="image/*" multiple />
             </div>
-            <button class="btn" type="submit">Tạo sản phẩm</button>
+            <div class="form-actions">
+              <button class="btn" type="submit" id="product-submit">Tạo sản phẩm</button>
+              <button class="btn btn--ghost" type="button" id="product-cancel" hidden>Hủy</button>
+            </div>
           </form>
         </div>
       </main>

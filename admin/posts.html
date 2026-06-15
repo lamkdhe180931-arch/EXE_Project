@@ -20,16 +20,16 @@
         <div class="table-wrap">
           <table>
             <thead>
-              <tr><th>#</th><th>Loại</th><th>Tiêu đề</th><th>Slug</th><th>Trạng thái</th></tr>
+              <tr><th>#</th><th>Loại</th><th>Tiêu đề</th><th>Slug</th><th>Trạng thái</th><th></th></tr>
             </thead>
             <tbody id="posts-body">
-              <tr><td colspan="5" class="muted">Đang tải…</td></tr>
+              <tr><td colspan="6" class="muted">Đang tải…</td></tr>
             </tbody>
           </table>
         </div>
 
         <div class="section-gap">
-          <h2>Viết bài mới</h2>
+          <h2 id="post-form-title">Viết bài mới</h2>
           <form id="post-form" class="card form-grid">
             <div class="field">
               <label for="type">Loại</label>
@@ -42,7 +42,10 @@
               <input id="publishNow" type="checkbox" style="width: auto" />
               <label for="publishNow" style="margin: 0">Xuất bản ngay</label>
             </div>
-            <button class="btn" type="submit">Lưu bài</button>
+            <div class="form-actions">
+              <button class="btn" type="submit" id="post-submit">Lưu bài</button>
+              <button class="btn btn--ghost" type="button" id="post-cancel" hidden>Hủy</button>
+            </div>
           </form>
         </div>
       </main>

@@ -32,7 +32,9 @@
     var token = getToken();
     if (token) headers.Authorization = 'Bearer ' + token;
 
-    var res = await fetch(API_BASE + path, Object.assign({}, options, { headers: headers }));
+    // no-store: the admin panel must always see fresh data — never a cached GET
+    // (otherwise the list won't reflect a create/edit/delete made this session).
+    var res = await fetch(API_BASE + path, Object.assign({ cache: 'no-store' }, options, { headers: headers }));
     if (res.status === 401) {
       clearToken();
       toLogin();

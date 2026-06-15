@@ -1,4 +1,4 @@
-// Products list + create (with artist picker + optional image upload).
+// Products list + create/edit (artist picker + optional image upload).
 (function () {
   'use strict';
   if (!Admin.initPage('products')) return;
@@ -11,18 +11,25 @@
     msg.className = 'msg is-show ' + (ok ? 'msg--ok' : 'msg--error');
   }
 
+  var loaded = [];   // last-fetched products, for the edit lookup
+  var editId = null; // null = create mode; an id = editing that product
+
   function render(products) {
-    if (!products.length) {
+    loaded = products || [];
+    if (!loaded.length) {
       document.getElementById('products-body').innerHTML =
         '<tr><td colspan="7" class="muted">Chưa có sản phẩm nào.</td></tr>';
       return;
     }
-    document.getElementById('products-body').innerHTML = products.map(function (p) {
+    document.getElementById('products-body').innerHTML = loaded.map(function (p) {
       var artist = p.artist ? Admin.esc(p.artist.name) : '<span class="muted">—</span>';
       return (
         '<tr><td>' + p.id + '</td><td>' + Admin.esc(p.name) + '</td><td>' + vnd(p.price) +
         '</td><td>' + (p.stock || 0) + '</td><td>' + Admin.esc(p.category) + '</td><td>' + artist +
-        '</td><td><button class="btn btn--ghost btn--sm" data-del="' + p.id + '">Ẩn</button></td></tr>'
+        '</td><td>' +
+        '<button class="btn btn--ghost btn--sm" data-edit="' + p.id + '">Sửa</button>' +
+        '<button class="btn btn--ghost btn--sm" data-del="' + p.id + '">Ẩn</button>' +
+        '</td></tr>'
       );
     }).join('');
   }
@@ -48,6 +55,27 @@
         document.getElementById('products-body').innerHTML =
           '<tr><td colspan="7" class="muted">Không tải được sản phẩm.</td></tr>';
       });
+  }
+
+  // Toggle the shared form between create and edit. `p` = product to edit, or null.
+  function setMode(p) {
+    editId = p ? p.id : null;
+    document.getElementById('product-form-title').textContent =
+      p ? ('Sửa sản phẩm #' + p.id) : 'Thêm sản phẩm mới';
+    document.getElementById('product-submit').textContent =
+      p ? 'Cập nhật' : 'Tạo sản phẩm';
+    document.getElementById('product-cancel').hidden = !p;
+
+    if (!p) { document.getElementById('product-form').reset(); return; }
+    document.getElementById('name').value = p.name || '';
+    document.getElementById('slug').value = p.slug || '';
+    document.getElementById('price').value = p.price != null ? p.price : '';
+    document.getElementById('stock').value = p.stock != null ? p.stock : 0;
+    document.getElementById('category').value = p.category || '';
+    document.getElementById('artistId').value = p.artistId != null ? String(p.artistId) : '';
+    document.getElementById('description').value = p.description || '';
+    document.getElementById('images').value = '';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   // Read selected files as data URLs (the upload endpoint accepts these via Cloudinary).
@@ -77,8 +105,11 @@
       artistId: artistId ? Number(artistId) : null,
     };
     try {
-      var product = await Admin.api('/products', { method: 'POST', body: JSON.stringify(body) });
+      var product = editId
+        ? await Admin.api('/products/' + editId, { method: 'PATCH', body: JSON.stringify(body) })
+        : await Admin.api('/products', { method: 'POST', body: JSON.stringify(body) });
 
+      // New image files are appended (the PATCH body never touches images).
       var files = document.getElementById('images').files;
       if (files && files.length) {
         var images = await readFilesAsDataURLs(files);
@@ -87,21 +118,32 @@
           body: JSON.stringify({ images: images }),
         });
       }
-      flash('Đã tạo sản phẩm "' + body.name + '"', true);
-      e.target.reset();
+      flash((editId ? 'Đã cập nhật sản phẩm "' : 'Đã tạo sản phẩm "') + body.name + '"', true);
+      setMode(null);
       loadProducts();
     } catch (err) {
       flash(err.message, false);
     }
   });
 
+  document.getElementById('product-cancel').addEventListener('click', function () {
+    setMode(null);
+  });
+
   document.getElementById('products-body').addEventListener('click', async function (e) {
+    var editAttr = e.target.getAttribute('data-edit');
+    if (editAttr) {
+      var p = loaded.find(function (x) { return String(x.id) === editAttr; });
+      if (p) setMode(p);
+      return;
+    }
     var id = e.target.getAttribute('data-del');
     if (!id) return;
     if (!window.confirm('Ẩn sản phẩm #' + id + '? (xóa mềm)')) return;
     try {
       await Admin.api('/products/' + id, { method: 'DELETE' });
       flash('Đã ẩn sản phẩm #' + id, true);
+      if (String(editId) === id) setMode(null);
       loadProducts();
     } catch (err) {
       flash(err.message, false);
