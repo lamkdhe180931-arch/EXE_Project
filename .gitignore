@@ -2,3 +2,12 @@ node_modules/
 .DS_Store
 screenshots/
 *.tmp
+
+# Claude Code tooling (skills vendored locally, not project source)
+.agents/
+.claude/skills/
+skills-lock.json
+
+# Throwaway verify / demo-seed scripts (local-only, not part of the app)
+_verify_*.js
+backend/_demo_seed*.js
