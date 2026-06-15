@@ -1,0 +1,21 @@
+{
+  "name": "adddirct",
+  "version": "1.0.0",
+  "description": "Chào mừng bạn đến với **Artdict**, không gian triển lãm kỹ thuật số được thiết kế để trưng bày các sản phẩm nghệ thuật đương đại với phong cách cao cấp, tối giản và chuyên nghiệp.",
+  "main": "rv-assert.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lamkdhe180931-arch/EXE_Project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/lamkdhe180931-arch/EXE_Project/issues"
+  },
+  "homepage": "https://github.com/lamkdhe180931-arch/EXE_Project#readme"
+}
