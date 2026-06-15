@@ -36,7 +36,12 @@
             <div class="field"><label for="role">Vai trò</label><input id="role" placeholder="Họa sĩ minh họa" required /></div>
             <div class="field"><label for="city">Thành phố</label><input id="city" required /></div>
             <div class="field"><label for="since">Hoạt động từ năm</label><input id="since" type="number" placeholder="2019" required /></div>
-            <div class="field"><label for="avatarUrl">Ảnh chân dung (URL)</label><input id="avatarUrl" placeholder="/assets/art-1.png" /></div>
+            <div class="field">
+              <label for="avatarUrl">Ảnh chân dung</label>
+              <input id="avatarUrl" placeholder="Dán URL, hoặc chọn ảnh từ máy bên dưới" />
+              <input id="avatarFile" type="file" accept="image/*" style="margin-top: 6px; width: auto" />
+              <small class="muted">Chọn ảnh từ máy sẽ upload và ghi đè URL ở trên.</small>
+            </div>
             <div class="field"><label for="quote">Pull quote lớn</label><textarea id="quote" required></textarea></div>
 
             <fieldset class="fieldset">

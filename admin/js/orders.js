@@ -27,20 +27,23 @@
     );
   }
 
+  function rowHtml(o) {
+    var who = Admin.esc(o.guestEmail || (o.user && o.user.email) || ('user#' + o.userId));
+    return (
+      '<tr><td>#' + o.id + '</td><td>' + who + '</td><td>' + vnd(o.total) + '</td>' +
+      '<td><span class="badge badge--' + o.status + '">' + o.status + '</span></td>' +
+      '<td>' + statusControl(o) + '</td><td>' + fmtDate(o.createdAt) + '</td></tr>'
+    );
+  }
+
+  var pager = Admin.makePager(
+    'orders-body',
+    function (slice) { return slice.map(rowHtml).join(''); },
+    '<tr><td colspan="6" class="muted">Chưa có đơn nào.</td></tr>'
+  );
+
   function render(orders) {
-    if (!orders.length) {
-      document.getElementById('orders-body').innerHTML =
-        '<tr><td colspan="6" class="muted">Chưa có đơn nào.</td></tr>';
-      return;
-    }
-    document.getElementById('orders-body').innerHTML = orders.map(function (o) {
-      var who = Admin.esc(o.guestEmail || (o.user && o.user.email) || ('user#' + o.userId));
-      return (
-        '<tr><td>#' + o.id + '</td><td>' + who + '</td><td>' + vnd(o.total) + '</td>' +
-        '<td><span class="badge badge--' + o.status + '">' + o.status + '</span></td>' +
-        '<td>' + statusControl(o) + '</td><td>' + fmtDate(o.createdAt) + '</td></tr>'
-      );
-    }).join('');
+    pager.set(orders || []);
   }
 
   async function apply(id) {

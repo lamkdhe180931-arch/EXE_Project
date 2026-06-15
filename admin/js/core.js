@@ -69,5 +69,30 @@
     return STATUS_FLOW[current] || [];
   }
 
-  return { decodeJwt, isTokenValid, getRole, buildArtistPayload, nextStatuses };
+  // ─── Client-side pagination ────────────────────────────────────────────────
+  // Total number of pages for `total` rows at `perPage` per page (min 1).
+  function pageCount(total, perPage) {
+    if (perPage <= 0) return 1;
+    return Math.max(1, Math.ceil(total / perPage));
+  }
+
+  // Clamp a requested page into [1, pageCount].
+  function clampPage(page, total, perPage) {
+    const last = pageCount(total, perPage);
+    if (!(page >= 1)) return 1; // also catches NaN
+    return page > last ? last : page;
+  }
+
+  // The slice of `items` shown on `page` (1-based) at `perPage` per page.
+  function pageSlice(items, page, perPage) {
+    const list = Array.isArray(items) ? items : [];
+    const p = clampPage(page, list.length, perPage);
+    const start = (p - 1) * perPage;
+    return list.slice(start, start + perPage);
+  }
+
+  return {
+    decodeJwt, isTokenValid, getRole, buildArtistPayload, nextStatuses,
+    pageCount, clampPage, pageSlice,
+  };
 });

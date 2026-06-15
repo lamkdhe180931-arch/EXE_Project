@@ -92,6 +92,49 @@
     return true;
   }
 
+  // Client-side paginator for a list table (10 rows/page by default).
+  //   bodyId     — id of the <tbody> to fill
+  //   rowsHtml   — fn(sliceItems) → <tr>…</tr> HTML string for the page slice
+  //   emptyHtml  — full <tr> HTML shown when there are no items
+  // Returns { set(items) } — call set() with the FULL list; it slices + draws
+  // controls. The page keeps its own full array for id lookups (edit/delete).
+  function makePager(bodyId, rowsHtml, emptyHtml) {
+    var PER = 10;
+    var core = window.AdminCore;
+    var body = document.getElementById(bodyId);
+    var wrap = body.closest('.table-wrap');
+    var bar = document.createElement('div');
+    bar.className = 'pager';
+    if (wrap && wrap.parentNode) wrap.parentNode.insertBefore(bar, wrap.nextSibling);
+
+    var items = [];
+    var page = 1;
+
+    function draw() {
+      if (!items.length) { body.innerHTML = emptyHtml; bar.innerHTML = ''; return; }
+      var pages = core.pageCount(items.length, PER);
+      page = core.clampPage(page, items.length, PER);
+      body.innerHTML = rowsHtml(core.pageSlice(items, page, PER));
+      if (pages <= 1) { bar.innerHTML = ''; return; }
+      bar.innerHTML =
+        '<button class="btn btn--ghost btn--sm" data-pg="prev"' + (page === 1 ? ' disabled' : '') + '>← Trước</button>' +
+        '<span class="pager__info">Trang ' + page + ' / ' + pages + ' · ' + items.length + ' dòng</span>' +
+        '<button class="btn btn--ghost btn--sm" data-pg="next"' + (page === pages ? ' disabled' : '') + '>Sau →</button>';
+    }
+
+    bar.addEventListener('click', function (e) {
+      var dir = e.target.getAttribute('data-pg');
+      if (!dir) return;
+      var pages = core.pageCount(items.length, PER);
+      if (dir === 'prev' && page > 1) { page -= 1; draw(); }
+      if (dir === 'next' && page < pages) { page += 1; draw(); }
+    });
+
+    return {
+      set: function (newItems) { items = newItems || []; page = 1; draw(); },
+    };
+  }
+
   window.Admin = {
     API_BASE: API_BASE,
     getToken: getToken,
@@ -102,6 +145,7 @@
     logout: logout,
     renderChrome: renderChrome,
     initPage: initPage,
+    makePager: makePager,
     esc: esc,
   };
 })();

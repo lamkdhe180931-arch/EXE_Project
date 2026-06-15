@@ -14,23 +14,26 @@
   var loaded = [];
   var editId = null;
 
+  function rowHtml(a) {
+    return (
+      '<tr><td>' + a.id + '</td><td>' + Admin.esc(a.name) + '</td><td>' + Admin.esc(a.slug) +
+      '</td><td>' + Admin.esc(a.role) + '</td><td>' + Admin.esc(a.city) + '</td>' +
+      '<td>' +
+      '<button class="btn btn--ghost btn--sm" data-edit="' + a.id + '">Sửa</button>' +
+      '<button class="btn btn--ghost btn--sm" data-del="' + a.id + '">Xóa</button>' +
+      '</td></tr>'
+    );
+  }
+
+  var pager = Admin.makePager(
+    'artists-body',
+    function (slice) { return slice.map(rowHtml).join(''); },
+    '<tr><td colspan="6" class="muted">Chưa có nghệ sĩ nào.</td></tr>'
+  );
+
   function render(artists) {
     loaded = artists || [];
-    if (!loaded.length) {
-      document.getElementById('artists-body').innerHTML =
-        '<tr><td colspan="6" class="muted">Chưa có nghệ sĩ nào.</td></tr>';
-      return;
-    }
-    document.getElementById('artists-body').innerHTML = loaded.map(function (a) {
-      return (
-        '<tr><td>' + a.id + '</td><td>' + Admin.esc(a.name) + '</td><td>' + Admin.esc(a.slug) +
-        '</td><td>' + Admin.esc(a.role) + '</td><td>' + Admin.esc(a.city) + '</td>' +
-        '<td>' +
-        '<button class="btn btn--ghost btn--sm" data-edit="' + a.id + '">Sửa</button>' +
-        '<button class="btn btn--ghost btn--sm" data-del="' + a.id + '">Xóa</button>' +
-        '</td></tr>'
-      );
-    }).join('');
+    pager.set(loaded);
   }
 
   function load() {
@@ -54,6 +57,7 @@
     document.getElementById('artist-cancel').hidden = !a;
 
     if (!a) { document.getElementById('artist-form').reset(); return; }
+    document.getElementById('avatarFile').value = ''; // don't carry a stale pick into edit
     var c = a.content || {};
     var qa = Array.isArray(c.qa) ? c.qa : [];
     setVal('name', a.name); setVal('slug', a.slug); setVal('role', a.role);
@@ -67,6 +71,16 @@
 
   function val(id) { return document.getElementById(id).value.trim(); }
 
+  // Read a single picked file as a data URL (Cloudinary accepts these).
+  function readFileAsDataURL(file) {
+    return new Promise(function (resolve, reject) {
+      var reader = new FileReader();
+      reader.onload = function () { resolve(reader.result); };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
   document.getElementById('artist-form').addEventListener('submit', async function (e) {
     e.preventDefault();
     var payload = core.buildArtistPayload({
@@ -75,10 +89,18 @@
       q1: val('q1'), a1: val('a1'), q2: val('q2'), a2: val('a2'), q3: val('q3'), a3: val('a3'),
     });
     try {
-      if (editId) {
-        await Admin.api('/artists/' + editId, { method: 'PATCH', body: JSON.stringify(payload) });
-      } else {
-        await Admin.api('/artists', { method: 'POST', body: JSON.stringify(payload) });
+      var saved = editId
+        ? await Admin.api('/artists/' + editId, { method: 'PATCH', body: JSON.stringify(payload) })
+        : await Admin.api('/artists', { method: 'POST', body: JSON.stringify(payload) });
+
+      // If a file was picked, upload it to the saved artist (overrides avatarUrl).
+      var files = document.getElementById('avatarFile').files;
+      if (files && files.length) {
+        var image = await readFileAsDataURL(files[0]);
+        await Admin.api('/artists/' + saved.id + '/avatar', {
+          method: 'POST',
+          body: JSON.stringify({ image: image }),
+        });
       }
       flash((editId ? 'Đã cập nhật nghệ sĩ "' : 'Đã tạo nghệ sĩ "') + payload.name + '"', true);
       setMode(null);

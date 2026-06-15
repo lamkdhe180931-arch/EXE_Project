@@ -103,3 +103,34 @@ describe('nextStatuses', () => {
     expect(core.nextStatuses('???')).toEqual([]);
   });
 });
+
+describe('pagination', () => {
+  const items = Array.from({ length: 23 }, (_, i) => i + 1); // 1..23
+
+  test('pageCount: 23 items at 10/page = 3 pages', () => {
+    expect(core.pageCount(23, 10)).toBe(3);
+    expect(core.pageCount(20, 10)).toBe(2);
+    expect(core.pageCount(0, 10)).toBe(1); // never zero pages
+  });
+
+  test('clampPage: keeps page within [1, last]', () => {
+    expect(core.clampPage(0, 23, 10)).toBe(1);
+    expect(core.clampPage(99, 23, 10)).toBe(3);
+    expect(core.clampPage(2, 23, 10)).toBe(2);
+    expect(core.clampPage(NaN, 23, 10)).toBe(1);
+  });
+
+  test('pageSlice: returns the right 10-row window', () => {
+    expect(core.pageSlice(items, 1, 10)).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+    expect(core.pageSlice(items, 2, 10)).toEqual([11, 12, 13, 14, 15, 16, 17, 18, 19, 20]);
+    expect(core.pageSlice(items, 3, 10)).toEqual([21, 22, 23]); // short last page
+  });
+
+  test('pageSlice: out-of-range page clamps to the last page', () => {
+    expect(core.pageSlice(items, 99, 10)).toEqual([21, 22, 23]);
+  });
+
+  test('pageSlice: tolerates a non-array', () => {
+    expect(core.pageSlice(null, 1, 10)).toEqual([]);
+  });
+});

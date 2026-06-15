@@ -14,24 +14,27 @@
   var loaded = [];   // last-fetched products, for the edit lookup
   var editId = null; // null = create mode; an id = editing that product
 
+  function rowHtml(p) {
+    var artist = p.artist ? Admin.esc(p.artist.name) : '<span class="muted">—</span>';
+    return (
+      '<tr><td>' + p.id + '</td><td>' + Admin.esc(p.name) + '</td><td>' + vnd(p.price) +
+      '</td><td>' + (p.stock || 0) + '</td><td>' + Admin.esc(p.category) + '</td><td>' + artist +
+      '</td><td>' +
+      '<button class="btn btn--ghost btn--sm" data-edit="' + p.id + '">Sửa</button>' +
+      '<button class="btn btn--ghost btn--sm" data-del="' + p.id + '">Xóa</button>' +
+      '</td></tr>'
+    );
+  }
+
+  var pager = Admin.makePager(
+    'products-body',
+    function (slice) { return slice.map(rowHtml).join(''); },
+    '<tr><td colspan="7" class="muted">Chưa có sản phẩm nào.</td></tr>'
+  );
+
   function render(products) {
     loaded = products || [];
-    if (!loaded.length) {
-      document.getElementById('products-body').innerHTML =
-        '<tr><td colspan="7" class="muted">Chưa có sản phẩm nào.</td></tr>';
-      return;
-    }
-    document.getElementById('products-body').innerHTML = loaded.map(function (p) {
-      var artist = p.artist ? Admin.esc(p.artist.name) : '<span class="muted">—</span>';
-      return (
-        '<tr><td>' + p.id + '</td><td>' + Admin.esc(p.name) + '</td><td>' + vnd(p.price) +
-        '</td><td>' + (p.stock || 0) + '</td><td>' + Admin.esc(p.category) + '</td><td>' + artist +
-        '</td><td>' +
-        '<button class="btn btn--ghost btn--sm" data-edit="' + p.id + '">Sửa</button>' +
-        '<button class="btn btn--ghost btn--sm" data-del="' + p.id + '">Ẩn</button>' +
-        '</td></tr>'
-      );
-    }).join('');
+    pager.set(loaded);
   }
 
   async function loadArtists() {
@@ -139,10 +142,10 @@
     }
     var id = e.target.getAttribute('data-del');
     if (!id) return;
-    if (!window.confirm('Ẩn sản phẩm #' + id + '? (xóa mềm)')) return;
+    if (!window.confirm('Xóa sản phẩm #' + id + '? Sản phẩm sẽ bị gỡ khỏi cửa hàng.')) return;
     try {
       await Admin.api('/products/' + id, { method: 'DELETE' });
-      flash('Đã ẩn sản phẩm #' + id, true);
+      flash('Đã xóa sản phẩm #' + id, true);
       if (String(editId) === id) setMode(null);
       loadProducts();
     } catch (err) {
