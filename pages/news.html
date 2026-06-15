@@ -5,44 +5,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>News — Artdict</title>
     <link rel="stylesheet" href="/css/style.css" />
-    <style>
-      .coming {
-        min-height: 60vh;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        gap: 18px;
-        padding: calc(var(--nav-h) + 40px) 0 60px;
-      }
-      .coming h1 {
-        font-family: var(--display);
-        font-weight: 700;
-        letter-spacing: -0.045em;
-        font-size: clamp(2rem, 5vw, 3.6rem);
-      }
-      .coming p {
-        color: color-mix(in srgb, var(--ink) 60%, transparent);
-        max-width: 36ch;
-      }
-    </style>
   </head>
   <body>
     <site-header active="khampha"></site-header>
 
     <main class="wrap">
-      <section class="coming">
-        <p class="eyebrow">News</p>
-        <h1>Đang xây dựng</h1>
-        <p>Tin tức từ xưởng sẽ được cập nhật tại đây. Quay lại sau nhé.</p>
-        <a class="circle-btn" href="/">Về trang chủ</a>
+      <!-- HERO -->
+      <section class="post-hero reveal">
+        <p class="eyebrow">News · Từ xưởng</p>
+        <h1>Chuyện <em>đang</em> diễn ra.</h1>
+        <p class="post-hero__lede">
+          Bản in mới, sự kiện, hậu trường và những gì Artdict đang làm. Tin
+          ngắn, cập nhật thường xuyên.
+        </p>
+      </section>
+
+      <!-- LIST — rendered from GET /api/posts?type=NEWS by /js/posts.js -->
+      <section class="post-list" id="post-list" data-type="NEWS">
+        <p
+          style="
+            padding: 34px 0;
+            color: color-mix(in srgb, var(--ink) 60%, transparent);
+          "
+        >
+          Đang tải tin tức…
+        </p>
       </section>
     </main>
 
     <site-footer></site-footer>
 
+    <!-- CART DRAWER -->
+    <div class="cart-scrim" data-cart-scrim></div>
+    <aside class="cart-drawer" data-cart-drawer aria-label="Giỏ hàng">
+      <div class="cart-drawer__head">
+        <span class="cart-drawer__title">Giỏ hàng</span>
+        <button class="cart-close" data-close-cart aria-label="Đóng">✕</button>
+      </div>
+      <div class="cart-items" data-cart-items></div>
+      <div class="cart-drawer__foot">
+        <div class="cart-total">
+          <span class="cart-total__label">Tạm tính</span>
+          <span class="cart-total__val" data-cart-total>0₫</span>
+        </div>
+        <button class="circle-btn circle-btn--solid circle-btn--block">
+          Thanh toán
+        </button>
+      </div>
+    </aside>
+
     <script src="/components/site-header.js" defer></script>
     <script src="/components/site-footer.js" defer></script>
+    <script src="/js/api.js" defer></script>
+    <script src="/js/posts.js" defer></script>
+    <script src="/js/artdict.js" defer></script>
   </body>
 </html>

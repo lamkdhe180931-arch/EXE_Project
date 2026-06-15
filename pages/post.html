@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bài viết — Artdict</title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <site-header active="khampha"></site-header>
+
+    <main class="wrap post-read">
+      <nav
+        class="breadcrumb reveal"
+        style="
+          display: flex;
+          gap: 10px;
+          align-items: center;
+          font-family: var(--display);
+          font-weight: 500;
+          font-size: 0.85rem;
+          color: color-mix(in srgb, var(--ink) 55%, transparent);
+          margin-bottom: 24px;
+        "
+      >
+        <a href="news.html" id="post-crumb-type" style="transition: color 0.25s"
+          >Bài viết</a
+        >
+        <span style="opacity: 0.4">/</span>
+        <span style="color: var(--ink)" id="post-crumb-name">Đang tải…</span>
+      </nav>
+
+      <!-- HEAD — filled from GET /api/posts/:slug by /js/post.js -->
+      <header class="post-read__head reveal">
+        <p class="eyebrow" id="post-eyebrow">Bài viết</p>
+        <h1 class="post-read__title" id="post-title">Đang tải…</h1>
+        <p class="post-read__meta" id="post-meta"></p>
+      </header>
+
+      <!-- BODY -->
+      <article class="post-body reveal" id="post-body"></article>
+
+      <!-- FOOT -->
+      <div class="post-read__foot reveal">
+        <p
+          class="eyebrow"
+          style="color: color-mix(in srgb, var(--ink) 50%, transparent)"
+        >
+          Artdict
+        </p>
+        <a class="circle-btn" href="news.html" id="post-back"
+          >← Tất cả bài viết</a
+        >
+      </div>
+    </main>
+
+    <site-footer></site-footer>
+
+    <!-- CART DRAWER -->
+    <div class="cart-scrim" data-cart-scrim></div>
+    <aside class="cart-drawer" data-cart-drawer aria-label="Giỏ hàng">
+      <div class="cart-drawer__head">
+        <span class="cart-drawer__title">Giỏ hàng</span>
+        <button class="cart-close" data-close-cart aria-label="Đóng">✕</button>
+      </div>
+      <div class="cart-items" data-cart-items></div>
+      <div class="cart-drawer__foot">
+        <div class="cart-total">
+          <span class="cart-total__label">Tạm tính</span>
+          <span class="cart-total__val" data-cart-total>0₫</span>
+        </div>
+        <button class="circle-btn circle-btn--solid circle-btn--block">
+          Thanh toán
+        </button>
+      </div>
+    </aside>
+
+    <script src="/components/site-header.js" defer></script>
+    <script src="/components/site-footer.js" defer></script>
+    <script src="/js/api.js" defer></script>
+    <script src="/js/post.js" defer></script>
+    <script src="/js/artdict.js" defer></script>
+  </body>
+</html>

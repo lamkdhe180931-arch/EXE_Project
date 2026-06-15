@@ -29,27 +29,27 @@ Hướng dẫn cho Claude. **Đọc rules trong `.claude/rules/` TRƯỚC khi co
 ---
 
 # Tiến độ dự án
-*Cập nhật: 2026-06-14*
+*Cập nhật: 2026-06-15*
 
 ## 1. Frontend công khai (`/`)
 - **Hoàn thành (giao diện)**: `index.html`, components, `catalogue.html`, `collection.html`, `about.html`, `submit.html`, `artists.html`, `artist.html`, `product.html`. Tất cả dùng **ảnh thật**, `style.css` hợp nhất.
-- **Nối API (đang làm — mục A):** ✅ **Sản phẩm** (`catalogue`/`product` ← `/api/products`) + ✅ **Nghệ sĩ** (`artists`/`artist` ← `/api/artists`, works qua `?artistId=`) đã nối, qua `js/api.js` + page script riêng (`catalogue/product/artists/artist.js`); `artdict.js` thêm `rescan()` để bind tilt/reveal/filter/gallery/add-to-cart cho DOM render động. ⏳ **Còn TĨNH (hardcode)**: bài viết (`news`/`journal`), ứng tuyển (`submit` vẫn `mailto:`), giỏ hàng/checkout. (Admin panel đã nối API đầy đủ từ trước.)
+- **Nối API (đang làm — mục A):** ✅ **Sản phẩm** (`catalogue`/`product` ← `/api/products`) + ✅ **Nghệ sĩ** (`artists`/`artist` ← `/api/artists`, works qua `?artistId=`) + ✅ **Bài viết** (`news`/`journal`/`post` ← `/api/posts`) đã nối, qua `js/api.js` + page script riêng (`catalogue/product/artists/artist/posts/post.js`); `artdict.js` thêm `rescan()` để bind tilt/reveal/filter/gallery/add-to-cart cho DOM render động. ⏳ **Còn TĨNH (hardcode)**: ứng tuyển (`submit` vẫn `mailto:`), giỏ hàng/checkout. (Admin panel đã nối API đầy đủ từ trước.)
 - **Tồn đọng giao diện**:
-  - `collab.html`, `news.html`, `journal.html`, `size-guide.html` còn là stub "coming soon" (48 dòng/file).
+  - `collab.html`, `size-guide.html` còn là stub "coming soon" (48 dòng/file).
   - `submit.html` vẫn là `mailto:artist@artdict.vn` — chưa nối `POST /api/artists/apply`.
 - **Đã kiểm tra** (`node shot.js`, desktop 1440 + mobile 390): các trang chính render đúng, không vỡ layout mobile; `.reveal` hiển thị đúng ở chế độ reduced-motion. Logic đổi ảnh gallery (`data-full`) đã nối — chưa click-test live trên trình duyệt.
 
 ## 2. Backend (`backend/`) — **CODE XONG HẾT (Phase 1-7)**
-**Stack**: Node + Express 5 + Prisma 5.22 + Postgres (Neon). TDD Jest. **Test: 113/113 PASS** (+ admin 14 test logic thuần).
+**Stack**: Node + Express 5 + Prisma 5.22 + Postgres (Neon). TDD Jest. **Test: 114/114 PASS** (+ admin 14 test logic thuần = 128). `Product.description` (nullable) đã thêm khi làm A.1 (migration `add_product_description`).
 
 - **Hoàn thành**: Setup · Auth (15m access, 7d refresh httpOnly) · Products & Artists CRUD · **Order & Checkout + MoMo** (`POST /orders` optional auth/guest, `validateCart` snapshot `priceAtTime` từ giá server, IPN `momo-callback`: verify HMAC → `PAID` → trừ kho `$transaction`, idempotent) · **upload ảnh Cloudinary** (`POST /products/:id/images`) · **Email Resend** (3 template: Order Confirmation nối callback PAID, Order Shipped nối `PATCH status→SHIPPED`, Artist Application qua `POST /api/artists/apply`) · **Content/Posts API** (`/api/posts` NEWS/JOURNAL) · **seed admin** (`npm run db:seed`).
   > Email đổi từ `fetch` thuần → **SDK `resend`** (thêm dep `resend@^6`, theo yêu cầu chủ dự án — ghi đè quyết định "no dep" cũ cho email).
 - **Admin Panel** (`admin/`, ngang hàng `backend/`): HTML/CSS/JS thuần. login + dashboard + products (artist picker + upload ảnh) + orders (đổi status) + artists (3 block Q&A) + posts. Logic thuần ở `admin/js/core.js` (14 test). **Cố ý tĩnh** (rule animation áp cho trang showcase công khai, không phải dashboard nội bộ).
 
-- **Trạng thái chạy thật (2026-06-14): ĐÃ CHẠY E2E TRÊN NEON ✓ — hết tồn đọng BE bắt buộc.**
-  - `backend/.env` đã tạo (JWT secret sinh sẵn; `DATABASE_URL` Neon thật). DB đã `db:migrate` (migration `init` đã commit) + `db:seed` (admin `admin@artdict.vn`). 127/127 test pass; `prisma validate` ✓.
-  - **E2E verified** bằng smoke test: boot app → login admin → tạo + list Product & Post → POST khi chưa auth bị `401` → đã dọn sạch row test (DB chỉ còn admin user).
-  - Toàn bộ Phase 1-7 + admin + migration **đã commit** lên `feature/artdict-ui` (chưa push).
+- **Trạng thái chạy thật (2026-06-15): ĐÃ CHẠY E2E TRÊN NEON ✓ — hết tồn đọng BE bắt buộc.**
+  - `backend/.env` đã tạo (JWT secret sinh sẵn; `DATABASE_URL` Neon thật). DB đã `db:migrate` (2 migration: `init` + `add_product_description`, đã commit) + `db:seed` (admin `admin@artdict.vn`). 128/128 test pass; `prisma validate` ✓.
+  - **E2E verified** bằng smoke test + screenshot frontend (A.1/A.2). Trên Neon hiện có **demo data** để review live: 3 nghệ sĩ + 6 sản phẩm (slug `demo-*`, đã liên kết artistId) — seed bằng `backend/_demo_seed.js` (throwaway, untracked). Lưu ý còn vài row rác cũ ("ÁO" / "NGON") chưa xoá.
+  - Phase 1-7 + admin + 2 migration + **A.1/A.2 (nối frontend)** đã commit lên `feature/artdict-ui` — **đang còn 7 commit chưa push**.
   - Credential bên thứ 3 vẫn rỗng (chỉ cần khi bật tính năng đó): `CLOUDINARY_*` (upload ảnh) · `MOMO_*` (thanh toán) · `RESEND_API_KEY`+`EMAIL_FROM` (email). Backend chạy bình thường không cần các key này.
 
 - **Quyết định chốt** (2026-06-11): phí ship = **miễn phí toàn bộ** (total = tiền hàng, không cột `shippingFee`); tra cứu đơn guest = **không làm** (khách chỉ nhận email xác nhận).
@@ -62,16 +62,18 @@ Hướng dẫn cho Claude. **Đọc rules trong `.claude/rules/` TRƯỚC khi co
 ## A. Nối frontend công khai vào API (ưu tiên cao nhất)
 Hiện chỉ admin tiêu thụ API; trang công khai vẫn hardcode. Làm lần lượt, mỗi bước có cách kiểm chứng:
 1. ✅ **Sản phẩm (XONG 2026-06-14)** — `catalogue.html` + `product.html` fetch `GET /api/products` (+ `/:slug`). Đã verify bằng screenshot (desktop+mobile) với 6 SP demo trên Neon: catalogue render đúng + filter/đếm theo `category` slug + sold-out + placeholder khi thiếu ảnh; product có gallery/giá/related động, size chỉ hiện cho `aothun`, sold-out disable nút, slug sai → trang 404. **Taxonomy đã chốt**: 8 slug cố định (`aothun/mu/vongtay/sotay/nhandan/mockhoa/tranh/khac`), ô category ở admin đổi `input`→`select`. **Map slug→nhãn** ở `js/api.js` (`ArtdictAPI.CATEGORIES`) là nguồn chung.
-   > **Giới hạn còn lại** (model `Product` thiếu field): trang product dùng **lede generic** + accordion "chất liệu/bảo quản" **tĩnh** (vd trang sổ tay vẫn ghi "Cotton 250gsm" — sai). Muốn đúng từng SP cần thêm field `description`/`details` (+ `oldPrice` nếu muốn hiện giảm giá) vào schema → migration BE.
+   > **Đã thêm `Product.description`** (theo yêu cầu chủ dự án): lede trang product lấy từ `description` (admin có ô textarea); accordion "chất liệu" tĩnh-sai đã gỡ, "bảo quản/vận chuyển" sửa thành copy phổ quát. Còn **tùy chọn chưa làm**: `oldPrice` nếu muốn hiện % giảm giá (model chưa có).
+
+> **Hạ tầng nối API đã dựng (tái dùng cho A.3-A.5):** `js/api.js` = client chung (`ArtdictAPI.get(path)` + `ArtdictAPI.CATEGORIES`); mỗi trang 1 page-script riêng load TRƯỚC `js/artdict.js`; `artdict.js` có `window.Artdict.rescan(root)` để bind tilt/reveal/filter/gallery/add-to-cart cho DOM render động. Verify = backend `:3000` + serve `:8000` (CORS) + `node _verify_shot.js <tên> <path>` (Playwright cố định port 8000; `shot.js` gốc port random nên bị CORS chặn — không dùng cho trang gọi API).
 2. ✅ **Nghệ sĩ (XONG 2026-06-14)** — `artists.html` (list + stats động + work-chips từ `/products?artistId=`) & `artist.html` (hero/meta/pull-quote/Q&A từ `content.qa`/works/next-artist) fetch `GET /api/artists`. Verify screenshot desktop+mobile + 404. *Lưu ý*: model `Artist` không có `bio` → trang list bỏ đoạn bio (chỉ quote); Q&A render từ `content.qa[]` (đúng 3 mục).
-3. **Bài viết** — dựng `news.html` / `journal.html` từ stub, fetch `GET /api/posts?type=NEWS|JOURNAL` (+ `/:slug`). → *kiểm*: post tạo ở admin hiện ra.
+3. ✅ **Bài viết (XONG 2026-06-15)** — dựng mới `news.html` + `journal.html` (list, fetch `GET /api/posts?type=NEWS|JOURNAL`, lọc `publishedAt` set = chỉ hiện bài đã publish) + `post.html` (detail dùng chung NEWS/JOURNAL, đọc `?slug=`, `body` text thuần → split `\n\n` thành `<p>`, lede = đoạn đầu in to). Page script `js/posts.js` (đọc `data-type` từ `#post-list`) + `js/post.js`. CSS `.post-*` (list date-led + read view măng-sét ~64ch) thêm vào `style.css`. Layout family mới (date-led list) khác lưới catalogue & row nghệ sĩ. Header dropdown "Khám phá" thêm link **Tạp chí** (journal trước đó chưa link). Verify screenshot desktop+mobile (list + detail + 404) với 4 post demo trên Neon (`backend/_demo_seed_posts.js`, throwaway). *Lưu ý*: list News còn 1 post rác cũ "sdfsd" trên Neon (giống row rác "ÁO"/"NGON" — chưa xoá).
 4. **Ứng tuyển** — `submit.html`: đổi `mailto:` → form `POST /api/artists/apply`. → *kiểm*: submit tạo log/email ở backend.
 5. **Giỏ hàng + checkout** — UI giỏ → `POST /api/orders` → redirect MoMo → trang `payment/return`. → *kiểm*: 1 đơn sandbox chạy hết luồng → IPN `momo-callback` đẩy đơn sang `PAID`.
 
 > **CORS**: frontend gọi API phải nằm trong origin được allow. Local đã allow `:8000`; khi deploy phải set `FRONTEND_URL` = domain thật.
 
 ## B. Hoàn thiện trang còn stub
-Sau khi A.3 nối xong `news`/`journal`, còn `collab.html` + `size-guide.html` — dựng nội dung thật theo `design-discipline.md` + `mandatory-rules.md` (animation scroll + mobile + screenshot đối chiếu).
+A.3 đã nối `news`/`journal`; còn `collab.html` + `size-guide.html` là stub — dựng nội dung thật theo `design-discipline.md` + `mandatory-rules.md` (animation scroll + mobile + screenshot đối chiếu).
 
 ## C. Bật tính năng bên thứ 3 (điền key vào `backend/.env` — xem Bước 1)
 - **Cloudinary** (`CLOUDINARY_*`) — upload ảnh sản phẩm thật từ admin (`POST /products/:id/images`).
@@ -80,7 +82,7 @@ Sau khi A.3 nối xong `news`/`journal`, còn `collab.html` + `size-guide.html` 
 
 ## D. Cứng hoá & deploy
 1. **Đổi `ADMIN_PASSWORD`** (đang là dev pw yếu `123`) → mật khẩu mạnh, rồi `npm run db:seed` lại (upsert idempotent).
-2. **Push** `feature/artdict-ui` lên remote (**đang còn 5 commit chưa push**) → mở PR vào `main`.
+2. **Push** `feature/artdict-ui` lên remote (**đang còn 7 commit chưa push**) → mở PR vào `main`.
 3. **Deploy**: BE (Render/Railway/Fly) + DB Neon (đã có) + FE static (Netlify/Vercel/Cloudflare Pages). Set env production — đặc biệt `FRONTEND_URL`, `DATABASE_URL`, JWT secret, và các key mục C.
 
 ---

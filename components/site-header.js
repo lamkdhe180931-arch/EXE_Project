@@ -64,6 +64,7 @@ class SiteHeader extends HTMLElement {
               <a href="/pages/about.html" class="dropdown-link">Về chúng tôi</a>
               <a href="/pages/collection.html" class="dropdown-link">Bộ sưu tập</a>
               <a href="/pages/news.html" class="dropdown-link">News</a>
+              <a href="/pages/journal.html" class="dropdown-link">Tạp chí</a>
             </div>
           </div>
 
