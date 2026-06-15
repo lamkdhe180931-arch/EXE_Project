@@ -26,6 +26,14 @@ function sign(params, apiSecret) {
 
 async function uploadImage(file) {
   const c = config();
+
+  // Dev fallback: with no Cloudinary credentials, store the given data URL / URL
+  // as-is so local testing works without external keys. Set CLOUDINARY_* in
+  // production for real CDN hosting + resizing (instead of base64 in the DB).
+  if (!c.cloudName || !c.apiKey || !c.apiSecret) {
+    return { url: file, publicId: null };
+  }
+
   const timestamp = Math.floor(Date.now() / 1000);
   const signature = sign({ folder: c.folder, timestamp }, c.apiSecret);
 
