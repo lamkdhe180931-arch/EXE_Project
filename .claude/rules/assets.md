@@ -7,6 +7,8 @@ globs:
 
 # Tài sản có sẵn (`assets/`)
 
+> **Cập nhật 2026-06-15 (deploy hygiene):** các **bản gốc tên có dấu**, ảnh dự phòng (`12/13/14.png`, `ờ.png`), `art-2.png` và `www.shopify.com_vn.png` **đã được xoá** để giảm gói deploy (65 MB → ~2 MB). Chỉ còn bản ASCII/WebP code thực sự dùng. Khôi phục từ git history nếu cần bản gốc độ phân giải cao. Ảnh nghệ thuật gradient nay là **WebP** (`art-1.webp`, `art-3.webp`, `art-4.webp`), không còn `art-1/3/4.png`.
+
 | File gốc                                       | Bản copy ASCII (dùng trong code)      | Dùng cho                                                   |
 | ---------------------------------------------- | ------------------------------------- | ---------------------------------------------------------- |
 | `Logo bản tối.png`                             | `logo-dark.png`                       | Logo Artdict (pixel-art "Art" + "dict.") — nền sáng        |
