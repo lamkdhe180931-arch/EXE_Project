@@ -87,6 +87,115 @@
         color: var(--crimson);
         text-decoration: underline;
         text-underline-offset: 3px;
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+      }
+      .pd-sizeguide:hover {
+        color: var(--crimson-deep);
+      }
+
+      /* SIZE GUIDE MODAL */
+      .sg-scrim {
+        position: fixed;
+        inset: 0;
+        background: rgba(15, 15, 15, 0.5);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s var(--ease);
+        z-index: 300;
+      }
+      .sg-scrim.open {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .sg-modal {
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -46%);
+        width: min(540px, 92vw);
+        max-height: 86vh;
+        overflow: auto;
+        background: var(--cream-50);
+        border-radius: var(--r-craft);
+        padding: clamp(24px, 4vw, 40px);
+        z-index: 301;
+        opacity: 0;
+        pointer-events: none;
+        transition:
+          opacity 0.25s var(--ease),
+          transform 0.25s var(--ease);
+      }
+      .sg-modal.open {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translate(-50%, -50%);
+      }
+      .sg-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 6px;
+      }
+      .sg-title {
+        font-family: var(--display);
+        font-weight: 700;
+        letter-spacing: -0.03em;
+        font-size: clamp(1.4rem, 3vw, 1.9rem);
+      }
+      .sg-close {
+        flex-shrink: 0;
+        background: none;
+        border: none;
+        font-size: 1.3rem;
+        line-height: 1;
+        cursor: pointer;
+        color: color-mix(in srgb, var(--ink) 55%, transparent);
+        padding: 4px;
+      }
+      .sg-close:hover {
+        color: var(--crimson);
+      }
+      .sg-sub {
+        font-size: 0.9rem;
+        line-height: 1.55;
+        color: color-mix(in srgb, var(--ink) 65%, transparent);
+        margin-bottom: 22px;
+        max-width: 44ch;
+      }
+      .sg-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .sg-table th,
+      .sg-table td {
+        text-align: left;
+        padding: 12px 10px;
+        border-bottom: 1px solid var(--line);
+        font-size: 0.92rem;
+      }
+      .sg-table thead th {
+        font-family: var(--display);
+        font-weight: 600;
+        font-size: 0.78rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: color-mix(in srgb, var(--ink) 60%, transparent);
+        border-bottom-color: var(--ink);
+      }
+      .sg-table tbody td:first-child {
+        font-family: var(--display);
+        font-weight: 700;
+        color: var(--crimson);
+      }
+      .sg-note {
+        margin-top: 18px;
+        font-size: 0.84rem;
+        line-height: 1.6;
+        color: color-mix(in srgb, var(--ink) 62%, transparent);
       }
       .pd-actions {
         display: flex;
@@ -213,7 +322,9 @@
           <div class="pd-block" id="pd-size-block">
             <div class="pd-block__head">
               <span class="spec-label" style="margin: 0">Chọn size</span>
-              <a class="pd-sizeguide" href="size-guide.html">Bảng size</a>
+              <button class="pd-sizeguide" type="button" data-sizeguide-open>
+                Bảng size
+              </button>
             </div>
             <div class="size-group" data-size-group>
               <button class="size-btn" data-size="S">S</button>
@@ -347,6 +458,63 @@
     </main>
 
     <site-footer></site-footer>
+
+    <!-- SIZE GUIDE MODAL (mở từ nút "Bảng size" trong khối size áo thun) -->
+    <div class="sg-scrim" data-sizeguide-scrim></div>
+    <div
+      class="sg-modal"
+      data-sizeguide
+      role="dialog"
+      aria-modal="true"
+      aria-label="Bảng size áo thun"
+    >
+      <div class="sg-head">
+        <h2 class="sg-title">Bảng size — Áo thun</h2>
+        <button class="sg-close" data-sizeguide-close aria-label="Đóng">
+          ✕
+        </button>
+      </div>
+      <p class="sg-sub">
+        Áo Artdict may form rộng (oversized). Số đo trải phẳng, tính bằng
+        centimet.
+      </p>
+      <table class="sg-table">
+        <thead>
+          <tr>
+            <th>Size</th>
+            <th>Rộng ngang</th>
+            <th>Dài áo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>S</td>
+            <td>52 cm</td>
+            <td>68 cm</td>
+          </tr>
+          <tr>
+            <td>M</td>
+            <td>55 cm</td>
+            <td>70 cm</td>
+          </tr>
+          <tr>
+            <td>L</td>
+            <td>58 cm</td>
+            <td>72 cm</td>
+          </tr>
+          <tr>
+            <td>XL</td>
+            <td>61 cm</td>
+            <td>74 cm</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="sg-note">
+        Số đo mang tính tham khảo, có thể lệch 1–2 cm do may &amp; in thủ công.
+        Mẹo: đo một chiếc áo bạn hay mặc rồi đối chiếu cột “Rộng ngang”. Phân vân
+        giữa hai size — chọn size nhỏ hơn nếu thích ôm, lớn hơn nếu thích rộng.
+      </p>
+    </div>
 
     <!-- CART DRAWER -->
     <div class="cart-scrim" data-cart-scrim></div>

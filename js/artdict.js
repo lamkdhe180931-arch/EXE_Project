@@ -380,6 +380,33 @@
     });
   }
 
+  /* ---------- Size guide modal (product page) ---------- */
+  function initSizeGuide() {
+    const modal = document.querySelector("[data-sizeguide]");
+    const scrim = document.querySelector("[data-sizeguide-scrim]");
+    if (!modal) return;
+    const open = () => {
+      modal.classList.add("open");
+      if (scrim) scrim.classList.add("open");
+    };
+    const close = () => {
+      modal.classList.remove("open");
+      if (scrim) scrim.classList.remove("open");
+    };
+    // Delegation: the trigger lives in a block product.js may add/remove.
+    document.addEventListener("click", (e) => {
+      if (e.target.closest("[data-sizeguide-open]")) {
+        e.preventDefault();
+        open();
+      } else if (e.target.closest("[data-sizeguide-close]") || e.target === scrim) {
+        close();
+      }
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") close();
+    });
+  }
+
   /* ---------- Web Component nav (burger + scroll state) ---------- */
   function initNav() {
     const nav = document.getElementById("nav");
@@ -416,6 +443,7 @@
     initProductAdd();
     initGallery();
     initCartUI();
+    initSizeGuide();
     renderCart();
   });
 
