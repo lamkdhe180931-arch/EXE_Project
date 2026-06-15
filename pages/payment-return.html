@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kết quả thanh toán — Artdict</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <style>
+      /* ============ PAYMENT RETURN — page-local ============ */
+      .pr {
+        min-height: 72vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: calc(var(--nav-h) + 40px) 0 80px;
+      }
+      .pr-card {
+        max-width: 46ch;
+        text-align: center;
+      }
+      .pr-mark {
+        width: 72px;
+        height: 72px;
+        margin: 0 auto 26px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+        font-size: 2rem;
+        font-weight: 700;
+        line-height: 1;
+      }
+      .pr-card.is-ok .pr-mark {
+        background: var(--crimson);
+        color: var(--cream-50);
+      }
+      .pr-card.is-pending .pr-mark {
+        background: color-mix(in srgb, var(--ink) 12%, transparent);
+        color: var(--ink);
+      }
+      .pr-card.is-fail .pr-mark {
+        background: var(--ink);
+        color: var(--cream-50);
+      }
+      .pr-eyebrow {
+        color: var(--crimson);
+      }
+      .pr-title {
+        font-family: var(--display);
+        font-weight: var(--fw-bold);
+        font-size: var(--fs-display-md);
+        letter-spacing: var(--ls-display-md);
+        line-height: var(--lh-tightest);
+        margin: 14px 0 0;
+      }
+      .pr-order {
+        font-family: var(--display);
+        font-weight: var(--fw-medium);
+        font-size: var(--fs-body-md);
+        color: color-mix(in srgb, var(--ink) 62%, transparent);
+        margin-top: 18px;
+      }
+      .pr-order strong {
+        color: var(--ink);
+      }
+      .pr-body {
+        font-size: var(--fs-body-md);
+        line-height: var(--lh-body);
+        color: color-mix(in srgb, var(--ink) 74%, transparent);
+        margin: 18px auto 0;
+      }
+      .pr-actions {
+        display: flex;
+        gap: 14px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 34px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <site-header active=""></site-header>
+
+    <main class="wrap pr">
+      <div class="pr-card" id="pr-card">
+        <p class="pr-body">Đang tải kết quả…</p>
+      </div>
+    </main>
+
+    <site-footer></site-footer>
+
+    <script src="/components/site-header.js" defer></script>
+    <script src="/components/site-footer.js" defer></script>
+    <script src="/js/payment-return.js" defer></script>
+    <script src="/js/artdict.js" defer></script>
+  </body>
+</html>

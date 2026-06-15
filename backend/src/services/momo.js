@@ -28,7 +28,11 @@ function sign(rawString, secretKey) {
 // Create a payment request and return the MoMo-hosted pay URL.
 async function createPayment({ orderId, amount, orderInfo, extraData = '' }) {
   const c = config();
-  const id = String(orderId);
+  // MoMo requires a globally-unique orderId per partner (forever) — re-paying a
+  // failed order needs a fresh one, and the shared public sandbox rejects ids it
+  // has seen. Append a uniqueness suffix; the IPN handler recovers the real DB id
+  // with parseInt(), which stops at the '-' separator.
+  const id = `${orderId}-${Date.now()}`;
   const requestId = id;
   const requestType = 'captureWallet';
 

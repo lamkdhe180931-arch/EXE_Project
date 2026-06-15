@@ -25,6 +25,29 @@
     return data;
   }
 
+  // POST JSON. On non-2xx, throws Error(message) with the server `error` text
+  // and an `.data` field carrying the parsed body (e.g. orderId on a 502).
+  async function post(path, body) {
+    var res = await fetch(BASE + path, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body || {}),
+    });
+    var data = null;
+    try {
+      data = await res.json();
+    } catch (e) {
+      /* empty body */
+    }
+    if (!res.ok) {
+      var err = new Error((data && data.error) || "Lỗi " + res.status);
+      err.status = res.status;
+      err.data = data;
+      throw err;
+    }
+    return data;
+  }
+
   // Canonical category vocabulary — slug (DB + catalogue filter pills) → label.
   // Single source of truth shared by catalogue.js and product.js.
   var CATEGORIES = {
@@ -38,5 +61,10 @@
     khac: "Khác",
   };
 
-  window.ArtdictAPI = { base: BASE, get: get, CATEGORIES: CATEGORIES };
+  window.ArtdictAPI = {
+    base: BASE,
+    get: get,
+    post: post,
+    CATEGORIES: CATEGORIES,
+  };
 })();

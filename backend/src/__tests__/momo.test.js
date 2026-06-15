@@ -40,7 +40,11 @@ describe('momo.createPayment', () => {
 
     const sent = JSON.parse(options.body);
     expect(sent.amount).toBe(250000);
-    expect(sent.orderId).toBe('42');
+    // orderId carries the DB id plus a uniqueness suffix; the IPN recovers the
+    // DB id via parseInt(), which stops at the '-'.
+    expect(sent.orderId).toMatch(/^42-\d+$/);
+    expect(parseInt(sent.orderId, 10)).toBe(42);
+    expect(sent.requestId).toBe(sent.orderId);
     // HMAC-SHA256 hex digest
     expect(sent.signature).toMatch(/^[a-f0-9]{64}$/);
   });

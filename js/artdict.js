@@ -35,6 +35,9 @@
   function removeFromCart(key) {
     writeCart(readCart().filter((i) => i.id + "|" + (i.size || "") !== key));
   }
+  function clearCart() {
+    writeCart([]);
+  }
 
   /* ---------- Cart UI ---------- */
   function cartCount() {
@@ -359,6 +362,19 @@
         const rm = e.target.closest("[data-remove]");
         if (rm) removeFromCart(rm.dataset.remove);
       });
+    // "Thanh toán" → checkout page (root-relative so it works from any page).
+    const checkoutBtn = document.querySelector(
+      "[data-cart-drawer] .circle-btn--block",
+    );
+    if (checkoutBtn) {
+      checkoutBtn.addEventListener("click", () => {
+        if (!cartCount()) {
+          toast("Giỏ của bạn đang trống");
+          return;
+        }
+        window.location.href = "/pages/checkout.html";
+      });
+    }
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape") closeCart();
     });
@@ -412,5 +428,13 @@
   }
 
   // expose for inline use if needed
-  window.Artdict = { addToCart, openCart, closeCart, VND, rescan };
+  window.Artdict = {
+    addToCart,
+    openCart,
+    closeCart,
+    clearCart,
+    readCart,
+    VND,
+    rescan,
+  };
 })();
