@@ -15,16 +15,21 @@
       /* HERO */
       .sub-hero {
         padding: calc(120px + 40px) 0 clamp(40px, 6vw, 72px);
-        max-width: 22ch;
       }
       .sub-hero__title {
         font-family: var(--display);
         font-weight: var(--fw-bold);
-        font-size: var(--fs-display-lg);
+        /* nhỏ lại để cả câu nằm gọn trên 1 dòng (desktop) */
+        font-size: clamp(2rem, 6vw, 4.4rem);
         line-height: var(--lh-tightest);
         letter-spacing: var(--ls-display-lg);
         margin: 22px 0 26px;
-        text-wrap: balance;
+        white-space: nowrap;
+      }
+      @media (max-width: 560px) {
+        .sub-hero__title {
+          white-space: normal; /* mobile hẹp: cho xuống dòng tránh tràn ngang */
+        }
       }
       .sub-hero__title em {
         font-style: italic;

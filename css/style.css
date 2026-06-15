@@ -217,6 +217,11 @@ ul {
   padding-inline: var(--gutter);
 }
 
+/* Page <main> tách khỏi footer — không để nội dung dán vào thẻ footer/body. */
+main.wrap {
+  padding-bottom: clamp(72px, 9vw, 130px);
+}
+
 /* ============================================================
    TYPE PRIMITIVES
    ============================================================ */
@@ -2346,15 +2351,31 @@ ul {
 
 .artist-row {
   display: grid;
-  grid-template-columns: 0.92fr 1.08fr;
+  /* Cột ảnh CỐ ĐỊNH (nhỏ ~30% so với bản 0.92fr cũ) → mọi ảnh cùng 1 size,
+     dù nằm trái hay phải. Chữ chiếm phần còn lại (1fr). */
+  grid-template-columns: var(--artist-media-w, clamp(200px, 26vw, 350px)) 1fr;
   gap: clamp(28px, 5vw, 72px);
   align-items: center;
   padding: clamp(40px, 6vw, 80px) 0;
   border-top: 1px solid var(--line-light);
 }
-
+.artist-row__media {
+  grid-column: 1;
+  grid-row: 1;
+}
+.artist-row__text {
+  grid-column: 2;
+  grid-row: 1;
+}
+/* Hàng chẵn: đảo bên (ảnh sang phải) nhưng GIỮ cột ảnh cùng bề rộng cố định. */
+.artist-row:nth-child(even) {
+  grid-template-columns: 1fr var(--artist-media-w, clamp(200px, 26vw, 350px));
+}
 .artist-row:nth-child(even) .artist-row__media {
-  order: 2;
+  grid-column: 2;
+}
+.artist-row:nth-child(even) .artist-row__text {
+  grid-column: 1;
 }
 
 .artist-portrait {
@@ -2446,6 +2467,48 @@ ul {
   gap: 8px;
   flex-wrap: wrap;
   margin-bottom: 28px;
+}
+
+/* Phân trang danh sách (tác giả) */
+.list-pager {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 40px 0 8px;
+  border-top: 1px solid var(--line-light);
+}
+.list-pager:empty {
+  display: none;
+}
+.list-pager__btn {
+  font-family: var(--display);
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-body-sm);
+  letter-spacing: var(--ls-display-sm);
+  color: var(--ink);
+  background: transparent;
+  border: 1.5px solid var(--ink);
+  border-radius: var(--r-pill);
+  padding: 0.6em 1.3em;
+  cursor: pointer;
+  transition: background 0.25s var(--ease), color 0.25s var(--ease),
+    border-color 0.25s var(--ease);
+}
+.list-pager__btn:hover:not([disabled]) {
+  background: var(--crimson);
+  border-color: var(--crimson);
+  color: var(--cream-50);
+}
+.list-pager__btn[disabled] {
+  opacity: 0.32;
+  cursor: default;
+}
+.list-pager__info {
+  font-family: var(--display);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-body-sm);
+  color: color-mix(in srgb, var(--ink) 60%, transparent);
 }
 
 .work-chip {
@@ -2558,7 +2621,10 @@ ul {
 
 .iv-banner .pull-quote {
   font-size: var(--fs-h1);
-  max-width: 24ch;
+  /* căn giữa + nới rộng để câu trích gói gọn ~2 dòng */
+  max-width: 38ch;
+  margin-inline: auto;
+  text-align: center;
 }
 
 .iv-banner__by {
@@ -2567,6 +2633,7 @@ ul {
   font-size: var(--fs-body-sm);
   color: color-mix(in srgb, var(--ink) 52%, transparent);
   margin-top: 22px;
+  text-align: center;
 }
 
 /* Interview body: TOC sidebar + QA */
@@ -2653,7 +2720,8 @@ ul {
   float: left;
   font-family: var(--display);
   font-weight: var(--fw-bold);
-  font-size: var(--fs-display-lg);
+  /* nhỏ đi 50% so với cũ (var(--fs-display-lg)) */
+  font-size: calc(var(--fs-display-lg) * 0.5);
   line-height: var(--lh-tightest);
   margin: 0.07em 0.1em 0 0;
   color: var(--crimson);
@@ -2702,12 +2770,17 @@ ul {
 }
 
 @media (max-width: 900px) {
-  .artist-row {
+  .artist-row,
+  .artist-row:nth-child(even) {
     grid-template-columns: 1fr;
   }
 
-  .artist-row:nth-child(even) .artist-row__media {
-    order: 0;
+  .artist-row__media,
+  .artist-row__text,
+  .artist-row:nth-child(even) .artist-row__media,
+  .artist-row:nth-child(even) .artist-row__text {
+    grid-column: 1;
+    grid-row: auto;
   }
 
   .join-band {
@@ -3033,7 +3106,7 @@ ul {
   padding: calc(var(--nav-h) + 24px) 0 0;
 }
 .post-read__head {
-  max-width: 22ch;
+  max-width: none;
   margin: 0 auto 44px;
   text-align: center;
 }
@@ -3042,9 +3115,29 @@ ul {
   font-weight: var(--fw-bold);
   letter-spacing: var(--ls-display-md);
   line-height: var(--lh-tighter);
-  font-size: clamp(2rem, 6vw, 4rem);
+  font-size: clamp(1.8rem, 5vw, 3.4rem);
   margin: 16px auto 0;
-  max-width: 16ch;
+  max-width: none;
+  white-space: nowrap; /* tiêu đề trên 1 dòng (desktop) */
+}
+/* Cover image (optional, from Post.coverImage) */
+.post-read__cover {
+  max-width: 980px;
+  margin: 0 auto 48px;
+  border-radius: var(--r-sharp);
+  overflow: hidden;
+  background: var(--card);
+}
+.post-read__cover img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+@media (max-width: 700px) {
+  .post-read__title {
+    white-space: normal; /* mobile: cho xuống dòng để không tràn ngang */
+    max-width: 18ch;
+  }
 }
 .post-read__meta {
   margin-top: 22px;

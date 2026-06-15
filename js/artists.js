@@ -88,6 +88,63 @@
       "</p>";
   }
 
+  // ── Client-side pagination: 5 tác giả / trang ──────────────────────────────
+  var PER = 5;
+  var allArtists = [];
+  var byArtistGlobal = {};
+  var page = 1;
+  var pager = null;
+
+  function pageCount() {
+    return Math.max(1, Math.ceil(allArtists.length / PER));
+  }
+
+  function ensurePager() {
+    if (pager) return pager;
+    pager = document.createElement("nav");
+    pager.className = "list-pager";
+    pager.setAttribute("aria-label", "Phân trang tác giả");
+    list.insertAdjacentElement("afterend", pager);
+    pager.addEventListener("click", function (e) {
+      var dir = e.target.getAttribute("data-pg");
+      if (!dir) return;
+      if (dir === "prev" && page > 1) page -= 1;
+      else if (dir === "next" && page < pageCount()) page += 1;
+      else return;
+      drawPage();
+      list.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+    return pager;
+  }
+
+  function drawPage() {
+    var pages = pageCount();
+    if (page > pages) page = pages;
+    var start = (page - 1) * PER;
+    var slice = allArtists.slice(start, start + PER);
+    // absolute index → giữ số thứ tự chân dung liên tục giữa các trang
+    list.innerHTML = slice
+      .map(function (a, k) {
+        return rowHTML(a, start + k, byArtistGlobal);
+      })
+      .join("");
+
+    var bar = ensurePager();
+    if (pages <= 1) {
+      bar.innerHTML = "";
+    } else {
+      bar.innerHTML =
+        '<button class="list-pager__btn" type="button" data-pg="prev"' +
+        (page === 1 ? " disabled" : "") +
+        ">← Trước</button>" +
+        '<span class="list-pager__info">Trang ' + page + " / " + pages + "</span>" +
+        '<button class="list-pager__btn" type="button" data-pg="next"' +
+        (page === pages ? " disabled" : "") +
+        ">Sau →</button>";
+    }
+    if (window.Artdict && window.Artdict.rescan) window.Artdict.rescan(list);
+  }
+
   Promise.all([
     ArtdictAPI.get("/artists"),
     ArtdictAPI.get("/products").catch(function () {
@@ -106,12 +163,10 @@
         message("Chưa có tác giả nào.");
         return;
       }
-      list.innerHTML = artists
-        .map(function (a, i) {
-          return rowHTML(a, i, byArtist);
-        })
-        .join("");
-      if (window.Artdict && window.Artdict.rescan) window.Artdict.rescan(list);
+      allArtists = artists;
+      byArtistGlobal = byArtist;
+      page = 1;
+      drawPage();
     })
     .catch(function (err) {
       message("Không tải được tác giả (" + err.message + ").");

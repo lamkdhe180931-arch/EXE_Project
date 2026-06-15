@@ -63,6 +63,17 @@
     var title = $("post-title");
     if (title) title.textContent = p.title;
 
+    var cover = $("post-cover");
+    if (cover) {
+      if (p.coverImage) {
+        cover.innerHTML =
+          '<img src="' + esc(p.coverImage) + '" alt="' + esc(p.title) + '" />';
+        cover.hidden = false;
+      } else {
+        cover.hidden = true;
+      }
+    }
+
     var meta = $("post-meta");
     if (meta) {
       var date = fmtDate(p.publishedAt);
