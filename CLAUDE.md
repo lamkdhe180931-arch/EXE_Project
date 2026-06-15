@@ -46,14 +46,15 @@ Hướng dẫn cho Claude. **Đọc rules trong `.claude/rules/` TRƯỚC khi co
 
 - **Hoàn thành**: Setup · Auth (15m access, 7d refresh httpOnly) · Products & Artists CRUD · **Order & Checkout + MoMo** (`POST /orders` optional auth/guest, `validateCart` snapshot `priceAtTime` từ giá server, IPN `momo-callback`: verify HMAC → `PAID` → trừ kho `$transaction`, idempotent) · **upload ảnh Cloudinary** (`POST /products/:id/images`) · **Email Resend** (3 template: Order Confirmation nối callback PAID, Order Shipped nối `PATCH status→SHIPPED`, Artist Application qua `POST /api/artists/apply`) · **Content/Posts API** (`/api/posts` NEWS/JOURNAL) · **seed admin** (`npm run db:seed`).
   > Email đổi từ `fetch` thuần → **SDK `resend`** (thêm dep `resend@^6`, theo yêu cầu chủ dự án — ghi đè quyết định "no dep" cũ cho email).
+  > **Fix upload ảnh (2026-06-15)**: `app.js` nâng `express.json({ limit: '25mb' })` (mặc định 100kb → ảnh base64 bị **413 Payload Too Large**). `cloudinary.js` thêm **fallback dev**: chưa có `CLOUDINARY_*` → lưu thẳng data URL/URL vào DB (test local không cần key); có key → upload CDN thật. *(app.js cũng mang sẵn 1 thay đổi CORS cho phép biến thể `localhost`/`127.0.0.1`.)*
 - **Admin Panel** (`admin/`, ngang hàng `backend/`): HTML/CSS/JS thuần. login + dashboard + products (artist picker + upload ảnh) + orders (đổi status) + artists (3 block Q&A) + posts. **CRUD đầy đủ**: tạo + **sửa** (nút "Sửa" mỗi dòng tái dùng form tạo, đổi sang chế độ cập nhật → `PATCH /:id`) + xóa (products soft-delete, artists xóa; posts chưa có DELETE ở BE nên chỉ sửa). `auth.js` fetch dùng `cache:'no-store'` để list refresh đúng sau mutate. Logic thuần ở `admin/js/core.js` (14 test). **Cố ý tĩnh** (rule animation áp cho trang showcase công khai, không phải dashboard nội bộ).
 
 - **Trạng thái chạy thật (2026-06-15): ĐÃ CHẠY E2E TRÊN NEON ✓ — hết tồn đọng BE bắt buộc.**
   - `backend/.env` đã tạo (JWT secret sinh sẵn; `DATABASE_URL` Neon thật). DB đã `db:migrate` (2 migration: `init` + `add_product_description`, đã commit) + `db:seed` (admin `admin@artdict.vn`). 128/128 test pass; `prisma validate` ✓.
   - **E2E verified** bằng smoke test + screenshot frontend (A.1/A.2). Trên Neon hiện có **demo data** để review live: 3 nghệ sĩ + 6 sản phẩm (slug `demo-*`, đã liên kết artistId) — seed bằng `backend/_demo_seed.js` (throwaway, untracked). Lưu ý còn vài row rác cũ ("ÁO" / "NGON") chưa xoá.
-  - Phase 1-7 + admin + 2 migration + **A.1/A.2/A.3 (nối frontend) + A.5 (checkout)** đã commit lên `feature/artdict-ui` — **chưa push** (nhiều commit; xem `git status`).
+  - Phase 1-7 + admin + 2 migration + **A.1/A.2/A.3 + A.5 (nối frontend) + B (index động + size-guide modal) + admin CRUD sửa + fix 413 upload ảnh** đã commit lên `feature/artdict-ui` — **chưa push** (nhiều commit; xem `git status`).
   - Trên Neon còn có 4 post demo (`backend/_demo_seed_posts.js`, throwaway) cho A.3.
-  - Credential bên thứ 3: ✅ **`MOMO_*`** đã điền **key sandbox công khai** vào `backend/.env` (để test checkout; `.env` gitignored nên không lên git). Còn rỗng (chỉ cần khi bật): `CLOUDINARY_*` (upload ảnh) · `RESEND_API_KEY`+`EMAIL_FROM` (email). Backend chạy bình thường không cần các key còn rỗng.
+  - Credential bên thứ 3: ✅ **`MOMO_*`** (sandbox công khai) + ✅ **`CLOUDINARY_*`** (key thật của chủ dự án — upload ảnh CDN đã bật) đã điền vào `backend/.env` (`.env` gitignored nên không lên git). Còn rỗng (chỉ cần khi bật): `RESEND_API_KEY`+`EMAIL_FROM` (email). Backend chạy bình thường không cần key còn rỗng.
 
 - **Quyết định chốt** (2026-06-11): phí ship = **miễn phí toàn bộ** (total = tiền hàng, không cột `shippingFee`); tra cứu đơn guest = **không làm** (khách chỉ nhận email xác nhận).
 
@@ -83,13 +84,13 @@ Hiện chỉ admin tiêu thụ API; trang công khai vẫn hardcode. Làm lần 
 - ✅ **Trang chủ động**: lưới SP `index.html` đã nối API (xem mục 1).
 
 ## C. Bật tính năng bên thứ 3 (điền key vào `backend/.env` — xem Bước 1)
-- **Cloudinary** (`CLOUDINARY_*`) — upload ảnh sản phẩm thật từ admin (`POST /products/:id/images`).
-- **MoMo** (`MOMO_*`) — dùng sandbox công khai (key sẵn ở Bước 1) để test thanh toán thật.
-- **Resend** (`RESEND_API_KEY` + domain đã verify ở `EMAIL_FROM`) — gửi email xác nhận / đã gửi hàng / ứng tuyển.
+- ✅ **Cloudinary** (`CLOUDINARY_*`) — ĐÃ điền key thật, upload ảnh CDN từ admin hoạt động. (Chưa có key thì `cloudinary.js` fallback lưu data URL vào DB — chỉ nên dùng để test.)
+- ✅ **MoMo** (`MOMO_*`) — sandbox công khai đã điền (test thanh toán).
+- ⏳ **Resend** (`RESEND_API_KEY` + domain đã verify ở `EMAIL_FROM`) — gửi email xác nhận / đã gửi hàng / ứng tuyển. **Chưa bật.**
 
 ## D. Cứng hoá & deploy
 1. **Đổi `ADMIN_PASSWORD`** (đang là dev pw yếu `123`) → mật khẩu mạnh, rồi `npm run db:seed` lại (upsert idempotent).
-2. **Push** `feature/artdict-ui` lên remote (**đang còn 7 commit chưa push**) → mở PR vào `main`.
+2. **Push** `feature/artdict-ui` lên remote (**còn nhiều commit chưa push** — xem `git log origin/feature/artdict-ui..HEAD`) → mở PR vào `main`.
 3. **Deploy**: BE (Render/Railway/Fly) + DB Neon (đã có) + FE static (Netlify/Vercel/Cloudflare Pages). Set env production — đặc biệt `FRONTEND_URL`, `DATABASE_URL`, JWT secret, và các key mục C.
 
 ---
