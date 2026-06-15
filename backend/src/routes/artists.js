@@ -4,7 +4,7 @@ const { verifyToken, requireAdmin } = require('../middlewares/auth');
 
 function artistsRouter(db, deps = {}) {
   const router = Router();
-  const { list, detail, create, update, remove, apply } =
+  const { list, detail, create, update, remove, apply, uploadAvatar } =
     makeArtistsController(db, deps);
 
   router.get('/', list);
@@ -13,6 +13,7 @@ function artistsRouter(db, deps = {}) {
   router.post('/', verifyToken, requireAdmin, create);
   router.patch('/:id', verifyToken, requireAdmin, update);
   router.delete('/:id', verifyToken, requireAdmin, remove);
+  router.post('/:id/avatar', verifyToken, requireAdmin, uploadAvatar);
 
   return router;
 }

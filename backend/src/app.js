@@ -41,7 +41,7 @@ function createApp(db, deps = {}) {
   app.use('/api/products', productsRouter(db, deps));
   app.use('/api/artists', artistsRouter(db, deps));
   app.use('/api/orders', ordersRouter(db, deps));
-  app.use('/api/posts', postsRouter(db));
+  app.use('/api/posts', postsRouter(db, deps));
 
   return app;
 }

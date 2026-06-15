@@ -1,6 +1,8 @@
 const VALID_TYPES = ['NEWS', 'JOURNAL'];
 
-function makePostsController(db) {
+function makePostsController(db, deps = {}) {
+  const cloudinary = deps.cloudinary || require('../services/cloudinary');
+
   // GET /api/posts — public; optional ?type=NEWS|JOURNAL filter, newest first.
   async function list(req, res) {
     const { type } = req.query;
@@ -27,7 +29,7 @@ function makePostsController(db) {
 
   // POST /api/posts — admin. `publishedAt` optional (null = draft).
   async function create(req, res) {
-    const { type, title, slug, body, publishedAt } = req.body;
+    const { type, title, slug, body, coverImage, publishedAt } = req.body;
     if (!type || !title || !slug || !body) {
       return res
         .status(400)
@@ -37,7 +39,7 @@ function makePostsController(db) {
       return res.status(400).json({ error: 'type phải là NEWS hoặc JOURNAL' });
     }
     const post = await db.post.create({
-      data: { type, title, slug, body, publishedAt: publishedAt ?? null },
+      data: { type, title, slug, body, coverImage: coverImage ?? null, publishedAt: publishedAt ?? null },
     });
     return res.status(201).json(post);
   }
@@ -48,7 +50,7 @@ function makePostsController(db) {
     const existing = await db.post.findUnique({ where: { id } });
     if (!existing) return res.status(404).json({ error: 'Bài viết không tồn tại' });
 
-    const allowed = ['type', 'title', 'slug', 'body', 'publishedAt'];
+    const allowed = ['type', 'title', 'slug', 'body', 'coverImage', 'publishedAt'];
     const data = {};
     for (const key of allowed) {
       if (req.body[key] !== undefined) data[key] = req.body[key];
@@ -60,7 +62,32 @@ function makePostsController(db) {
     return res.json(post);
   }
 
-  return { list, detail, create, update };
+  // DELETE /api/posts/:id — admin.
+  async function remove(req, res) {
+    const id = parseInt(req.params.id, 10);
+    const existing = await db.post.findUnique({ where: { id } });
+    if (!existing) return res.status(404).json({ error: 'Bài viết không tồn tại' });
+
+    await db.post.delete({ where: { id } });
+    return res.json({ message: 'Đã xóa bài viết' });
+  }
+
+  // POST /api/posts/:id/cover — admin. Upload a cover image (data URL or remote
+  // URL) to Cloudinary and save the resulting URL onto the post.
+  async function uploadCover(req, res) {
+    const id = parseInt(req.params.id, 10);
+    const existing = await db.post.findUnique({ where: { id } });
+    if (!existing) return res.status(404).json({ error: 'Bài viết không tồn tại' });
+
+    const { image } = req.body;
+    if (!image) return res.status(400).json({ error: 'Cần một ảnh' });
+
+    const { url } = await cloudinary.uploadImage(image);
+    const post = await db.post.update({ where: { id }, data: { coverImage: url } });
+    return res.json(post);
+  }
+
+  return { list, detail, create, update, remove, uploadCover };
 }
 
 module.exports = makePostsController;

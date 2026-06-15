@@ -121,6 +121,7 @@ model Post {
   title       String
   slug        String   @unique
   body        String
+  coverImage  String?
   publishedAt DateTime?
   createdAt   DateTime @default(now())
 }

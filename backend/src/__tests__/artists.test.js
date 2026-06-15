@@ -184,6 +184,68 @@ describe('DELETE /api/artists/:id', () => {
   });
 });
 
+// ─── POST avatar (Cloudinary) ────────────────────────────────────────────────
+
+describe('POST /api/artists/:id/avatar', () => {
+  let cloudinary;
+  beforeEach(() => {
+    cloudinary = {
+      uploadImage: jest
+        .fn()
+        .mockResolvedValue({ url: 'https://res.cloudinary.com/demo/a.png' }),
+    };
+    app = createApp(db, { cloudinary });
+  });
+
+  test('200: admin uploads an avatar → Cloudinary called, avatarUrl saved', async () => {
+    db.artist.findUnique.mockResolvedValue(mockArtist);
+    db.artist.update.mockResolvedValue({
+      ...mockArtist,
+      avatarUrl: 'https://res.cloudinary.com/demo/a.png',
+    });
+
+    const res = await request(app)
+      .post('/api/artists/1/avatar')
+      .set('Authorization', adminToken())
+      .send({ image: 'data:image/png;base64,AAA' });
+
+    expect(res.status).toBe(200);
+    expect(cloudinary.uploadImage).toHaveBeenCalledWith('data:image/png;base64,AAA');
+    expect(db.artist.update).toHaveBeenCalledWith({
+      where: { id: 1 },
+      data: { avatarUrl: 'https://res.cloudinary.com/demo/a.png' },
+    });
+    expect(res.body.avatarUrl).toBe('https://res.cloudinary.com/demo/a.png');
+  });
+
+  test('400: no image provided', async () => {
+    db.artist.findUnique.mockResolvedValue(mockArtist);
+    const res = await request(app)
+      .post('/api/artists/1/avatar')
+      .set('Authorization', adminToken())
+      .send({});
+    expect(res.status).toBe(400);
+    expect(cloudinary.uploadImage).not.toHaveBeenCalled();
+  });
+
+  test('404: artist not found', async () => {
+    db.artist.findUnique.mockResolvedValue(null);
+    const res = await request(app)
+      .post('/api/artists/999/avatar')
+      .set('Authorization', adminToken())
+      .send({ image: 'x' });
+    expect(res.status).toBe(404);
+  });
+
+  test('403: customer cannot upload', async () => {
+    const res = await request(app)
+      .post('/api/artists/1/avatar')
+      .set('Authorization', customerToken())
+      .send({ image: 'x' });
+    expect(res.status).toBe(403);
+  });
+});
+
 // ─── POST apply — public artist application ───────────────────────────────────
 
 describe('POST /api/artists/apply', () => {

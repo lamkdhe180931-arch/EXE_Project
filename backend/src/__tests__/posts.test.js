@@ -100,6 +100,18 @@ describe('POST /api/posts', () => {
     expect(db.post.create).not.toHaveBeenCalled();
   });
 
+  test('201: accepts an optional coverImage', async () => {
+    db.post.create.mockResolvedValue({ id: 5, ...validBody, coverImage: 'https://x/c.png' });
+    const res = await request(app)
+      .post('/api/posts')
+      .set('Authorization', adminToken())
+      .send({ ...validBody, coverImage: 'https://x/c.png' });
+    expect(res.status).toBe(201);
+    expect(db.post.create).toHaveBeenCalledWith(
+      expect.objectContaining({ data: expect.objectContaining({ coverImage: 'https://x/c.png' }) })
+    );
+  });
+
   test('400: invalid type', async () => {
     const res = await request(app)
       .post('/api/posts')
@@ -151,6 +163,99 @@ describe('PATCH /api/posts/:id', () => {
       .patch('/api/posts/1')
       .set('Authorization', customerToken())
       .send({ title: 'x' });
+    expect(res.status).toBe(403);
+  });
+});
+
+// ─── DELETE ──────────────────────────────────────────────────────────────────
+
+describe('DELETE /api/posts/:id', () => {
+  test('200: admin deletes a post', async () => {
+    db.post.findUnique.mockResolvedValue(mockPost);
+    db.post.delete.mockResolvedValue(mockPost);
+
+    const res = await request(app)
+      .delete('/api/posts/1')
+      .set('Authorization', adminToken());
+
+    expect(res.status).toBe(200);
+    expect(db.post.delete).toHaveBeenCalledWith({ where: { id: 1 } });
+  });
+
+  test('404: post not found', async () => {
+    db.post.findUnique.mockResolvedValue(null);
+    const res = await request(app)
+      .delete('/api/posts/999')
+      .set('Authorization', adminToken());
+    expect(res.status).toBe(404);
+  });
+
+  test('403: customer cannot delete', async () => {
+    const res = await request(app)
+      .delete('/api/posts/1')
+      .set('Authorization', customerToken());
+    expect(res.status).toBe(403);
+  });
+});
+
+// ─── POST cover image (Cloudinary) ───────────────────────────────────────────
+
+describe('POST /api/posts/:id/cover', () => {
+  let cloudinary;
+  beforeEach(() => {
+    cloudinary = {
+      uploadImage: jest
+        .fn()
+        .mockResolvedValue({ url: 'https://res.cloudinary.com/demo/cover.png' }),
+    };
+    app = createApp(db, { cloudinary });
+  });
+
+  test('200: admin uploads a cover → Cloudinary called, coverImage saved', async () => {
+    db.post.findUnique.mockResolvedValue(mockPost);
+    db.post.update.mockResolvedValue({
+      ...mockPost,
+      coverImage: 'https://res.cloudinary.com/demo/cover.png',
+    });
+
+    const res = await request(app)
+      .post('/api/posts/1/cover')
+      .set('Authorization', adminToken())
+      .send({ image: 'data:image/png;base64,AAA' });
+
+    expect(res.status).toBe(200);
+    expect(cloudinary.uploadImage).toHaveBeenCalledWith('data:image/png;base64,AAA');
+    expect(db.post.update).toHaveBeenCalledWith({
+      where: { id: 1 },
+      data: { coverImage: 'https://res.cloudinary.com/demo/cover.png' },
+    });
+    expect(res.body.coverImage).toBe('https://res.cloudinary.com/demo/cover.png');
+  });
+
+  test('400: no image provided', async () => {
+    db.post.findUnique.mockResolvedValue(mockPost);
+    const res = await request(app)
+      .post('/api/posts/1/cover')
+      .set('Authorization', adminToken())
+      .send({});
+    expect(res.status).toBe(400);
+    expect(cloudinary.uploadImage).not.toHaveBeenCalled();
+  });
+
+  test('404: post not found', async () => {
+    db.post.findUnique.mockResolvedValue(null);
+    const res = await request(app)
+      .post('/api/posts/999/cover')
+      .set('Authorization', adminToken())
+      .send({ image: 'x' });
+    expect(res.status).toBe(404);
+  });
+
+  test('403: customer cannot upload', async () => {
+    const res = await request(app)
+      .post('/api/posts/1/cover')
+      .set('Authorization', customerToken())
+      .send({ image: 'x' });
     expect(res.status).toBe(403);
   });
 });
