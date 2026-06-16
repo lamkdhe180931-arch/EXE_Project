@@ -36,7 +36,7 @@
     var delay = (i % 3) * 60;
 
     var media = img
-      ? '<img src="' + esc(img) + '" alt="' + esc(p.name) + '" loading="lazy" />'
+      ? '<img src="' + esc(ArtdictAPI.img(img, 600)) + '" alt="' + esc(p.name) + '" loading="lazy" />'
       : '<div class="ph"><span class="ph__label">' + esc(p.name) + "</span></div>";
 
     var badge = soldOut
@@ -54,7 +54,7 @@
         '" data-price="' +
         (p.price || 0) +
         '" data-img="' +
-        esc(img) +
+        esc(ArtdictAPI.img(img, 200)) +
         '">Thêm +</button>';
 
     return (

@@ -82,7 +82,7 @@
     var img = (p.images && p.images[0] && p.images[0].url) || "";
     var soldOut = (p.stock || 0) <= 0;
     var media = img
-      ? '<img src="' + esc(img) + '" alt="' + esc(p.name) + '" loading="lazy" />'
+      ? '<img src="' + esc(ArtdictAPI.img(img, 600)) + '" alt="' + esc(p.name) + '" loading="lazy" />'
       : '<div class="ph"><span class="ph__label">' + esc(p.name) + "</span></div>";
     var action = soldOut
       ? '<span class="card__add" style="opacity:.5;color:color-mix(in srgb,var(--ink) 50%,transparent)">Sold out</span>'
@@ -95,7 +95,7 @@
         '" data-price="' +
         (p.price || 0) +
         '" data-img="' +
-        esc(img) +
+        esc(ArtdictAPI.img(img, 200)) +
         '">Thêm +</button>';
     return (
       '<a class="card ' +
@@ -143,7 +143,7 @@
     var portrait = $("iv-portrait");
     if (portrait) {
       portrait.innerHTML = artist.avatarUrl
-        ? '<img src="' + esc(artist.avatarUrl) + '" alt="' + esc(artist.name) + '" />'
+        ? '<img src="' + esc(ArtdictAPI.img(artist.avatarUrl, 800)) + '" alt="' + esc(artist.name) + '" />'
         : '<div class="ph" style="font-weight:400"><span class="ph__label">chân dung · ' +
           esc(fname) +
           "</span></div>";

@@ -8,9 +8,15 @@ function makeProductsController(db, deps = {}) {
 
     const products = await db.product.findMany({
       where,
-      include: { images: { orderBy: { order: 'asc' } }, artist: true },
+      // The grid/cards only ever use the first image — fetch just that one so
+      // the list payload stays small as products accumulate galleries.
+      include: { images: { orderBy: { order: 'asc' }, take: 1 }, artist: true },
       orderBy: { createdAt: 'desc' },
     });
+    // Public read data: let browsers/CDN serve repeat visits from cache while
+    // revalidating in the background. Admin reads use cache:'no-store' so they
+    // are unaffected.
+    res.set('Cache-Control', 'public, max-age=60, stale-while-revalidate=300');
     return res.json(products);
   }
 
@@ -22,6 +28,7 @@ function makeProductsController(db, deps = {}) {
     if (!product || !product.isActive) {
       return res.status(404).json({ error: 'Sản phẩm không tồn tại' });
     }
+    res.set('Cache-Control', 'public, max-age=60, stale-while-revalidate=300');
     return res.json(product);
   }
 

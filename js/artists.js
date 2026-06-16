@@ -26,7 +26,7 @@
 
   function rowHTML(a, i, byArtist) {
     var avatar = a.avatarUrl
-      ? '<img src="' + esc(a.avatarUrl) + '" alt="' + esc(a.name) + '" loading="lazy" />'
+      ? '<img src="' + esc(ArtdictAPI.img(a.avatarUrl, 500)) + '" alt="' + esc(a.name) + '" loading="lazy" />'
       : '<div class="ph"><span class="ph__label">chân dung · ' +
         esc(firstName(a.name)) +
         "</span></div>";

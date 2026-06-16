@@ -7,8 +7,13 @@
 (function () {
   "use strict";
 
+  var defaultApiBase = "http://localhost:3000";
+  if (window.location.hostname && window.location.hostname !== "localhost" && window.location.hostname !== "127.0.0.1") {
+    defaultApiBase = "http://" + window.location.hostname + ":3000";
+  }
+
   var BASE =
-    (localStorage.getItem("artdict_api") || "http://localhost:3000") + "/api";
+    (localStorage.getItem("artdict_api") || defaultApiBase) + "/api";
 
   // GET JSON; throws Error(message) on non-2xx so callers can show a state.
   async function get(path) {
@@ -48,6 +53,23 @@
     return data;
   }
 
+  // Cloudinary on-the-fly transform: rewrite a Cloudinary delivery URL to serve
+  // a CDN-optimised image (auto WebP/AVIF, auto quality, capped to the display
+  // width) instead of the full-res original. Cuts product-image weight ~10–30×.
+  // Non-Cloudinary URLs (data:, /assets, external) pass through unchanged, and
+  // a URL that already carries a transform is left alone.
+  function img(url, width) {
+    if (!url || typeof url !== "string") return url || "";
+    var marker = "/image/upload/";
+    var up = url.indexOf(marker);
+    if (url.indexOf("res.cloudinary.com") === -1 || up === -1) return url;
+    var rest = url.slice(up + marker.length);
+    // Already carries a transform segment (e.g. f_auto,…/) → leave untouched.
+    if (/^[a-z]{1,3}_[^/]*\//.test(rest)) return url;
+    return url.slice(0, up + marker.length) +
+      "f_auto,q_auto,c_limit,w_" + (width || 600) + "/" + rest;
+  }
+
   // Canonical category vocabulary — slug (DB + catalogue filter pills) → label.
   // Single source of truth shared by catalogue.js and product.js.
   var CATEGORIES = {
@@ -65,6 +87,7 @@
     base: BASE,
     get: get,
     post: post,
+    img: img,
     CATEGORIES: CATEGORIES,
   };
 })();

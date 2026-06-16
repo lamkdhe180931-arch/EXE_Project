@@ -55,20 +55,20 @@
             '<button class="thumb' +
             (i === 0 ? " is-active" : "") +
             '" data-thumb data-full="' +
-            esc(im.url) +
+            esc(ArtdictAPI.img(im.url, 1200)) +
             '" data-label="' +
             esc(name) +
             '"><div class="ph"><img src="' +
-            esc(im.url) +
+            esc(ArtdictAPI.img(im.url, 200)) +
             '" alt="' +
             esc(name) +
-            '" /></div></button>'
+            '" loading="lazy" /></div></button>'
           );
         })
         .join("");
     if (main)
       main.innerHTML =
-        '<img src="' + esc(images[0].url) + '" alt="' + esc(name) + '" />';
+        '<img src="' + esc(ArtdictAPI.img(images[0].url, 1200)) + '" alt="' + esc(name) + '" />';
   }
 
   function relatedCardHTML(p, i) {
@@ -77,7 +77,7 @@
     var img = (p.images && p.images[0] && p.images[0].url) || "";
     var soldOut = (p.stock || 0) <= 0;
     var media = img
-      ? '<img src="' + esc(img) + '" alt="' + esc(p.name) + '" loading="lazy" />'
+      ? '<img src="' + esc(ArtdictAPI.img(img, 600)) + '" alt="' + esc(p.name) + '" loading="lazy" />'
       : '<div class="ph"><span class="ph__label">' + esc(p.name) + "</span></div>";
     var action = soldOut
       ? '<span class="card__add" style="opacity:.5;color:color-mix(in srgb,var(--ink) 50%,transparent)">Sold out</span>'
@@ -90,7 +90,7 @@
         '" data-price="' +
         (p.price || 0) +
         '" data-img="' +
-        esc(img) +
+        esc(ArtdictAPI.img(img, 200)) +
         '">Thêm +</button>';
     return (
       '<a class="card ' +
@@ -181,7 +181,7 @@
       add.setAttribute("data-name", p.name);
       add.setAttribute("data-cat", label);
       add.setAttribute("data-price", p.price || 0);
-      add.setAttribute("data-img", img);
+      add.setAttribute("data-img", ArtdictAPI.img(img, 200));
       if (soldOut) {
         add.disabled = true;
         add.textContent = "Hết hàng";
