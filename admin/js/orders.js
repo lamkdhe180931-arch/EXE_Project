@@ -27,10 +27,26 @@
     );
   }
 
+  function customerCell(o) {
+    var name = o.guestName || (o.user && o.user.name) || '';
+    var email = o.guestEmail || (o.user && o.user.email) || '';
+    var phone = o.guestPhone || '';
+    var lines = [];
+    lines.push('<strong>' + (name ? Admin.esc(name) : '<span class="muted">— chưa có tên</span>') + '</strong>');
+    if (email) lines.push('<span class="muted">✉ ' + Admin.esc(email) + '</span>');
+    if (phone) lines.push('<span class="muted">☎ ' + Admin.esc(phone) + '</span>');
+    return lines.join('<br>');
+  }
+
   function rowHtml(o) {
-    var who = Admin.esc(o.guestEmail || (o.user && o.user.email) || ('user#' + o.userId));
+    var address = o.shippingAddress
+      ? Admin.esc(o.shippingAddress)
+      : '<span class="muted">—</span>';
     return (
-      '<tr><td>#' + o.id + '</td><td>' + who + '</td><td>' + vnd(o.total) + '</td>' +
+      '<tr><td>#' + o.id + '</td>' +
+      '<td>' + customerCell(o) + '</td>' +
+      '<td style="max-width:260px;white-space:normal">' + address + '</td>' +
+      '<td>' + vnd(o.total) + '</td>' +
       '<td><span class="badge badge--' + o.status + '">' + o.status + '</span></td>' +
       '<td>' + statusControl(o) + '</td><td>' + fmtDate(o.createdAt) + '</td></tr>'
     );
@@ -39,7 +55,7 @@
   var pager = Admin.makePager(
     'orders-body',
     function (slice) { return slice.map(rowHtml).join(''); },
-    '<tr><td colspan="6" class="muted">Chưa có đơn nào.</td></tr>'
+    '<tr><td colspan="7" class="muted">Chưa có đơn nào.</td></tr>'
   );
 
   function render(orders) {
@@ -71,7 +87,7 @@
       .catch(function (err) {
         flash(err.message, false);
         document.getElementById('orders-body').innerHTML =
-          '<tr><td colspan="6" class="muted">Không tải được đơn hàng.</td></tr>';
+          '<tr><td colspan="7" class="muted">Không tải được đơn hàng.</td></tr>';
       });
   }
 

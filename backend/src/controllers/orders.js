@@ -115,7 +115,7 @@ function makeOrdersController(db, deps = {}) {
   // GET /api/orders — admin: every order, newest first.
   async function list(_req, res) {
     const orders = await db.order.findMany({
-      include: { items: true },
+      include: { items: true, user: true },
       orderBy: { createdAt: 'desc' },
     });
     return res.json(orders);
