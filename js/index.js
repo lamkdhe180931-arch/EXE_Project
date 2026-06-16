@@ -99,7 +99,7 @@
 
   // Replace the static placeholder cards immediately so stale mock data
   // never lingers on screen while the request is in flight.
-  message("Đang tải sản phẩm…");
+  grid.innerHTML = ArtdictAPI.skeletonCards(LIMIT);
 
   ArtdictAPI.get("/products")
     .then(function (products) {

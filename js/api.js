@@ -70,6 +70,20 @@
       "f_auto,q_auto,c_limit,w_" + (width || 600) + "/" + rest;
   }
 
+  // Shimmer placeholder cards shown immediately while products fetch, so the
+  // grid never flashes empty. Replaced wholesale by real cards on resolve.
+  function skeletonCards(n) {
+    var one =
+      '<div class="card-skel" aria-hidden="true">' +
+      '<div class="skel card-skel__media"></div>' +
+      '<div class="skel card-skel__line card-skel__line--sm"></div>' +
+      '<div class="skel card-skel__line card-skel__line--lg"></div>' +
+      "</div>";
+    var out = "";
+    for (var i = 0; i < (n || 6); i++) out += one;
+    return out;
+  }
+
   // Canonical category vocabulary — slug (DB + catalogue filter pills) → label.
   // Single source of truth shared by catalogue.js and product.js.
   var CATEGORIES = {
@@ -88,6 +102,7 @@
     get: get,
     post: post,
     img: img,
+    skeletonCards: skeletonCards,
     CATEGORIES: CATEGORIES,
   };
 })();

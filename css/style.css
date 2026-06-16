@@ -348,6 +348,29 @@ main.wrap {
   padding: 0 var(--gutter);
 }
 
+.section-head--flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 32px;
+}
+
+.section-head__content {
+  flex: 1;
+}
+
+.section-head__action {
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .section-head--flex {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+}
+
 .section-lead {
   font-size: var(--fs-body-lg);
   line-height: var(--lh-body);
@@ -3183,4 +3206,52 @@ main.wrap {
   justify-content: space-between;
   gap: 20px;
   flex-wrap: wrap;
+}
+
+/* ── Skeleton loading (perceived-speed placeholder while products fetch) ──
+   Reuses the card grid cell; the 4/5 media block matches .card__media so
+   there is no layout shift when real cards replace the skeletons. */
+.card-skel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.card-skel__media {
+  aspect-ratio: 4 / 5;
+  width: 100%;
+}
+.card-skel__line {
+  height: 13px;
+}
+.card-skel__line--sm {
+  width: 38%;
+  height: 10px;
+}
+.card-skel__line--lg {
+  width: 72%;
+  height: 17px;
+}
+.skel {
+  border-radius: 2px;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--ink) 6%, transparent) 25%,
+    color-mix(in srgb, var(--ink) 12%, transparent) 37%,
+    color-mix(in srgb, var(--ink) 6%, transparent) 63%
+  );
+  background-size: 200% 100%;
+  animation: skel-shimmer 1.4s ease-in-out infinite;
+}
+@keyframes skel-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .skel {
+    animation: none;
+  }
 }

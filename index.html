@@ -11,6 +11,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://res.cloudinary.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
@@ -89,11 +90,20 @@
 
     <!-- ============ CATALOGUE (grid đều, mỗi thẻ 1 nền màu) ============ -->
     <section class="catalogue" id="catalogue">
-      <header class="section-head" data-reveal>
-        <h2 class="section-title">Bộ sưu tập đang mở bán</h2>
-        <p class="section-lead">
-          Mỗi sản phẩm là một tác phẩm — số lượng giới hạn, in theo mẻ.
-        </p>
+      <header class="section-head section-head--flex" data-reveal>
+        <div class="section-head__content">
+          <h2 class="section-title">Bộ sưu tập đang mở bán</h2>
+          <p class="section-lead">
+            Mỗi sản phẩm là một tác phẩm — số lượng giới hạn, in theo mẻ.
+          </p>
+        </div>
+        <div class="section-head__action">
+          <a href="/pages/catalogue.html" class="circle-btn">
+            <span class="circle-btn__ring"></span>
+            <span class="circle-btn__label">Xem tất cả</span>
+            <span class="circle-btn__arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
       </header>
 
       <!-- Sản phẩm render động từ GET /api/products bởi /js/index.js (teaser 6 SP) -->
@@ -107,13 +117,6 @@
         >
           Đang tải sản phẩm…
         </p>
-      </div>
-      <div style="margin-top: 40px" data-reveal>
-        <a href="/pages/catalogue.html" class="circle-btn">
-          <span class="circle-btn__ring"></span>
-          <span class="circle-btn__label">Xem tất cả</span>
-          <span class="circle-btn__arrow" aria-hidden="true">→</span>
-        </a>
       </div>
     </section>
 

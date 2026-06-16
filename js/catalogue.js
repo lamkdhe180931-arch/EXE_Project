@@ -128,6 +128,9 @@
     if (active && active.dataset.filter !== "all") active.click();
   }
 
+  // Show shimmer placeholders right away so the grid never flashes empty.
+  grid.innerHTML = ArtdictAPI.skeletonCards(9);
+
   ArtdictAPI.get("/products")
     .then(render)
     .catch(function (err) {
