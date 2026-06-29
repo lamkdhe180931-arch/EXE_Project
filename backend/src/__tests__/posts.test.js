@@ -91,13 +91,16 @@ describe('POST /api/posts', () => {
     expect(res.body.slug).toBe('ghi-chep-xuong-ve');
   });
 
-  test('400: missing required fields', async () => {
+  test('201: fields optional — creates with only a title (type defaults NEWS, slug auto)', async () => {
+    db.post.create.mockResolvedValue({ id: 9, type: 'NEWS', title: 'Chỉ có tiêu đề', slug: 'chi-co-tieu-de', body: '' });
     const res = await request(app)
       .post('/api/posts')
       .set('Authorization', adminToken())
       .send({ title: 'Chỉ có tiêu đề' });
-    expect(res.status).toBe(400);
-    expect(db.post.create).not.toHaveBeenCalled();
+    expect(res.status).toBe(201);
+    expect(db.post.create).toHaveBeenCalledWith(
+      expect.objectContaining({ data: expect.objectContaining({ type: 'NEWS', slug: 'chi-co-tieu-de' }) })
+    );
   });
 
   test('201: accepts an optional coverImage', async () => {

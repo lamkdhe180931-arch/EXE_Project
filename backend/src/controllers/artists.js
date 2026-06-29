@@ -1,3 +1,14 @@
+const { resolveSlug } = require('../utils/slug');
+
+// Chuẩn hoá khối content { quote, qa:[{id,q,a}] } — chấp nhận thiếu/rỗng.
+function normContent(content) {
+  const c = content && typeof content === 'object' ? content : {};
+  return {
+    quote: c.quote == null ? '' : c.quote,
+    qa: Array.isArray(c.qa) ? c.qa : [],
+  };
+}
+
 function makeArtistsController(db, deps = {}) {
   const email = deps.email || require('../services/email');
   const cloudinary = deps.cloudinary || require('../services/cloudinary');
@@ -13,16 +24,22 @@ function makeArtistsController(db, deps = {}) {
     return res.json(artist);
   }
 
+  // Mọi trường đều KHÔNG bắt buộc. Slug bỏ trống → tự sinh từ tên (hoặc 'nghe-si').
+  // Q&A không còn buộc đúng 3 mục; thiếu năm → mặc định năm hiện tại.
   async function create(req, res) {
     const { name, slug, role, city, since, avatarUrl, content } = req.body;
-    if (!name || !slug || !role || !city || !since || !content) {
-      return res.status(400).json({ error: 'name, slug, role, city, since, content là bắt buộc' });
-    }
-    if (!content.quote || !Array.isArray(content.qa) || content.qa.length !== 3) {
-      return res.status(400).json({ error: 'content phải có quote và đúng 3 câu hỏi qa[]' });
-    }
+    const finalSlug = await resolveSlug(db.artist, slug, name, 'nghe-si', null);
+    const yr = parseInt(since, 10);
     const artist = await db.artist.create({
-      data: { name, slug, role, city, since, avatarUrl: avatarUrl ?? null, content },
+      data: {
+        name: name == null ? '' : String(name),
+        slug: finalSlug,
+        role: role == null ? '' : String(role),
+        city: city == null ? '' : String(city),
+        since: (Number.isFinite(yr) && yr > 1900) ? yr : new Date().getFullYear(),
+        avatarUrl: avatarUrl ?? null,
+        content: normContent(content),
+      },
     });
     return res.status(201).json(artist);
   }
@@ -37,6 +54,15 @@ function makeArtistsController(db, deps = {}) {
     for (const key of allowed) {
       if (req.body[key] !== undefined) data[key] = req.body[key];
     }
+    if (data.slug !== undefined) {
+      if (!String(data.slug).trim()) delete data.slug;
+      else data.slug = await resolveSlug(db.artist, data.slug, existing.name, 'nghe-si', id);
+    }
+    if (data.since !== undefined) {
+      const yr = parseInt(data.since, 10);
+      data.since = (Number.isFinite(yr) && yr > 1900) ? yr : existing.since;
+    }
+    if (data.content !== undefined) data.content = normContent(data.content);
     const artist = await db.artist.update({ where: { id }, data });
     return res.json(artist);
   }

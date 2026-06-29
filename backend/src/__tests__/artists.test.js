@@ -96,21 +96,29 @@ describe('POST /api/artists', () => {
     expect(res.body.slug).toBe('new-artist');
   });
 
-  test('400: missing required fields', async () => {
+  test('201: fields optional — creates with only a name (slug auto-generated)', async () => {
+    db.artist.create.mockResolvedValue({ id: 9, name: 'Only name', slug: 'only-name' });
     const res = await request(app)
       .post('/api/artists')
       .set('Authorization', adminToken())
       .send({ name: 'Only name' });
-    expect(res.status).toBe(400);
+    expect(res.status).toBe(201);
+    expect(db.artist.create).toHaveBeenCalledWith(
+      expect.objectContaining({ data: expect.objectContaining({ slug: 'only-name' }) })
+    );
   });
 
-  test('400: content.qa must have exactly 3 items', async () => {
+  test('201: accepts content with fewer than 3 Q&A (no longer required)', async () => {
+    db.artist.create.mockResolvedValue({ id: 10, ...validBody });
     const body = { ...validBody, content: { quote: 'q', qa: [{ id: 'q1', q: 'Q?', a: 'A.' }] } };
     const res = await request(app)
       .post('/api/artists')
       .set('Authorization', adminToken())
       .send(body);
-    expect(res.status).toBe(400);
+    expect(res.status).toBe(201);
+    expect(db.artist.create).toHaveBeenCalledWith(
+      expect.objectContaining({ data: expect.objectContaining({ content: expect.objectContaining({ qa: expect.any(Array) }) }) })
+    );
   });
 
   test('403: customer cannot create artist', async () => {

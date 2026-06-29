@@ -1,3 +1,5 @@
+const { resolveSlug } = require('../utils/slug');
+
 function makeProductsController(db, deps = {}) {
   const cloudinary = deps.cloudinary || require('../services/cloudinary');
 
@@ -32,15 +34,22 @@ function makeProductsController(db, deps = {}) {
     return res.json(product);
   }
 
+  // Mọi trường đều KHÔNG bắt buộc: thiếu thì điền mặc định hợp lý. Slug bỏ trống
+  // sẽ tự sinh từ tên (hoặc 'san-pham') và bảo đảm duy nhất.
   async function create(req, res) {
     const { name, slug, price, stock, category, artistId, description } = req.body;
-    if (!name || !slug || price == null || !category) {
-      return res.status(400).json({ error: 'name, slug, price, category là bắt buộc' });
-    }
+    const finalSlug = await resolveSlug(db.product, slug, name, 'san-pham', null);
+    const priceN = Number(price);
+    const stockN = Number(stock);
+    const artistN = parseInt(artistId, 10);
     const product = await db.product.create({
       data: {
-        name, slug, price, stock: stock ?? 0, category,
-        artistId: artistId ?? null,
+        name: name == null ? '' : String(name),
+        slug: finalSlug,
+        price: Number.isFinite(priceN) ? Math.trunc(priceN) : 0,
+        stock: Number.isFinite(stockN) ? Math.trunc(stockN) : 0,
+        category: category || 'khac',
+        artistId: Number.isFinite(artistN) ? artistN : null,
         description: description ?? null,
       },
     });
@@ -57,6 +66,14 @@ function makeProductsController(db, deps = {}) {
     for (const key of allowed) {
       if (req.body[key] !== undefined) data[key] = req.body[key];
     }
+    // Slug rỗng → giữ nguyên slug cũ; có giá trị → bảo đảm duy nhất (loại trừ chính nó).
+    if (data.slug !== undefined) {
+      if (!String(data.slug).trim()) delete data.slug;
+      else data.slug = await resolveSlug(db.product, data.slug, existing.name, 'san-pham', id);
+    }
+    if (data.price !== undefined) { const n = Number(data.price); data.price = Number.isFinite(n) ? Math.trunc(n) : 0; }
+    if (data.stock !== undefined) { const n = Number(data.stock); data.stock = Number.isFinite(n) ? Math.trunc(n) : 0; }
+    if (data.artistId !== undefined) { const n = parseInt(data.artistId, 10); data.artistId = Number.isFinite(n) ? n : null; }
     const product = await db.product.update({ where: { id }, data });
     return res.json(product);
   }

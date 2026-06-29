@@ -1,4 +1,5 @@
 const VALID_TYPES = ['NEWS', 'JOURNAL'];
+const { resolveSlug } = require('../utils/slug');
 
 function makePostsController(db, deps = {}) {
   const cloudinary = deps.cloudinary || require('../services/cloudinary');
@@ -27,19 +28,24 @@ function makePostsController(db, deps = {}) {
     return res.json(post);
   }
 
-  // POST /api/posts — admin. `publishedAt` optional (null = draft).
+  // POST /api/posts — admin. Mọi trường KHÔNG bắt buộc: type mặc định NEWS,
+  // slug bỏ trống → tự sinh từ tiêu đề (hoặc 'bai-viet'). `publishedAt` null = nháp.
   async function create(req, res) {
     const { type, title, slug, body, coverImage, publishedAt } = req.body;
-    if (!type || !title || !slug || !body) {
-      return res
-        .status(400)
-        .json({ error: 'type, title, slug, body là bắt buộc' });
-    }
-    if (!VALID_TYPES.includes(type)) {
+    const finalType = type || 'NEWS';
+    if (!VALID_TYPES.includes(finalType)) {
       return res.status(400).json({ error: 'type phải là NEWS hoặc JOURNAL' });
     }
+    const finalSlug = await resolveSlug(db.post, slug, title, 'bai-viet', null);
     const post = await db.post.create({
-      data: { type, title, slug, body, coverImage: coverImage ?? null, publishedAt: publishedAt ?? null },
+      data: {
+        type: finalType,
+        title: title == null ? '' : String(title),
+        slug: finalSlug,
+        body: body == null ? '' : String(body),
+        coverImage: coverImage ?? null,
+        publishedAt: publishedAt ?? null,
+      },
     });
     return res.status(201).json(post);
   }
@@ -57,6 +63,10 @@ function makePostsController(db, deps = {}) {
     }
     if (data.type && !VALID_TYPES.includes(data.type)) {
       return res.status(400).json({ error: 'type phải là NEWS hoặc JOURNAL' });
+    }
+    if (data.slug !== undefined) {
+      if (!String(data.slug).trim()) delete data.slug;
+      else data.slug = await resolveSlug(db.post, data.slug, existing.title, 'bai-viet', id);
     }
     const post = await db.post.update({ where: { id }, data });
     return res.json(post);

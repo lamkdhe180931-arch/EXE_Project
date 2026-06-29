@@ -123,12 +123,16 @@ describe('POST /api/products', () => {
     );
   });
 
-  test('400: missing required fields', async () => {
+  test('201: fields optional — creates with only a name (slug auto, defaults applied)', async () => {
+    db.product.create.mockResolvedValue({ id: 9, name: 'Only name', slug: 'only-name', price: 0, category: 'khac', isActive: true });
     const res = await request(app)
       .post('/api/products')
       .set('Authorization', adminToken())
       .send({ name: 'Only name' });
-    expect(res.status).toBe(400);
+    expect(res.status).toBe(201);
+    expect(db.product.create).toHaveBeenCalledWith(
+      expect.objectContaining({ data: expect.objectContaining({ slug: 'only-name', price: 0, category: 'khac' }) })
+    );
   });
 
   test('403: customer cannot create product', async () => {
