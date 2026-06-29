@@ -21,6 +21,10 @@ function createApp(db, deps = {}) {
   app.use(cors({
     origin: function (origin, callback) {
       if (!origin) return callback(null, true);
+      // In development, allow any origin to support local network devices (e.g. 192.168.x.x)
+      if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV !== 'production') {
+        return callback(null, true);
+      }
       if (allowedOrigins.indexOf(origin) !== -1 || origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:')) {
         return callback(null, true);
       }

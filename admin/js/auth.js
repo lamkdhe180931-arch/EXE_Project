@@ -4,8 +4,11 @@
   'use strict';
   var core = window.AdminCore;
 
-  // Backend base URL. Override for deploy: localStorage.setItem('artdict_api', 'https://api...').
-  var API_BASE = (localStorage.getItem('artdict_api') || 'http://localhost:3000') + '/api';
+  var defaultApiBase = 'http://localhost:3000';
+  if (window.location.hostname && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+    defaultApiBase = 'http://' + window.location.hostname + ':3000';
+  }
+  var API_BASE = (localStorage.getItem('artdict_api') || defaultApiBase) + '/api';
   var TOKEN_KEY = 'artdict_admin_token';
 
   function getToken() { return localStorage.getItem(TOKEN_KEY); }
