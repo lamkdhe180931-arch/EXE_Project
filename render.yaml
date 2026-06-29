@@ -1,0 +1,69 @@
+# Render Blueprint — Artdict backend (Node + Express + Prisma).
+# Dùng: Render Dashboard → New → Blueprint → chọn repo này. Render đọc file này,
+# tạo Web Service, và HỎI bạn điền các biến có `sync: false` (secret).
+#
+# Backend chạy ở thư mục backend/ . Build sẽ tự:
+#   1) cài deps  2) generate Prisma Client  3) chạy migration production
+#   4) seed tài khoản admin (idempotent — chạy lại không tạo trùng).
+# => Đổi mật khẩu admin sau này = đổi ADMIN_PASSWORD trong Render rồi Redeploy.
+services:
+  - type: web
+    name: artdict-backend        # ⚠️ Giữ đúng tên này thì URL = artdict-backend.onrender.com
+    runtime: node                # (khớp vercel.json + MOMO_IPN_URL). Đổi tên thì sửa cả 2 chỗ.
+    rootDir: backend
+    region: singapore            # gần Việt Nam nhất (giảm độ trễ)
+    plan: free                   # free: service "ngủ" sau ~15' không truy cập, lần gọi đầu chậm ~50s
+    buildCommand: npm install && npx prisma generate && npx prisma migrate deploy && npm run db:seed
+    startCommand: npm start
+    healthCheckPath: /health
+    autoDeploy: true             # tự deploy lại mỗi khi push lên nhánh đã chọn
+    envVars:
+      # ── Bắt buộc (đặt giá trị / Render tự sinh) ──────────────────────────────
+      - key: NODE_ENV
+        value: production        # bật CORS theo FRONTEND_URL + cookie Secure
+      - key: JWT_ACCESS_SECRET
+        generateValue: true      # Render tự sinh chuỗi ngẫu nhiên an toàn
+      - key: JWT_REFRESH_SECRET
+        generateValue: true
+      - key: JWT_ACCESS_EXPIRES
+        value: 15m
+      - key: JWT_REFRESH_EXPIRES
+        value: 7d
+      - key: ADMIN_EMAIL
+        value: admin@artdict.vn
+      - key: EMAIL_FROM
+        value: Artdict <no-reply@artdict.vn>
+
+      # ── Secret — Render sẽ HỎI bạn điền khi tạo Blueprint ────────────────────
+      - key: DATABASE_URL          # chuỗi kết nối Neon (…?sslmode=require)
+        sync: false
+      - key: ADMIN_PASSWORD        # ĐẶT MẬT KHẨU MẠNH (đây là pw đăng nhập admin)
+        sync: false
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+
+      # ── Phụ thuộc domain Vercel — điền SAU khi có domain, rồi Redeploy ───────
+      - key: FRONTEND_URL          # vd: https://artdict.vercel.app  (cho CORS)
+        sync: false
+      - key: MOMO_REDIRECT_URL     # vd: https://artdict.vercel.app/pages/payment-return.html
+        sync: false
+
+      # ── MoMo SANDBOX (key công khai — chỉ để DEMO, KHÔNG có tiền thật) ───────
+      - key: MOMO_PARTNER_CODE
+        value: MOMO
+      - key: MOMO_ACCESS_KEY
+        value: F8BBA842ECF85
+      - key: MOMO_SECRET_KEY
+        value: K951B6PE1waDMi640xX08PD3vg6EkVlz
+      - key: MOMO_ENDPOINT
+        value: https://test-payment.momo.vn/v2/gateway/api/create
+      - key: MOMO_IPN_URL          # MoMo gọi về đây (server-to-server) — phải là URL Render công khai
+        value: https://artdict-backend.onrender.com/api/orders/momo-callback
+
+      # ── Email (chưa bật đợt này — để trống thì email tự bỏ qua, không lỗi) ───
+      # - key: RESEND_API_KEY
+      #   sync: false

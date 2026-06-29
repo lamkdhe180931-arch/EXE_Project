@@ -155,3 +155,16 @@ Nếu vẫn không được → chụp màn hình cửa sổ đen (có dòng ch�
 ---
 
 > 📌 **Lưu ý:** Hướng dẫn này dành cho lúc chạy **trên máy tính này** (local). Khi web được **đưa lên mạng (deploy)** chính thức, bạn sẽ **không cần mở 2 cửa sổ đen nữa** — chỉ cần vào địa chỉ admin trên mạng (người kỹ thuật sẽ cung cấp link mới). Mọi thao tác quản lý ở Mục 4–6 vẫn giữ nguyên.
+
+---
+
+## 10. Khi web đã chạy trên mạng (online)
+
+Sau khi deploy (xem `DEPLOY.md`):
+
+- **Trang khách:** `https://<tên-miền>` (người kỹ thuật cung cấp, vd `https://artdict.vercel.app`).
+- **Trang quản trị:** `https://<tên-miền>/admin/login.html` — đăng nhập như Mục 3.
+- **KHÔNG cần** `MO-WEB.bat` hay 2 cửa sổ đen nữa — web chạy 24/7 trên mạng.
+- Thao tác Sản phẩm / Đơn hàng / Nghệ sĩ / Bài viết (Mục 4–6) **giống hệt** bản local.
+- ⚠️ Lần đầu vào sau một lúc không ai dùng, trang có thể **chậm ~50 giây** rồi mới hiện (máy chủ "ngủ dậy") — bình thường, cứ đợi.
+- 💳 Thanh toán đang ở chế độ **thử nghiệm (MoMo sandbox)** — chưa nhận tiền thật. 📧 Email xác nhận đơn **chưa bật**. Hai mục này bật khi sẵn sàng (xem `DEPLOY.md`).

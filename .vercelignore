@@ -1,0 +1,22 @@
+# Vercel chỉ host phần FE tĩnh (index.html, /pages, /js, /css, /assets,
+# /components, /admin). Loại các thứ không cần / không nên public:
+
+# Backend chạy trên Render — không đưa source lên CDN Vercel
+backend/
+
+# Phụ thuộc & công cụ dev
+node_modules/
+.claude/
+shot.js
+optimize-assets.js
+screenshots/
+
+# Loại package.json gốc để Vercel coi đây là site TĨNH thuần
+# (không chạy build, không cài sharp) — site không cần file này.
+package.json
+package-lock.json
+skills-lock.json
+
+# Script tiện ích Windows + tài liệu nội bộ (đừng để public)
+*.bat
+*.md

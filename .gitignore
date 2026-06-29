@@ -8,6 +8,7 @@ screenshots/
 .claude/skills/
 skills-lock.json
 
-# Throwaway verify / demo-seed scripts (local-only, not part of the app)
+# Throwaway verify / demo-seed / cleanup scripts (local-only, not part of the app)
 _verify_*.js
 backend/_demo_seed*.js
+backend/_cleanup.js
