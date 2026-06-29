@@ -23,9 +23,9 @@ class SiteFooter extends HTMLElement {
           </div>
           <div class="footer__col">
             <h4>Kết nối</h4>
-            <a href="https://www.instagram.com/artdict.vn/" target="_blank" rel="noopener">Instagram</a>
-            <a href="https://www.tiktok.com/@artdict.vn" target="_blank" rel="noopener">TikTok</a>
-            <a href="https://www.facebook.com/artdict.vn" target="_blank" rel="noopener">Facebook</a>
+            <a href="https://www.instagram.com/artdict_official/" target="_blank" rel="noopener">Instagram</a>
+            <a href="https://www.tiktok.com/@artdict_official?_r=1&_t=ZS-97clej7PI9A" target="_blank" rel="noopener">TikTok</a>
+            <a href="https://www.facebook.com/profile.php?id=61577523485968" target="_blank" rel="noopener">Facebook</a>
           </div>
         </nav>
       </div>
