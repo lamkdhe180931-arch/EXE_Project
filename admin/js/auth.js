@@ -4,9 +4,9 @@
   'use strict';
   var core = window.AdminCore;
 
-  var defaultApiBase = 'http://localhost:3000';
-  if (window.location.hostname && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
-    defaultApiBase = 'http://' + window.location.hostname + ':3000';
+  var defaultApiBase = '';
+  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    defaultApiBase = 'http://localhost:3000';
   }
   var API_BASE = (localStorage.getItem('artdict_api') || defaultApiBase) + '/api';
   var TOKEN_KEY = 'artdict_admin_token';
