@@ -12,3 +12,5 @@ skills-lock.json
 _verify_*.js
 backend/_demo_seed*.js
 backend/_cleanup.js
+
+.vercel
