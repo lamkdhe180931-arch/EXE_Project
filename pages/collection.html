@@ -74,6 +74,8 @@
         grid-template-columns: repeat(6, 1fr);
         gap: clamp(16px, 1.6vw, 24px);
         margin-bottom: clamp(64px, 9vw, 120px);
+        /* thẻ feature ngắn hơn thẻ thường ⇒ đừng kéo giãn, canh theo đỉnh */
+        align-items: start;
       }
       .col-card {
         position: relative;
@@ -122,6 +124,19 @@
       }
       .col-card:hover .col-card__ph {
         transform: scale(1.04);
+      }
+      /* THẺ 1 & 2 (feature) — chiều cao CỐ ĐỊNH bằng nhau để hàng đầu thẳng
+         hàng (thẻ 2 kéo dài bằng thẻ 1), vẫn thấp hơn poster bên dưới. */
+      .col-card--feat .col-card__ph {
+        aspect-ratio: auto;
+        height: clamp(220px, 27vw, 392px);
+      }
+      /* cover ảnh thật (render động) phủ kín khung, giữ tỉ lệ */
+      .col-card__ph img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
       }
       .col-card__ghost {
         position: absolute;
@@ -192,6 +207,18 @@
         line-height: var(--lh-tight);
         color: var(--ink);
       }
+      /* thẻ feature ngắn → tên gọn hơn để không tràn ra ngoài khung thấp */
+      .col-card--feat .col-card__name {
+        font-size: clamp(1.4rem, 2.4vw, 2.1rem);
+      }
+      /* tên tác giả — nhỏ hơn, đặt DƯỚI tên bộ sưu tập */
+      .col-card__by {
+        margin-top: 7px;
+        font-family: var(--display);
+        font-weight: var(--fw-medium);
+        font-size: var(--fs-body-sm);
+        color: color-mix(in srgb, var(--ink) 64%, transparent);
+      }
       .col-card__foot {
         display: flex;
         align-items: center;
@@ -236,6 +263,33 @@
         color: var(--cream-50);
       }
 
+      /* thẻ có ảnh cover: scrim tối LUÔN hiện + chữ sáng để đọc rõ trên ảnh */
+      .col-card--photo .col-card__ph::after {
+        opacity: 1;
+        background: linear-gradient(
+          to top,
+          rgba(15, 15, 15, 0.78) 0%,
+          rgba(15, 15, 15, 0.34) 34%,
+          transparent 66%
+        );
+      }
+      .col-card--photo .col-card__name,
+      .col-card--photo .col-card__go {
+        color: var(--cream-50);
+      }
+      .col-card--photo .col-card__count {
+        color: color-mix(in srgb, var(--cream-50) 85%, transparent);
+      }
+      .col-card--photo .col-card__artist {
+        color: var(--crimson-hi);
+      }
+      /* tên tác giả sáng lên trên nền ảnh / tint tối */
+      .col-card--photo .col-card__by,
+      .col-card--ink .col-card__by,
+      .col-card--crimson .col-card__by {
+        color: color-mix(in srgb, var(--cream-50) 82%, transparent);
+      }
+
       /* CLOSING BAND (reuse .join-band) */
       .col-band {
         margin-bottom: clamp(40px, 6vw, 80px);
@@ -255,6 +309,9 @@
         .col-card--wide .col-card__ph,
         .col-card--third .col-card__ph {
           aspect-ratio: 4 / 5;
+        }
+        .col-card--feat .col-card__ph {
+          height: clamp(200px, 32vw, 300px);
         }
       }
       @media (max-width: 768px) {
@@ -280,6 +337,9 @@
         .col-card--third .col-card__ph,
         .col-card--full .col-card__ph {
           aspect-ratio: 4 / 3;
+        }
+        .col-card--feat .col-card__ph {
+          height: clamp(180px, 46vw, 260px);
         }
       }
     </style>
@@ -315,168 +375,22 @@
 
       <!-- META -->
       <section class="col-meta reveal">
-        <p class="col-meta__count"><b>08</b> bộ sưu tập đang mở</p>
+        <p class="col-meta__count"><b>··</b> bộ sưu tập đang mở</p>
         <p class="col-meta__note">Cập nhật theo mùa · Mùa 04 / 2026</p>
       </section>
 
-      <!-- GRID -->
-      <!-- TODO: thay .col-card__ph bằng <img> cover khi có ảnh bộ sưu tập -->
+      <!-- GRID — render động từ GET /api/artists + /api/products bởi
+           /js/collection.js (gộp sản phẩm theo tác giả = 1 bộ sưu tập). -->
       <section class="col-grid" id="grid">
-        <!-- 01 — feature crimson -->
-        <a
-          class="col-card col-card--wide col-card--crimson reveal"
-          data-tilt
-          href="/pages/catalogue.html?filter=aothun"
+        <p
+          style="
+            grid-column: 1 / -1;
+            padding: 40px 0;
+            color: color-mix(in srgb, var(--ink) 60%, transparent);
+          "
         >
-          <div class="col-card__ph">
-            <span class="col-card__ghost" aria-hidden="true">01</span>
-          </div>
-          <div class="col-card__label">
-            <p class="col-card__artist">Lê Minh Quân</p>
-            <h2 class="col-card__name">Mèo Nổ</h2>
-            <div class="col-card__foot">
-              <span class="col-card__count">Áo thun · 03 mẫu</span>
-              <span class="col-card__go">Xem →</span>
-            </div>
-          </div>
-        </a>
-
-        <!-- 02 -->
-        <a
-          class="col-card col-card--third reveal"
-          data-tilt
-          data-delay="80"
-          href="/pages/catalogue.html?filter=mu"
-        >
-          <div class="col-card__ph">
-            <span class="col-card__ghost" aria-hidden="true">02</span>
-          </div>
-          <div class="col-card__label">
-            <p class="col-card__artist">Nguyễn Hoàng Phúc</p>
-            <h2 class="col-card__name">Lập Thể</h2>
-            <div class="col-card__foot">
-              <span class="col-card__count">Mũ · 01 mẫu</span>
-              <span class="col-card__go">Xem →</span>
-            </div>
-          </div>
-        </a>
-
-        <!-- 03 -->
-        <a
-          class="col-card reveal"
-          data-tilt
-          href="/pages/catalogue.html?filter=aothun"
-        >
-          <div class="col-card__ph">
-            <span class="col-card__ghost" aria-hidden="true">03</span>
-          </div>
-          <div class="col-card__label">
-            <p class="col-card__artist">Lê Minh Quân</p>
-            <h2 class="col-card__name">Phố Cổ &amp; Mực Tàu</h2>
-            <div class="col-card__foot">
-              <span class="col-card__count">Áo thun · 02 mẫu</span>
-              <span class="col-card__go">Xem →</span>
-            </div>
-          </div>
-        </a>
-
-        <!-- 04 — feature ink -->
-        <a
-          class="col-card col-card--ink reveal"
-          data-tilt
-          data-delay="80"
-          href="/pages/catalogue.html"
-        >
-          <div class="col-card__ph">
-            <span class="col-card__ghost" aria-hidden="true">04</span>
-          </div>
-          <div class="col-card__label">
-            <p class="col-card__artist">Đỗ Gia Bảo</p>
-            <h2 class="col-card__name">Linh Thú</h2>
-            <div class="col-card__foot">
-              <span class="col-card__count">Tranh in · 04 mẫu</span>
-              <span class="col-card__go">Xem →</span>
-            </div>
-          </div>
-        </a>
-
-        <!-- 05 -->
-        <a
-          class="col-card col-card--third reveal"
-          data-tilt
-          href="/pages/catalogue.html?filter=sotay"
-        >
-          <div class="col-card__ph">
-            <span class="col-card__ghost" aria-hidden="true">05</span>
-          </div>
-          <div class="col-card__label">
-            <p class="col-card__artist">Trần Hà My</p>
-            <h2 class="col-card__name">Trang Trắng</h2>
-            <div class="col-card__foot">
-              <span class="col-card__count">Sổ tay · 02 mẫu</span>
-              <span class="col-card__go">Xem →</span>
-            </div>
-          </div>
-        </a>
-
-        <!-- 06 -->
-        <a
-          class="col-card col-card--third reveal"
-          data-tilt
-          data-delay="80"
-          href="/pages/catalogue.html?filter=mu"
-        >
-          <div class="col-card__ph">
-            <span class="col-card__ghost" aria-hidden="true">06</span>
-          </div>
-          <div class="col-card__label">
-            <p class="col-card__artist">Đỗ Gia Bảo</p>
-            <h2 class="col-card__name">Trăng Khuyết</h2>
-            <div class="col-card__foot">
-              <span class="col-card__count">Mũ · 01 mẫu</span>
-              <span class="col-card__go">Xem →</span>
-            </div>
-          </div>
-        </a>
-
-        <!-- 07 -->
-        <a
-          class="col-card col-card--third reveal"
-          data-tilt
-          data-delay="160"
-          href="/pages/catalogue.html?filter=sotay"
-        >
-          <div class="col-card__ph">
-            <span class="col-card__ghost" aria-hidden="true">07</span>
-          </div>
-          <div class="col-card__label">
-            <p class="col-card__artist">Phạm Thu Trang</p>
-            <h2 class="col-card__name">Vết Mực</h2>
-            <div class="col-card__foot">
-              <span class="col-card__count">Sổ tay · 02 mẫu</span>
-              <span class="col-card__go">Xem →</span>
-            </div>
-          </div>
-        </a>
-
-        <!-- 08 — full-width capsule -->
-        <a
-          class="col-card col-card--full col-card--ink reveal"
-          data-tilt
-          href="/pages/catalogue.html"
-        >
-          <div class="col-card__ph">
-            <span class="col-card__ghost" aria-hidden="true">08</span>
-          </div>
-          <div class="col-card__label">
-            <p class="col-card__artist">Artdict Capsule</p>
-            <h2 class="col-card__name">Đồ để chơi</h2>
-            <div class="col-card__foot">
-              <span class="col-card__count">Trọn bộ · 09 mẫu</span>
-              <span class="col-card__go">Xem tất cả →</span>
-            </div>
-          </div>
-        </a>
+          Đang tải bộ sưu tập…
+        </p>
       </section>
 
       <!-- CLOSING BAND -->
@@ -524,6 +438,8 @@
 
     <script src="/components/site-header.js" defer></script>
     <script src="/components/site-footer.js" defer></script>
+    <script src="/js/api.js" defer></script>
+    <script src="/js/collection.js" defer></script>
     <script src="/js/artdict.js" defer></script>
   </body>
 </html>

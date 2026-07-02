@@ -47,6 +47,48 @@
       .cat-count b {
         color: var(--crimson);
       } */
+      /* Banner ngữ cảnh khi mở 1 bộ sưu tập (?collection=<slug>) */
+      .cat-collection {
+        padding: 26px 0 24px;
+        margin-bottom: clamp(24px, 3vw, 40px);
+        border-bottom: 1px solid var(--line-light);
+      }
+      .cat-collection__back {
+        display: inline-block;
+        font-family: var(--display);
+        font-weight: var(--fw-medium);
+        font-size: var(--fs-body-sm);
+        letter-spacing: var(--ls-eyebrow);
+        text-transform: uppercase;
+        color: color-mix(in srgb, var(--ink) 60%, transparent);
+        margin-bottom: 16px;
+        transition: color 0.3s var(--ease);
+      }
+      .cat-collection__back:hover {
+        color: var(--crimson);
+      }
+      .cat-collection__eyebrow {
+        font-family: var(--display);
+        font-size: var(--fs-body-xs);
+        font-weight: var(--fw-regular);
+        letter-spacing: var(--ls-eyebrow);
+        text-transform: uppercase;
+        color: var(--crimson);
+        margin-bottom: 8px;
+      }
+      .cat-collection__name {
+        font-family: var(--display);
+        font-weight: var(--fw-bold);
+        font-size: var(--fs-display-md, clamp(2rem, 5vw, 3.4rem));
+        line-height: var(--lh-tight);
+        letter-spacing: var(--ls-display-sm);
+      }
+      .cat-collection__count {
+        margin-top: 10px;
+        font-size: var(--fs-body-sm);
+        color: color-mix(in srgb, var(--ink) 62%, transparent);
+      }
+
       .grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);

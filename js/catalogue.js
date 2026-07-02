@@ -111,6 +111,25 @@
       "</p>";
   }
 
+  // Deep-link từ collection.html: ?collection=<artistSlug> → chỉ hiện sản phẩm
+  // của bộ sưu tập (tác giả) đó + banner ngữ cảnh. Chèn 1 lần, trước lưới.
+  function showCollectionBanner(name, count) {
+    if (document.querySelector(".cat-collection")) return;
+    var el = document.createElement("section");
+    el.className = "cat-collection";
+    el.innerHTML =
+      '<a class="cat-collection__back" href="catalogue.html">← Tất cả sản phẩm</a>' +
+      '<p class="cat-collection__eyebrow">Bộ sưu tập theo tác giả</p>' +
+      '<h2 class="cat-collection__name">' +
+      esc(name) +
+      "</h2>" +
+      '<p class="cat-collection__count">' +
+      count +
+      " sản phẩm</p>";
+    var anchor = document.querySelector(".cat-meta") || grid;
+    anchor.parentNode.insertBefore(el, anchor);
+  }
+
   function render(products) {
     updateCounts(products);
     if (!products.length) {
@@ -131,8 +150,28 @@
   // Show shimmer placeholders right away so the grid never flashes empty.
   grid.innerHTML = ArtdictAPI.skeletonCards(9);
 
+  var collectionSlug = new URLSearchParams(window.location.search).get(
+    "collection",
+  );
+
   ArtdictAPI.get("/products")
-    .then(render)
+    .then(function (products) {
+      if (!collectionSlug) return render(products);
+      // Lọc theo bộ sưu tập (tác giả). Product nhúng sẵn object `artist`.
+      var subset = products.filter(function (p) {
+        return p.artist && p.artist.slug === collectionSlug;
+      });
+      var name =
+        (subset[0] && subset[0].artist && subset[0].artist.name) ||
+        collectionSlug;
+      showCollectionBanner(name, subset.length);
+      if (!subset.length) {
+        message("Bộ sưu tập này chưa có sản phẩm nào.");
+        updateCounts(subset);
+        return;
+      }
+      render(subset);
+    })
     .catch(function (err) {
       message(
         "Không tải được sản phẩm (" +
