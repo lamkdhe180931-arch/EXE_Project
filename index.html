@@ -152,15 +152,15 @@
     <!-- ============ XƯỞNG / DANH MỤC SẢN PHẨM (bento + tilt 3D theo chuột) ============ -->
     <section class="craft" id="craft">
       <header class="section-head" data-reveal>
-        <p class="eyebrow eyebrow--line">DANH MỤC SẢN PHẨM</p>
-        <h2 class="section-title">Chúng tôi <em>tạo ra gì</em></h2>
+        <p class="eyebrow eyebrow--line">BỘ SƯU TẬP THEO TÁC GIẢ</p>
+        <h2 class="section-title">Mỗi nghệ sĩ, <em>một thế giới</em></h2>
         <p class="section-lead">
-          Tuyển chọn sản phẩm thiết kế sáng tạo, mang đậm dấu ấn cá nhân từ các
-          nghệ sĩ & sinh viên thiết kế trẻ.
+          Bộ sưu tập in giới hạn theo từng tác giả — đánh số, không tái bản.
+          Chọn một thế giới để bước vào.
         </p>
       </header>
 
-      <div class="craft-bento">
+      <div class="craft-bento" id="craft-bento">
         <a
           class="craft-card craft-card--a tilt"
           href="/pages/catalogue.html"
@@ -232,19 +232,20 @@
     </section>
 
     <!-- ============ STATS ============ -->
-    <!-- numbers below = sample / mock data, chưa phải số liệu thật -->
+    <!-- thiết kế + nghệ sĩ = số liệu thật từ API (js/index.js);
+         lượt xem = bộ đếm localStorage, sàn 300, +1 mỗi lượt xem. -->
     <section class="stats">
       <div class="stat" data-reveal>
-        <span class="stat__num" data-count="48">0</span>
+        <span class="stat__num" data-count="0" id="stat-designs">0</span>
         <span class="stat__label">thiết kế giới hạn</span>
       </div>
       <div class="stat" data-reveal>
-        <span class="stat__num" data-count="12">0</span>
+        <span class="stat__num" data-count="0" id="stat-artists">0</span>
         <span class="stat__label">nghệ sĩ cộng tác</span>
       </div>
       <div class="stat" data-reveal>
-        <span class="stat__num" data-count="3" data-suffix="k+">0</span>
-        <span class="stat__label">đơn đã giao</span>
+        <span class="stat__num" data-count="300" id="stat-views">0</span>
+        <span class="stat__label">lượt xem trang</span>
       </div>
     </section>
 

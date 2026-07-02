@@ -97,6 +97,50 @@
     khac: "Khác",
   };
 
+  // Tên bộ sưu tập THEO TÁC GIẢ (dùng chung cho collection.html + index.html).
+  // DB chưa có trường "tên bộ sưu tập" nên đặt theo chủ đề tác phẩm của từng
+  // tác giả (key = slug nghệ sĩ). Thêm/đổi tác giả thì sửa map này; tác giả
+  // chưa có tên rơi vào fallback theo danh mục chiếm ưu thế.
+  var COLLECTION_NAMES = {
+    "nguyen-quy-thien": "Mèo Nổ & Vì Sao",
+    "nguyen-minh-hoang": "Ma Quỷ Dân Gian",
+    "pham-lam-khoa": "Chuyện Thường Ngày",
+    "nguyen-cong-hieu": "Nhân Miêu Ký",
+    "nguyen-le-manh-dat": "Thế Giới Emmat",
+    "nguyen-tien-dung": "The Boy Who Lived",
+    "nguyen-thi-thu-trang": "Long Ly Quy Phụng",
+    "nguyen-vinh-quang": "Bính Ngọ 2026",
+    "le-ai-linh": "Lân Sư",
+    "hoang-hong-anh": "Vũ Điệu Lân",
+  };
+
+  var CAT_COLLECTION_NAME = {
+    aothun: "Tuyển Tập Áo",
+    mu: "Tuyển Tập Mũ",
+    vongtay: "Tuyển Tập Vòng Tay",
+    sotay: "Tuyển Tập Sổ Tay",
+    nhandan: "Tuyển Tập Nhãn Dán",
+    mockhoa: "Tuyển Tập Móc Khóa",
+    tranh: "Tuyển Tập Tranh In",
+    khac: "Tuyển Tập Giới Hạn",
+  };
+
+  function collectionName(artist, products) {
+    if (artist && COLLECTION_NAMES[artist.slug]) return COLLECTION_NAMES[artist.slug];
+    var counts = {},
+      top = "",
+      max = 0;
+    (products || []).forEach(function (p) {
+      var c = p.category || "khac";
+      counts[c] = (counts[c] || 0) + 1;
+      if (counts[c] > max) {
+        max = counts[c];
+        top = c;
+      }
+    });
+    return CAT_COLLECTION_NAME[top] || "Tuyển Tập Giới Hạn";
+  }
+
   window.ArtdictAPI = {
     base: BASE,
     get: get,
@@ -104,5 +148,7 @@
     img: img,
     skeletonCards: skeletonCards,
     CATEGORIES: CATEGORIES,
+    COLLECTION_NAMES: COLLECTION_NAMES,
+    collectionName: collectionName,
   };
 })();

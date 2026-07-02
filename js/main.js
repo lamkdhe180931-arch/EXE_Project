@@ -118,20 +118,23 @@ if (REDUCE) {
 
   /* ---------- 6. Stats: đếm số ---------- */
   document.querySelectorAll("[data-count]").forEach((el) => {
-    const target = parseFloat(el.dataset.count);
-    const suffix = el.dataset.suffix || "";
     const obj = { v: 0 };
     ScrollTrigger.create({
       trigger: el,
       start: "top 90%",
       once: true,
-      onEnter: () =>
+      // Đọc data-count/suffix TẠI LÚC kích hoạt (không chụp lúc khởi tạo) để
+      // số liệu do js/index.js bơm vào sau khi fetch API được đếm đúng.
+      onEnter: () => {
+        const target = parseFloat(el.dataset.count) || 0;
+        const suffix = el.dataset.suffix || "";
         gsap.to(obj, {
           v: target,
           duration: 1.6,
           ease: "power2.out",
           onUpdate: () => (el.textContent = Math.round(obj.v) + suffix),
-        }),
+        });
+      },
     });
   });
 

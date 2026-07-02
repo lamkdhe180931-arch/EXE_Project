@@ -97,13 +97,117 @@
       "</p>";
   }
 
+  /* ---------- BỘ SƯU TẬP THEO TÁC GIẢ (lưới bento) ---------- */
+  var bento = document.getElementById("craft-bento");
+  var BENTO_SPAN = ["craft-card--a", "craft-card--b", "craft-card--c", "craft-card--d"];
+
+  function coverOf(products) {
+    for (var i = 0; i < products.length; i++) {
+      var im = products[i].images && products[i].images[0];
+      if (im && im.url) return im.url;
+    }
+    return "";
+  }
+
+  function bentoCardHTML(col, i) {
+    var a = col.artist;
+    var cover = coverOf(col.products);
+    var name = ArtdictAPI.collectionName(a, col.products);
+    var media = cover
+      ? '<img class="craft-card__img" src="' +
+        esc(ArtdictAPI.img(cover, 800)) +
+        '" alt="' +
+        esc(name) +
+        '" loading="lazy" />'
+      : "";
+    return (
+      '<a class="craft-card ' +
+      BENTO_SPAN[i] +
+      ' reveal" data-tilt data-delay="' +
+      (i % 2) * 90 +
+      '" href="/pages/catalogue.html?collection=' +
+      encodeURIComponent(a.slug) +
+      '">' +
+      media +
+      '<div class="craft-card__label">' +
+      '<span class="craft-card__tag">' +
+      esc(a.name) +
+      "</span>" +
+      esc(name) +
+      "</div></a>"
+    );
+  }
+
+  function renderBento(collections) {
+    if (!bento || !collections.length) return;
+    bento.innerHTML = collections.slice(0, 4).map(bentoCardHTML).join("");
+    if (window.Artdict && window.Artdict.rescan) window.Artdict.rescan(bento);
+  }
+
+  function buildCollections(products, artists) {
+    var byId = {};
+    products.forEach(function (p) {
+      if (p.artistId == null) return;
+      (byId[p.artistId] = byId[p.artistId] || []).push(p);
+    });
+    return artists
+      .filter(function (a) {
+        return (byId[a.id] || []).length > 0;
+      })
+      .map(function (a) {
+        return { artist: a, products: byId[a.id] };
+      })
+      .sort(function (x, y) {
+        return y.products.length - x.products.length;
+      });
+  }
+
+  /* ---------- STATS (số liệu thật + lượt xem) ---------- */
+  function setStat(id, val) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.dataset.count = String(val); // để main.js đếm tới số này
+    el.textContent = String(val); // set trực tiếp (reduced-motion / phòng race)
+  }
+
+  // Lượt xem trang: bộ đếm localStorage, sàn 300, mỗi lượt xem +1.
+  function bumpViews() {
+    var KEY = "artdict_views";
+    var n = 0;
+    try {
+      n = parseInt(localStorage.getItem(KEY) || "0", 10) || 0;
+    } catch (e) {}
+    n = n < 0 ? 1 : n + 1;
+    try {
+      localStorage.setItem(KEY, String(n));
+    } catch (e) {}
+    return 299 + n; // lượt đầu = 300
+  }
+
+  setStat("stat-views", bumpViews());
+
   // Replace the static placeholder cards immediately so stale mock data
   // never lingers on screen while the request is in flight.
   grid.innerHTML = ArtdictAPI.skeletonCards(LIMIT);
 
-  ArtdictAPI.get("/products")
-    .then(function (products) {
-      products = products || [];
+  Promise.all([
+    ArtdictAPI.get("/products"),
+    ArtdictAPI.get("/artists").catch(function () {
+      return [];
+    }),
+  ])
+    .then(function (res) {
+      var products = res[0] || [];
+      var artists = res[1] || [];
+
+      // Số liệu thật.
+      setStat("stat-designs", products.length);
+      setStat("stat-artists", artists.length);
+
+      // Bộ sưu tập theo tác giả (4 bộ nhiều sản phẩm nhất).
+      renderBento(buildCollections(products, artists));
+
+      // Lưới "đang mở bán".
       if (!products.length) {
         message("Chưa có sản phẩm nào đang mở bán.");
         return;
